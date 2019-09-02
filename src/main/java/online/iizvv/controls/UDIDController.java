@@ -83,7 +83,7 @@ public class UDIDController {
             String xml = sb.toString().substring(sb.toString().indexOf("<?xml"), sb.toString().indexOf("</plist>")+8);
             NSDictionary parse = (NSDictionary) PropertyListParser.parse(xml.getBytes());
             String udid = (String) parse.get("UDID").toJavaObject();
-            System.out.println("当前设备uiid: " + udid);
+            System.out.println("当前设备udid: " + udid);
             itemService = analyzeUDID(udid, id);
             System.out.println("itemService文件名为: " + itemService);
         } catch (Exception e) {
@@ -100,7 +100,6 @@ public class UDIDController {
             }else {
                 String encode = "itms-services://?action=download-manifest&url=" + Config.aliTempHost + "/" + itemService;
                 redirect += "?itemService=" + URLEncoder.encode(encode, "UTF-8" );
-                packageService.updatePackageCountById(id);
             }
         }else {
             System.out.println("签名失败");

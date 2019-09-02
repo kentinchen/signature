@@ -20,53 +20,166 @@ public class PackageServiceImpl {
     @Autowired
     private PackageDao packageDao;
 
-    public int insertPackage(Package pck) {
-        return packageDao.insertPackage(pck);
+    /**
+     * create by: iizvv
+     * description: 添加ipa
+     * create time: 2019-09-02 18:59
+     * 
+     
+     * @return boolean
+     */
+    public boolean insertPackage(Package pck) {
+        int aPackage = packageDao.insertPackage(pck);
+        return aPackage>0;
+    }
+    
+    /**
+     * create by: iizvv
+     * description: 更新ipa
+     * create time: 2019-09-02 19:00
+     * 
+     
+     * @return boolean
+     */
+    public boolean updatePackage(Package pck) {
+        int aPackage = packageDao.updatePackage(pck);
+        return aPackage>0;
     }
 
-    public int updateTotalCountById(long id, long totalCount) {
-        return packageDao.updateTotalCountById(id, totalCount);
+    /**
+     * create by: iizvv
+     * description: 更新简介
+     * create time: 2019-09-02 19:10
+     *
+
+     * @return boolean
+     */
+    public boolean updatePackageSummaryById(long id, String summary) {
+        int aPackage = packageDao.updatePackageSummaryById(id, summary);
+        return aPackage>0;
     }
 
-    public int resetTotalCountById(long id, long totalCount) {
-        return packageDao.resetTotalCountById(id, totalCount);
+    /**
+     * create by: iizvv
+     * description: 更新预览图
+     * create time: 2019-09-02 19:13
+     *
+
+     * @return boolean
+     */
+    public boolean updatePackageImgsById(long id, String imgs) {
+        int aPackage = packageDao.updatePackageImgsById(id, imgs);
+        return aPackage>0;
     }
 
-    public int deleteById(long id) {
-        return packageDao.deleteById(id);
+    /**
+     * create by: iizvv
+     * description: 更新可使用设备量
+     * create time: 2019-09-02 19:13
+     *
+
+     * @return boolean
+     */
+    public boolean updatePackageTotalDeviceById(long id, long count) {
+        int aPackage = packageDao.updatePackageTotalDeviceById(id, count);
+        return aPackage>0;
     }
 
-    public void updateMobileconfig(String mobileconfig, long id) {
-        packageDao.updateMobileconfigById(mobileconfig, id);
+    /**
+     * create by: iizvv
+     * description: 更新ipa下载量
+     * create time: 2019-07-23 09:50
+
+     * @return boolean
+     */
+    public boolean updatePackageDownloadCountById(long id) {
+        int aPackage = packageDao.updatePackageDownloadCountById(id);
+        return aPackage>0;
     }
 
-    public int updatePackage(Package pck) {
-        return packageDao.updatePackage(pck);
+    /**
+     * create by: iizvv
+     * description: 更新ipa可用设备量
+     * create time: 2019-09-02 17:45
+
+     * @return boolean
+     */
+    public boolean updatePackageDeviceCountById(long id) {
+        int aPackage = packageDao.updatePackageDeviceCountById(id);
+        return aPackage>0;
     }
 
+    /**
+     * create by: iizvv
+     * description: 更新证书信息
+     * create time: 2019-07-04 11:36
+
+     * @return boolean
+     */
+    public boolean updatePackageMobileconfigById(long id, String mobileconfig) {
+        int aPackage = packageDao.updatePackageMobileconfigById(id, mobileconfig);
+        return aPackage>0;
+    }
+
+    /**
+     * create by: iizvv
+     * description: 删除ipa文件
+     * create time: 2019-08-21 12:37
+
+     * @return boolean
+     */
+    public boolean deletePackageById(long id) {
+        int aPackage = packageDao.deletePackageById(id);
+        return aPackage>0;
+    }
+
+    /**
+     * create by: iizvv
+     * description: 获取指定IPA
+     * create time: 2019-07-03 16:47
+
+     * @return Package
+     */
     public Package getPackageById(long id) {
-        return packageDao.getPackageById(id);
+        Package aPackage = packageDao.getPackageById(id);
+        return aPackage;
     }
 
-    public Package getPackageByBundleIdentifier(String bundleIdentifier, long userId) {
-        return packageDao.getPackageByBundleIdentifier(bundleIdentifier, userId);
+    /**
+     * create by: iizvv
+     * description: 获取指定IPA下载名称
+     * create time: 2019-07-06 09:12
+
+     * @return String
+     */
+    public String getPackageLinkById(long id) {
+        String link = packageDao.getPackageLinkById(id);
+        return link;
     }
 
-    public String getPackageLinkById(String id) {
-        return packageDao.getPackageLinkById(id);
+    /**
+     * create by: iizvv
+     * description: 获取全部IPA
+     * create time: 2019-07-03 16:27
+
+     * @return List
+     */
+    public List<Package> getAllPackage() {
+        List<Package> list = packageDao.getAllPackage();
+        return list;
     }
 
-    public int updatePackageCountById(long id) {
-        return packageDao.updatePackageCountById(id);
-    }
+    /**
+     * create by: iizvv
+     * description: 获取当前用户IPA
+     * create time: 2019-08-25 16:57
+     *
 
-    public List<Package>getAllPackage() {
-        return packageDao.getAllPackage();
-    }
-
+     * @return
+     */
     public List <Package> getAllPackageByUserId(long userId) {
-        return packageDao.getAllPackageByUserId(userId);
+        List<Package> list = packageDao.getAllPackageByUserId(userId);
+        return list;
     }
-
-
+    
 }

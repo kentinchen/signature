@@ -48,4 +48,7 @@ public class Config {
     public final static String redirect = "https://auto.iizvv.online";
 
 
+    /** 请求头键 */
+    public final static String Authorization = "Authorization";
+
 }

@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import online.iizvv.core.config.Config;
 import online.iizvv.pojo.Apple;
 import online.iizvv.pojo.Authorize;
 import online.iizvv.core.pojo.Result;
@@ -53,7 +54,7 @@ public class AppleController {
     @GetMapping("/getAllAppleAccounts")
     public Result<List<Apple>> getAllAppleAccounts(HttpServletRequest request) {
         Result result = new Result();
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
         long level = (Integer)claims.get("level");
         if (level==1) {
@@ -153,7 +154,7 @@ public class AppleController {
     @PostMapping("/deleteById")
     public Result deleteById(HttpServletRequest request, long id) {
         Result result = new Result();
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
         long level = (Integer)claims.get("level");
         if (level==1) {

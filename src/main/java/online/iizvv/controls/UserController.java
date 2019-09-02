@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import online.iizvv.core.config.Config;
 import online.iizvv.core.pojo.Result;
 import online.iizvv.pojo.User;
 import online.iizvv.service.UserServiceImpl;
@@ -92,7 +93,7 @@ public class UserController {
                     Map map = new HashMap();
                     map.put("level", user.getLevel());
                     map.put("username", username);
-                    map.put("id", user.getId());
+                    map.put("userId", user.getId());
                     String token = JwtHelper.generateToken(map);
                     result.setData(token);
                 }
@@ -109,7 +110,7 @@ public class UserController {
     @GetMapping("/getAllReviewUser")
     public Result getAllReviewUser(HttpServletRequest request) {
         Result result = new Result();
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
         long level = (Integer)claims.get("level");
         if (level == 1) {
@@ -127,7 +128,7 @@ public class UserController {
     @GetMapping("/getAllUser")
     public Result getAllUser(HttpServletRequest request) {
         Result result = new Result();
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
         long level = (Integer)claims.get("level");
         if (level == 1) {
@@ -149,7 +150,7 @@ public class UserController {
     @PostMapping("/checkUserById")
     public Result checkUserById(HttpServletRequest request, long id, boolean status) {
         Result result = new Result();
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
         long level = (Integer)claims.get("level");
         if (level == 1) {
@@ -170,9 +171,9 @@ public class UserController {
     @GetMapping("/getUserInfo")
     public Result getUserInfo(HttpServletRequest request) {
         Result result = new Result();
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long id = (Integer)claims.get("id");
+        long id = (Integer)claims.get("userId");
         User user = userService.getUserInfo(id);
         if (user!=null) {
             result.setData(user);

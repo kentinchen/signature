@@ -19,7 +19,7 @@ public interface PackageDao {
       * description: 添加IPA
       * create time: 2019-06-28 20:09
       *
-      * @return 是否添加成功
+      * @return int
       */
     @Insert("INSERT INTO package (name, icon, version, build_version, mini_version, bundle_identifier, link, user_id) " +
             "VALUES (#{name}, #{icon}, #{version}, #{buildVersion}, #{miniVersion}, #{bundleIdentifier}, #{link}, #{userId})")
@@ -27,34 +27,78 @@ public interface PackageDao {
     int insertPackage(Package pck);
 
     /**
-      * create by: iizvv
-      * description: 更新可用设备量
-      * create time: 2019-08-21 12:48
+     * create by: iizvv
+     * description: 更新IPA
+     * create time: 2019-07-04 14:38
 
-      * @return int
-      */
-    @Update("UPDATE package SET total_device = download_device+#{totalDevice} WHERE id = #{id}")
-    int updateTotalDeviceById(long id, long totalDevice);
+     * @return int
+     */
+    @Update("UPDATE package SET name = #{name}, icon = #{icon}, version = #{version}, " +
+            "build_version = #{buildVersion}, mini_version = #{miniVersion}, " +
+            "link = #{link} WHERE id = #{id}")
+    int updatePackage(Package pck);
 
     /**
+     * create by: iizvv
+     * description: 更新简介
+     * create time: 2019-09-02 19:05
+     * 
+     
+     * @return int
+     */
+    @Update("UPDATE package SET summary=#{summary} WHERE id=#{id}")
+    int updatePackageSummaryById(long id, String summary);
+
+    /**
+     * create by: iizvv
+     * description: 更新预览图
+     * create time: 2019-09-02 19:07
+     * 
+     
+     * @return int
+     */
+    @Update("UPDATE package SET imgs=#{imgs} WHERE id=#{id}")
+    int updatePackageImgsById(long id, String imgs);
+    
+    /**
       * create by: iizvv
-      * description: 重置可用设备量
+      * description: 设置可用设备量
       * create time: 2019-08-21 19:41
       
       * @return int
       */
-    @Update("UPDATE package SET total_device = #{totalDevice} WHERE id = #{id}")
-    int resetTotalDeviceById(long id, long totalDevice);
+    @Update("UPDATE package SET total_device = #{count} WHERE id = #{id}")
+    int updatePackageTotalDeviceById(long id, long count);
+
+    /**
+     * create by: iizvv
+     * description: 更新ipa下载量
+     * create time: 2019-07-23 09:50
+
+     * @return int
+     */
+    @Update("UPDATE package SET download_count = download_count+1 WHERE id = #{id}")
+    int updatePackageDownloadCountById(long id);
+
+    /**
+     * create by: iizvv
+     * description: 更新ipa可用设备量
+     * create time: 2019-09-02 17:45
+
+     * @return int
+     */
+    @Update("UPDATE package SET download_device = download_device+1 WHERE id = #{id} AND download_device<=total_device")
+    int updatePackageDeviceCountById(long id);
 
     /**
      * create by: iizvv
      * description: 更新证书信息
      * create time: 2019-07-04 11:36
 
-     * @return void
+     * @return int
      */
     @Update("UPDATE package SET mobileconfig = #{mobileconfig} WHERE id=#{id}")
-    void updateMobileconfigById(String mobileconfig, long id);
+    int updatePackageMobileconfigById(long id, String mobileconfig);
 
     /**
       * create by: iizvv
@@ -64,39 +108,8 @@ public interface PackageDao {
       * @return int
       */
     @Delete("DELETE FROM package WHERE id=#{id}")
-    int deleteById(long id);
+    int deletePackageById(long id);
 
-    /**
-      * create by: iizvv
-      * description: 更新IPA
-      * create time: 2019-07-04 14:38
-
-      * @return int
-      */
-    @Update("UPDATE package SET name = #{name}, icon = #{icon}, version = #{version}, " +
-            "build_version = #{buildVersion}, mini_version = #{miniVersion}, " +
-            "link = #{link} WHERE id = #{id}")
-    int updatePackage(Package pck);
-
-    /**
-      * create by: iizvv
-      * description: 更新ipa下载量
-      * create time: 2019-07-23 09:50
-
-      * @return int
-      */
-    @Update("UPDATE package SET download_count = download_count+1 WHERE id = #{id}")
-    int updatePackageDownloadCountById(long id);
-
-    /**
-      * create by: iizvv
-      * description: 更新ipa可用设备量
-      * create time: 2019-09-02 17:45
-
-      * @return int
-      */
-    @Update("UPDATE package SET download_count = download_count+1 WHERE id = #{id}")
-    int updatePackageDeviceCountById(long id);
 
     /**
       * create by: iizvv
@@ -108,8 +121,6 @@ public interface PackageDao {
     @Select("SELECT * FROM package WHERE id=#{id}")
     Package getPackageById(long id);
 
-    @Select("SELECT * FROM package WHERE bundle_identifier=#{bundleIdentifier} AND user_id=#{userId}")
-    Package getPackageByBundleIdentifier(String bundleIdentifier, long userId);
 
     /**
       * create by: iizvv
@@ -119,7 +130,7 @@ public interface PackageDao {
       * @return String
       */
     @Select("SELECT link FROM package WHERE id=#{id}")
-    String getPackageLinkById(String id);
+    String getPackageLinkById(long id);
 
     /**
       * create by: iizvv
