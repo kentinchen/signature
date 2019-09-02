@@ -34,7 +34,10 @@ public class Apple {
   private String bundleIds;
 
   @ApiModelProperty(value = "添加时间")
-  private long create_time;
+  private long createTime;
+
+  @ApiModelProperty(value = "当前账号是否可用")
+  private boolean isUse;
 
 
   public long getId() {
@@ -45,7 +48,6 @@ public class Apple {
     this.id = id;
   }
 
-
   public String getAccount() {
     return account;
   }
@@ -53,7 +55,6 @@ public class Apple {
   public void setAccount(String account) {
     this.account = account;
   }
-
 
   public long getCount() {
     return count;
@@ -63,7 +64,6 @@ public class Apple {
     this.count = count;
   }
 
-
   public String getP8() {
     return p8;
   }
@@ -72,7 +72,6 @@ public class Apple {
     this.p8 = p8;
   }
 
-
   public String getIss() {
     return iss;
   }
@@ -80,7 +79,6 @@ public class Apple {
   public void setIss(String iss) {
     this.iss = iss;
   }
-
 
   public String getKid() {
     return kid;
@@ -91,7 +89,7 @@ public class Apple {
   }
 
   public String getP12() {
-    return  p12;
+    return p12;
   }
 
   public void setP12(String p12) {
@@ -114,12 +112,20 @@ public class Apple {
     this.bundleIds = bundleIds;
   }
 
-  public long getCreate_time() {
-    return create_time;
+  public long getCreateTime() {
+    return createTime;
   }
 
-  public void setCreate_time(long create_time) {
-    this.create_time = create_time;
+  public void setCreateTime(long createTime) {
+    this.createTime = createTime;
+  }
+
+  public boolean isUse() {
+    return isUse;
+  }
+
+  public void setUse(boolean use) {
+    isUse = use;
   }
 
   @Override
@@ -134,7 +140,8 @@ public class Apple {
             ", p12='" + p12 + '\'' +
             ", cerId='" + cerId + '\'' +
             ", bundleIds='" + bundleIds + '\'' +
-            ", create_time=" + create_time +
+            ", createTime=" + createTime +
+            ", isUse=" + isUse +
             '}';
   }
 }

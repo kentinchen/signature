@@ -18,6 +18,13 @@ public class Device {
   @ApiModelProperty(value = "设备在开发者后台id")
   private String deviceId;
 
+  @ApiModelProperty(value = "当前设备是否可用")
+  private boolean isUse;
+
+  @ApiModelProperty(value = "创建时间")
+  private long createTime;
+
+
   public long getId() {
     return id;
   }
@@ -26,7 +33,6 @@ public class Device {
     this.id = id;
   }
 
-
   public String getUdid() {
     return udid;
   }
@@ -34,7 +40,6 @@ public class Device {
   public void setUdid(String udid) {
     this.udid = udid;
   }
-
 
   public long getAppleId() {
     return appleId;
@@ -52,13 +57,31 @@ public class Device {
     this.deviceId = deviceId;
   }
 
+  public boolean isUse() {
+    return isUse;
+  }
+
+  public void setUse(boolean use) {
+    isUse = use;
+  }
+
+  public long getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(long createTime) {
+    this.createTime = createTime;
+  }
+
   @Override
   public String toString() {
     return "Device{" +
             "id=" + id +
             ", udid='" + udid + '\'' +
             ", appleId=" + appleId +
-            ", device_id='" + deviceId + '\'' +
+            ", deviceId='" + deviceId + '\'' +
+            ", isUse=" + isUse +
+            ", createTime=" + createTime +
             '}';
   }
 }

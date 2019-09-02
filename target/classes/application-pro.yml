@@ -3,7 +3,6 @@ spring:
     name: signature
     url: jdbc:mysql://localhost:3306/signature
     username: root
-#    password: Aa123456
     password:  dongAI1221
     type: com.mysql.cj.jdbc.MysqlDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver

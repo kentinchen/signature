@@ -36,9 +36,12 @@ public class ITSUtils {
         Map header = getToken(authorize.getP8(), authorize.getIss(), authorize.getKid());
         Map res = new HashMap();
         String url = "https://api.appstoreconnect.apple.com/v1/devices";
+        Map body = new HashMap();
+        body.put("limit", 200);
         String result = HttpRequest.get(url).
-                addHeaders(header).
+                addHeaders(header).form(body).
                 execute().body();
+        System.out.println(result);
         Map map = JSON.parseObject(result, Map.class);
         JSONArray data = (JSONArray)map.get("data");
         List devices = new LinkedList();
@@ -89,6 +92,7 @@ public class ITSUtils {
         String result = HttpRequest.post(url).
                 addHeaders(getToken(authorize.getP8(), authorize.getIss(), authorize.getKid())).
                 body(JSON.toJSONString(data)).execute().body();
+        System.out.println("添加账号执行完成: " + result);
         Map map = JSON.parseObject(result, Map.class);
         Map data1 = (Map) map.get("data");
         String id = (String)data1.get("id");
@@ -325,7 +329,7 @@ public class ITSUtils {
                 claim("exp", System.currentTimeMillis()/1000 +  60 * 10).
                 setAudience("appstoreconnect-v1").
                 signWith(SignatureAlgorithm.ES256, new ECPrivateKeyImpl(encodeKey)).
-                compact();;
+                compact();
         Map map = new HashMap();
         map.put("Content-Type", "application/json");
         map.put("Authorization", "Bearer " + token);

@@ -125,8 +125,8 @@ public class UDIDController {
         System.out.println("获取ipa信息");
         Package pck = packageService.getPackageById(id);
         if (pck!=null) {
-            // 判断当前ipa是否还有可下载次数
-            if (pck.getTotalCount() == 0 || pck.getCount()<pck.getTotalCount()) {
+            // 判断当前ipa是否还有可继续下载
+            if (pck.getDownloadDevice()<=pck.getTotalDevice()) {
                 System.out.println("开始寻找可用帐号");
                 Device device = deviceService.getDeviceByUDID(udid);
                 if (device==null) {
@@ -172,7 +172,9 @@ public class UDIDController {
         // 发现可用账号
         String key = null;
         String devId = null;
+        System.out.println("开始添加设备");
         try {
+
             devId = ITSUtils.insertDevice(udid, new Authorize(apple.getP8(), apple.getIss(), apple.getKid()));
         } catch (InvalidKeyException e) {
             e.printStackTrace();

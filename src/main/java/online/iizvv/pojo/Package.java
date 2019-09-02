@@ -15,8 +15,32 @@ public class Package {
   @ApiModelProperty(value = "图标")
   private String icon;
 
+  @ApiModelProperty(value = "预览图")
+  private String imgs;
+
+  @ApiModelProperty(value = "用户id")
+  private long userId;
+
   @ApiModelProperty(value = "版本")
   private String version;
+
+  @ApiModelProperty(value = "安装包id")
+  private String bundleIdentifier;
+
+  @ApiModelProperty(value = "下载地址")
+  private String link;
+
+  @ApiModelProperty(value = "获取UDID证书地址")
+  private String mobileconfig;
+
+  @ApiModelProperty(value = "下载次数")
+  private long downloadCount;
+
+  @ApiModelProperty(value = "下载设备数量")
+  private long downloadDevice;
+
+  @ApiModelProperty(value = "总可用设备量")
+  private long totalDevice;
 
   @ApiModelProperty(value = "编译版本号")
   private String buildVersion;
@@ -24,26 +48,12 @@ public class Package {
   @ApiModelProperty(value = "最小支持版本")
   private String miniVersion;
 
-  @ApiModelProperty(value = "安装包id")
-  private String bundleIdentifier;
-
   @ApiModelProperty(value = "简介")
   private String summary;
 
-  @ApiModelProperty(value = "获取UDID证书地址")
-  private String mobileconfig;
+  @ApiModelProperty(value = "创建时间")
+  private long createTime;
 
-  @ApiModelProperty(value = "下载地址")
-  private String link;
-
-  @ApiModelProperty(value = "已有下载量")
-  private long count;
-
-  @ApiModelProperty(value = "可用下载量")
-  private long totalCount;
-
-  @ApiModelProperty(value = "用户id")
-  private long userId;
 
   public long getId() {
     return id;
@@ -53,7 +63,6 @@ public class Package {
     this.id = id;
   }
 
-
   public String getName() {
     return name;
   }
@@ -61,7 +70,6 @@ public class Package {
   public void setName(String name) {
     this.name = name;
   }
-
 
   public String getIcon() {
     return icon;
@@ -71,6 +79,21 @@ public class Package {
     this.icon = icon;
   }
 
+  public String getImgs() {
+    return imgs;
+  }
+
+  public void setImgs(String imgs) {
+    this.imgs = imgs;
+  }
+
+  public long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(long userId) {
+    this.userId = userId;
+  }
 
   public String getVersion() {
     return version;
@@ -80,33 +103,6 @@ public class Package {
     this.version = version;
   }
 
-
-  public String getBuildVersion() {
-    return buildVersion;
-  }
-
-  public void setBuildVersion(String buildVersion) {
-    this.buildVersion = buildVersion;
-  }
-
-
-  public String getMiniVersion() {
-    return miniVersion;
-  }
-
-  public void setMiniVersion(String miniVersion) {
-    this.miniVersion = miniVersion;
-  }
-
-
-  public String getSummary() {
-    return summary;
-  }
-
-  public void setSummary(String summary) {
-    this.summary = summary;
-  }
-
   public String getBundleIdentifier() {
     return bundleIdentifier;
   }
@@ -114,7 +110,6 @@ public class Package {
   public void setBundleIdentifier(String bundleIdentifier) {
     this.bundleIdentifier = bundleIdentifier;
   }
-
 
   public String getLink() {
     return link;
@@ -132,28 +127,60 @@ public class Package {
     this.mobileconfig = mobileconfig;
   }
 
-  public long getCount() {
-    return count;
+  public long getDownloadCount() {
+    return downloadCount;
   }
 
-  public void setCount(long count) {
-    this.count = count;
+  public void setDownloadCount(long downloadCount) {
+    this.downloadCount = downloadCount;
   }
 
-  public long getTotalCount() {
-    return totalCount;
+  public long getDownloadDevice() {
+    return downloadDevice;
   }
 
-  public void setTotalCount(long totalCount) {
-    this.totalCount = totalCount;
+  public void setDownloadDevice(long downloadDevice) {
+    this.downloadDevice = downloadDevice;
   }
 
-  public long getUserId() {
-    return userId;
+  public long getTotalDevice() {
+    return totalDevice;
   }
 
-  public void setUserId(long userId) {
-    this.userId = userId;
+  public void setTotalDevice(long totalDevice) {
+    this.totalDevice = totalDevice;
+  }
+
+  public String getBuildVersion() {
+    return buildVersion;
+  }
+
+  public void setBuildVersion(String buildVersion) {
+    this.buildVersion = buildVersion;
+  }
+
+  public String getMiniVersion() {
+    return miniVersion;
+  }
+
+  public void setMiniVersion(String miniVersion) {
+    this.miniVersion = miniVersion;
+  }
+
+  public String getSummary() {
+    return summary;
+  }
+
+  public void setSummary(String summary) {
+    this.summary = summary;
+  }
+
+  public long getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(long createTime) {
+    this.createTime = createTime;
   }
 
   @Override
@@ -162,14 +189,19 @@ public class Package {
             "id=" + id +
             ", name='" + name + '\'' +
             ", icon='" + icon + '\'' +
+            ", imgs='" + imgs + '\'' +
+            ", userId=" + userId +
             ", version='" + version + '\'' +
+            ", bundleIdentifier='" + bundleIdentifier + '\'' +
+            ", link='" + link + '\'' +
+            ", mobileconfig='" + mobileconfig + '\'' +
+            ", downloadCount=" + downloadCount +
+            ", downloadDevice=" + downloadDevice +
+            ", totalDevice=" + totalDevice +
             ", buildVersion='" + buildVersion + '\'' +
             ", miniVersion='" + miniVersion + '\'' +
-            ", bundleIdentifier='" + bundleIdentifier + '\'' +
             ", summary='" + summary + '\'' +
-            ", mobileconfig='" + mobileconfig + '\'' +
-            ", link='" + link + '\'' +
-            ", count=" + count +
+            ", createTime=" + createTime +
             '}';
   }
 }

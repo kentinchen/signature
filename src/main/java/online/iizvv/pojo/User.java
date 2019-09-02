@@ -18,10 +18,10 @@ public class User {
     private long level;
     @ApiModelProperty(value = "用户名")
     private String username;
-//    @ApiModelProperty(value = "密码")
-//    private String password;
     @ApiModelProperty(value = "邮箱")
     private String email;
+    @ApiModelProperty(value = "创建时间")
+    private long creatTime;
 
     public long getId() {
         return id;
@@ -50,15 +50,6 @@ public class User {
     }
 
 
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
-
-
     public String getEmail() {
         return email;
     }
@@ -67,4 +58,23 @@ public class User {
         this.email = email;
     }
 
+
+    public long getCreatTime() {
+        return creatTime;
+    }
+
+    public void setCreatTime(long creatTime) {
+        this.creatTime = creatTime;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", level=" + level +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", creatTime=" + creatTime +
+                '}';
+    }
 }

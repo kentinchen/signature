@@ -28,23 +28,23 @@ public interface PackageDao {
 
     /**
       * create by: iizvv
-      * description: 更新可用下载次数
+      * description: 更新可用设备量
       * create time: 2019-08-21 12:48
 
       * @return int
       */
-    @Update("UPDATE package SET total_count = total_count+#{totalCount} WHERE id = #{id}")
-    int updateTotalCountById(long id, long totalCount);
+    @Update("UPDATE package SET total_device = download_device+#{totalDevice} WHERE id = #{id}")
+    int updateTotalDeviceById(long id, long totalDevice);
 
     /**
       * create by: iizvv
-      * description: 重置可用下载次数
+      * description: 重置可用设备量
       * create time: 2019-08-21 19:41
       
       * @return int
       */
-    @Update("UPDATE package SET total_count = #{totalCount} WHERE id = #{id}")
-    int resetTotalCountById(long id, long totalCount);
+    @Update("UPDATE package SET total_device = #{totalDevice} WHERE id = #{id}")
+    int resetTotalDeviceById(long id, long totalDevice);
 
     /**
      * create by: iizvv
@@ -85,8 +85,18 @@ public interface PackageDao {
 
       * @return int
       */
-    @Update("UPDATE package SET count = count+1 WHERE id = #{id}")
-    int updatePackageCountById(long id);
+    @Update("UPDATE package SET download_count = download_count+1 WHERE id = #{id}")
+    int updatePackageDownloadCountById(long id);
+
+    /**
+      * create by: iizvv
+      * description: 更新ipa可用设备量
+      * create time: 2019-09-02 17:45
+
+      * @return int
+      */
+    @Update("UPDATE package SET download_count = download_count+1 WHERE id = #{id}")
+    int updatePackageDeviceCountById(long id);
 
     /**
       * create by: iizvv
