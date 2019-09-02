@@ -1,0 +1,26 @@
+create table if not exists signature.package
+(
+	id int auto_increment
+		primary key,
+	name varchar(30) not null comment '包名',
+	icon varchar(255) null comment '图标',
+	imgs varchar(255) null comment '预览图',
+	user_id int null comment '用户id',
+	version varchar(30) null comment '版本',
+	bundle_identifier varchar(100) not null comment '安装包id',
+	link varchar(100) not null comment '下载地址',
+	mobileconfig varchar(255) null comment '获取UDID证书名称',
+	download_count int default 0 not null comment '已有下载次数',
+	download_device int default 0 not null comment '已使用设备量',
+	total_device int default 0 not null comment '总可用设备量',
+	build_version varchar(30) not null comment '编译版本号',
+	mini_version varchar(30) not null comment '最小支持版本',
+	summary text null comment '简介',
+	create_time timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
+	constraint package_url_uindex
+		unique (link),
+	constraint package_user_id_fk
+		foreign key (user_id) references signature.user (id)
+)
+comment '安装包';
+
