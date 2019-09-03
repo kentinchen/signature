@@ -3,26 +3,25 @@ package online.iizvv.controls;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpUtil;
 import com.dd.plist.*;
-import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import online.iizvv.core.config.Config;
 import online.iizvv.pojo.Apple;
 import online.iizvv.pojo.Authorize;
 import online.iizvv.pojo.Device;
 import online.iizvv.pojo.Package;
+import online.iizvv.server.WebSocketServer;
 import online.iizvv.service.AppleServiceImpl;
 import online.iizvv.service.DeviceServiceImpl;
 import online.iizvv.service.PackageServiceImpl;
-import online.iizvv.core.config.Config;
-import online.iizvv.utils.FileManager;
-import online.iizvv.utils.ITSUtils;
-import online.iizvv.utils.JwtHelper;
-import online.iizvv.utils.Shell;
+import online.iizvv.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,10 +61,11 @@ public class UDIDController {
             @ApiImplicitParam(name = "id", value = "IPA id", required = true),
     })
     @PostMapping("/getUDID")
-    public void getUDID(HttpServletResponse response, HttpServletRequest request, long id) throws UnsupportedEncodingException {
+    public void getUDID(HttpServletResponse response, HttpServletRequest request, String encryptHex) throws UnsupportedEncodingException {
         response.setContentType("text/html;charset=UTF-8");
         long begin = System.currentTimeMillis();
         String ua = request.getHeader("User-Agent");
+        long id = AESUtils.decryptStr(encryptHex);
         System.out.println("当前时间: " + DateUtil.now() + "\n当前产品id： " + id + "\n当前用户User-Agent: " + ua);
         String itemService = null;
         try {
@@ -89,14 +89,14 @@ public class UDIDController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String redirect = Config.redirect + "/detail/" + id;
+        String redirect = Config.redirect + "/app/" + id;
         if (itemService != null) {
             if (itemService.equalsIgnoreCase("1")) {
                 System.out.println("没有找到合适的账号");
-                redirect+="?style=1";
+                redirect+="?message=没有找到合适的账号";
             }else if (itemService.equalsIgnoreCase("2")) {
                 System.out.println("当前ipa已无下载次数");
-                redirect+="?style=2";
+                redirect+="?message=当前ipa已无下载次数";
             }else {
                 String encode = "itms-services://?action=download-manifest&url=" + Config.aliTempHost + "/" + itemService;
                 redirect += "?itemService=" + URLEncoder.encode(encode, "UTF-8" );
@@ -110,6 +110,8 @@ public class UDIDController {
         response.setHeader("Location", redirect);
         response.setStatus(301);
     }
+
+
 
     /**
      * create by: iizvv
@@ -125,7 +127,7 @@ public class UDIDController {
         Package pck = packageService.getPackageById(id);
         if (pck!=null) {
             // 判断当前ipa是否还有可继续下载
-            if (pck.getDownloadDevice()<=pck.getTotalDevice()) {
+            if (pck.getUseDevice()<=pck.getTotalDevice()) {
                 System.out.println("开始寻找可用帐号");
                 Device device = deviceService.getDeviceByUDID(udid);
                 if (device==null) {
@@ -139,7 +141,7 @@ public class UDIDController {
                     }else {
                         System.out.println("找到合适帐号， 开始添加设备");
                         // 找到合适的帐号
-                        String resignature = insertDevice(udid, apple, pck.getLink());
+                        String resignature = insertDevice(id, udid, apple, pck.getLink());
                         itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
                     }
                 }else {
@@ -167,22 +169,26 @@ public class UDIDController {
 
      * @return String
      */
-    String insertDevice(String udid, Apple apple, String link) {
+    String insertDevice(long id, String udid, Apple apple, String link) {
         // 发现可用账号
         String key = null;
         String devId = null;
         System.out.println("开始添加设备");
-        try {
-
-            devId = ITSUtils.insertDevice(udid, new Authorize(apple.getP8(), apple.getIss(), apple.getKid()));
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        }
-        if (devId!=null) {
-            int i = deviceService.insertDevice(udid, apple.getId(), devId);
-            if (i==1) {
-                appleService.updateDevicesCount(apple.getId());
-                key = resignature(apple, devId, link);
+        boolean b = packageService.updatePackageDeviceCountById(id);
+        if (b) {
+            try {
+                devId = ITSUtils.insertDevice(udid, new Authorize(apple.getP8(), apple.getIss(), apple.getKid()));
+            } catch (InvalidKeyException e) {
+                e.printStackTrace();
+            }
+            if (devId!=null) {
+                int i = deviceService.insertDevice(udid, apple.getId(), devId);
+                if (i==1) {
+                    appleService.updateDevicesCount(apple.getId());
+                    key = resignature(apple, devId, link);
+                }
+            }else {
+                packageService.rowBackPackageDeviceCountById(id);
             }
         }
         return key;
@@ -309,7 +315,7 @@ public class UDIDController {
                 "    </array>  \n" +
                 "</dict>  \n" +
                 "</plist> ";
-        String filePath = "itemService_" + UUID.randomUUID().toString().replace("-", "") +".plist";
+        String filePath = "itemService_" + IdUtil.simpleUUID() +".plist";
         FileWriter writer = new FileWriter(filePath);
         writer.write(plist);
         String itemService = uploadItemService(writer.getFile());
@@ -325,9 +331,24 @@ public class UDIDController {
      * @return plist名称
      */
     String uploadItemService(File file) {
-        String objName = UUID.randomUUID().toString().replace("-", "")+".plist";
+        String objName = IdUtil.simpleUUID()+".plist";
         fileManager.uploadFile(file, objName);
         return objName;
+    }
+
+    /**
+      * create by: iizvv
+      * description: 签名完成
+      * create time: 2019-09-03 17:46
+
+      * @return void
+      */
+    void pushToWebSocket(@PathVariable String socketId) {
+        try {
+            WebSocketServer.sendInfo("OK",socketId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -110,6 +110,18 @@ public class PackageServiceImpl {
     }
 
     /**
+      * create by: iizvv
+      * description: 设备添加失败后， 将已使用设备量-1
+      * create time: 2019-09-03 12:23
+
+      * @return boolean
+      */
+    public boolean rowBackPackageDeviceCountById(long id) {
+        int aPackage = packageDao.rowBackPackageDeviceCountById(id);
+        return aPackage>0;
+    }
+
+    /**
      * create by: iizvv
      * description: 更新证书信息
      * create time: 2019-07-04 11:36

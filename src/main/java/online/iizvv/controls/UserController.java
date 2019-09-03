@@ -108,7 +108,7 @@ public class UserController {
 
     @ApiOperation(value="/getAllReviewUser", notes="待审核用户列表", produces = "application/json")
     @GetMapping("/getAllReviewUser")
-    public Result getAllReviewUser(HttpServletRequest request) {
+    public Result <List<User>>getAllReviewUser(HttpServletRequest request) {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
@@ -126,7 +126,7 @@ public class UserController {
 
     @ApiOperation(value="/getAllUser", notes="待审核用户列表", produces = "application/json")
     @GetMapping("/getAllUser")
-    public Result getAllUser(HttpServletRequest request) {
+    public Result <List<User>>getAllUser(HttpServletRequest request) {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
@@ -169,7 +169,7 @@ public class UserController {
 
     @ApiOperation(value="/getUserInfo", notes="获取用户信息", produces = "application/json")
     @GetMapping("/getUserInfo")
-    public Result getUserInfo(HttpServletRequest request) {
+    public Result <User>getUserInfo(HttpServletRequest request) {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);

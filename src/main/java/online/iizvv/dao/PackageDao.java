@@ -87,8 +87,18 @@ public interface PackageDao {
 
      * @return int
      */
-    @Update("UPDATE package SET download_device = download_device+1 WHERE id = #{id} AND download_device<=total_device")
+    @Update("UPDATE package SET use_device = use_device+1 WHERE id = #{id} AND use_device<=total_device")
     int updatePackageDeviceCountById(long id);
+
+    /**
+      * create by: iizvv
+      * description: 设备添加失败后， 将已使用设备量-1
+      * create time: 2019-09-03 12:14
+
+      * @return
+      */
+    @Update("UPDATE package SET use_device = use_device-1 WHERE id = #{id}")
+    int rowBackPackageDeviceCountById(long id);
 
     /**
      * create by: iizvv

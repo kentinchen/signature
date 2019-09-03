@@ -51,4 +51,7 @@ public class Config {
     /** 请求头键 */
     public final static String Authorization = "Authorization";
 
+    /** 加密key */
+    public final static String aesKey = "$%6AA^123*^%@!@$";
+
 }

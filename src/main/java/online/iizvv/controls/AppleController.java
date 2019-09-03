@@ -1,6 +1,6 @@
 package online.iizvv.controls;
 
-import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.IdUtil;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -129,7 +129,7 @@ public class AppleController {
     @PostMapping("/uploadP12")
     public Result uploadP12(long id, MultipartFile file) throws IOException {
         Result result = new Result();
-        String p12 = UUID.randomUUID().toString().replace("-", "") + ".p12";
+        String p12 = IdUtil.simpleUUID() + ".p12";
         if (file.getContentType().equalsIgnoreCase("application/x-pkcs12")) {
             // p12文件
             uploadP12File(file.getBytes(), p12);

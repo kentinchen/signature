@@ -3,6 +3,8 @@ package online.iizvv.pojo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+
 @ApiModel(value = "设备对象")
 public class Device {
 
@@ -22,7 +24,7 @@ public class Device {
   private boolean isUse;
 
   @ApiModelProperty(value = "创建时间")
-  private long createTime;
+  private Date createTime;
 
 
   public long getId() {
@@ -65,11 +67,11 @@ public class Device {
     isUse = use;
   }
 
-  public long getCreateTime() {
+  public Date getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(long createTime) {
+  public void setCreateTime(Date createTime) {
     this.createTime = createTime;
   }
 

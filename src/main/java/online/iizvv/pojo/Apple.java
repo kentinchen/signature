@@ -3,6 +3,8 @@ package online.iizvv.pojo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+
 @ApiModel(value = "开发者账号对象")
 public class Apple {
 
@@ -34,7 +36,7 @@ public class Apple {
   private String bundleIds;
 
   @ApiModelProperty(value = "添加时间")
-  private long createTime;
+  private Date createTime;
 
   @ApiModelProperty(value = "当前账号是否可用")
   private boolean isUse;
@@ -112,11 +114,11 @@ public class Apple {
     this.bundleIds = bundleIds;
   }
 
-  public long getCreateTime() {
+  public Date getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(long createTime) {
+  public void setCreateTime(Date createTime) {
     this.createTime = createTime;
   }
 

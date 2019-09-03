@@ -3,6 +3,8 @@ package online.iizvv.pojo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+
 @ApiModel(value = "安装包对象")
 public class Package {
 
@@ -36,8 +38,8 @@ public class Package {
   @ApiModelProperty(value = "下载次数")
   private long downloadCount;
 
-  @ApiModelProperty(value = "下载设备数量")
-  private long downloadDevice;
+  @ApiModelProperty(value = "已使用设备量")
+  private long useDevice;
 
   @ApiModelProperty(value = "总可用设备量")
   private long totalDevice;
@@ -52,7 +54,7 @@ public class Package {
   private String summary;
 
   @ApiModelProperty(value = "创建时间")
-  private long createTime;
+  private Date createTime;
 
 
   public long getId() {
@@ -135,12 +137,12 @@ public class Package {
     this.downloadCount = downloadCount;
   }
 
-  public long getDownloadDevice() {
-    return downloadDevice;
+  public long getUseDevice() {
+    return useDevice;
   }
 
-  public void setDownloadDevice(long downloadDevice) {
-    this.downloadDevice = downloadDevice;
+  public void setUseDevice(long useDevice) {
+    this.useDevice = useDevice;
   }
 
   public long getTotalDevice() {
@@ -175,11 +177,11 @@ public class Package {
     this.summary = summary;
   }
 
-  public long getCreateTime() {
+  public Date getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(long createTime) {
+  public void setCreateTime(Date createTime) {
     this.createTime = createTime;
   }
 
@@ -196,7 +198,7 @@ public class Package {
             ", link='" + link + '\'' +
             ", mobileconfig='" + mobileconfig + '\'' +
             ", downloadCount=" + downloadCount +
-            ", downloadDevice=" + downloadDevice +
+            ", useDevice=" + useDevice +
             ", totalDevice=" + totalDevice +
             ", buildVersion='" + buildVersion + '\'' +
             ", miniVersion='" + miniVersion + '\'' +

@@ -3,6 +3,8 @@ package online.iizvv.pojo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+
 /**
  * @author ：iizvv
  * @date ：Created in 2019-08-22 12:57
@@ -21,7 +23,7 @@ public class User {
     @ApiModelProperty(value = "邮箱")
     private String email;
     @ApiModelProperty(value = "创建时间")
-    private long creatTime;
+    private Date createTime;
 
     public long getId() {
         return id;
@@ -59,12 +61,12 @@ public class User {
     }
 
 
-    public long getCreatTime() {
-        return creatTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatTime(long creatTime) {
-        this.creatTime = creatTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override
@@ -74,7 +76,7 @@ public class User {
                 ", level=" + level +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", creatTime=" + creatTime +
+                ", createTime=" + createTime +
                 '}';
     }
 }
