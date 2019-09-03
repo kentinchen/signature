@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 
-@ServerEndpoint("/websocket/{sid}")
+@ServerEndpoint("/websocket/{socketId}")
 @Component
 public class WebSocketServer {
 
@@ -32,16 +32,16 @@ public class WebSocketServer {
     private Session session;
 
     //接收sid
-    private String sid="";
+    private String socketId="";
     /**
      * 连接建立成功调用的方法*/
     @OnOpen
-    public void onOpen(Session session, @PathParam("sid") String sid) {
+    public void onOpen(Session session, @PathParam("socketId") String socketId) {
         this.session = session;
         webSocketSet.add(this);     //加入set中
         addOnlineCount();           //在线数加1
-        log.info("有新窗口开始监听:"+sid+",当前在线人数为" + getOnlineCount());
-        this.sid=sid;
+        log.info("有新窗口开始监听:"+socketId+",当前在线人数为" + getOnlineCount());
+        this.socketId=socketId;
         try {
             sendMessage("连接成功");
         } catch (IOException e) {
@@ -65,7 +65,7 @@ public class WebSocketServer {
      * @param message 客户端发送过来的消息*/
     @OnMessage
     public void onMessage(String message, Session session) {
-        log.info("收到来自窗口"+sid+"的信息:"+message);
+        log.info("收到来自窗口"+socketId+"的信息:"+message);
         //群发消息
         for (WebSocketServer item : webSocketSet) {
             try {
@@ -97,7 +97,7 @@ public class WebSocketServer {
     /**
      * 群发自定义消息
      * */
-    public static void sendInfo(String message,@PathParam("sid") String socketId) throws IOException {
+    public static void sendInfo(String message,@PathParam("socketId") String socketId) throws IOException {
         if (onlineCount>0){
             log.info("推送消息到窗口"+socketId+"，推送内容:"+message);
             for (WebSocketServer item : webSocketSet) {
@@ -105,7 +105,7 @@ public class WebSocketServer {
                     //这里可以设定只推送给这个sid的，为null则全部推送
                     if(socketId==null) {
                         item.sendMessage(message);
-                    }else if(item.sid.equals(socketId)){
+                    }else if(item.socketId.equals(socketId)){
                         item.sendMessage(message);
                     }
                 } catch (IOException e) {

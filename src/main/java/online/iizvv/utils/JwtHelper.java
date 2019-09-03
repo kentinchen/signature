@@ -18,7 +18,7 @@ public class JwtHelper {
     /**
      * token 过期时间, 单位: 秒. 这个值表示 30 天
      */
-    private static final long TOKEN_EXPIRED_TIME = 30 * 24 * 60 * 60 * 1000;
+    private static final long TOKEN_EXPIRED_TIME = (30 * (24 * (60 * 60))) * 1000;
 
     /**
      * jwt 加密解密密钥
@@ -30,11 +30,12 @@ public class JwtHelper {
      * 创建JWT
      */
     public static String createJWT(Map<String, Object> claims, Long time) {
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256; //指定签名的时候使用的签名算法，也就是header那部分，jjwt已经将这部分内容封装好了。
+        //指定签名的时候使用的签名算法，也就是header那部分，jjwt已经将这部分内容封装好了。
+        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         Date now = new Date(System.currentTimeMillis());
-
         SecretKey secretKey = generalKey();
-        long nowMillis = System.currentTimeMillis();//生成JWT的时间
+        //生成JWT的时间
+        long nowMillis = System.currentTimeMillis();
         //下面就是在为payload添加各种标准声明和私有声明了
         JwtBuilder builder = Jwts.builder() //这里其实就是new一个JwtBuilder，设置jwt的body
                 .setClaims(claims)          //如果有私有声明，一定要先设置这个自己创建的私有的声明，这个是给builder的claim赋值，一旦写在标准的声明赋值之后，就是覆盖了那些标准的声明的
@@ -44,7 +45,8 @@ public class JwtHelper {
         if (time >= 0) {
             long expMillis = nowMillis + time;
             Date exp = new Date(expMillis);
-            builder.setExpiration(exp);     //设置过期时间
+            // 设置过期时间
+            builder.setExpiration(exp);
         }
         return builder.compact();
     }

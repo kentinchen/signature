@@ -22,10 +22,10 @@ public class AESUtils {
 
       * @return str
       */
-    public static String encryptHex(long x) {
+    public static String encryptHex(String hex) {
         SymmetricCrypto aes = new SymmetricCrypto(SymmetricAlgorithm.AES, Config.aesKey.getBytes());
         //加密为16进制表示
-        String encryptHex = aes.encryptHex(String.valueOf(x));
+        String encryptHex = aes.encryptHex(hex);
         System.out.println(encryptHex);
         return encryptHex;
     }

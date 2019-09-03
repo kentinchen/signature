@@ -147,7 +147,11 @@ public class PackageController {
     @PostMapping("/updatePackageImgsById")
     public Result updatePackageImgsById(long id, String imgs) {
         Result result = new Result();
-        boolean b = packageService.updatePackageImgsById(id, imgs.replace(Config.aliMainHost, ""));
+        if (imgs==null || imgs.isEmpty()) {
+            imgs = "";
+        }
+        imgs = imgs.trim();
+        boolean b = packageService.updatePackageImgsById(id, imgs.replace(Config.aliMainHost + "/", ""));
         if (b) {
             result.setCode(1);
             result.setMsg("预览图上传成功");
@@ -400,7 +404,7 @@ public class PackageController {
                 "        <key>PayloadContent</key>\n" +
                 "        <dict>\n" +
                 "            <key>URL</key>\n" +
-                "            <string>"+ Config.udidURL +"/udid/getUDID?encryptHex="+ AESUtils.encryptHex(id) +"</string> <!--接收数据的接口地址-->\n" +
+                "            <string>"+ Config.udidURL +"/udid/getUDID?encryptHex="+ AESUtils.encryptHex(String.valueOf(id)) +"</string> <!--接收数据的接口地址-->\n" +
                 "            <key>DeviceAttributes</key>\n" +
                 "            <array>\n" +
                 "                <string>SERIAL</string>\n" +

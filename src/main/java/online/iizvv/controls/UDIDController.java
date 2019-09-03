@@ -5,12 +5,14 @@ import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson.JSON;
 import com.dd.plist.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import online.iizvv.core.config.Config;
+import online.iizvv.core.pojo.Result;
 import online.iizvv.pojo.Apple;
 import online.iizvv.pojo.Authorize;
 import online.iizvv.pojo.Device;
@@ -63,11 +65,9 @@ public class UDIDController {
     @PostMapping("/getUDID")
     public void getUDID(HttpServletResponse response, HttpServletRequest request, String encryptHex) throws UnsupportedEncodingException {
         response.setContentType("text/html;charset=UTF-8");
-        long begin = System.currentTimeMillis();
         String ua = request.getHeader("User-Agent");
-        long id = AESUtils.decryptStr(encryptHex);
-        System.out.println("当前时间: " + DateUtil.now() + "\n当前产品id： " + id + "\n当前用户User-Agent: " + ua);
-        String itemService = null;
+        System.out.println("当前时间: " + DateUtil.now() + "\n当前用户User-Agent: " + ua);
+        String udid = null;
         try {
             request.setCharacterEncoding("UTF-8");
             // 获取HTTP请求的输入流
@@ -82,35 +82,57 @@ public class UDIDController {
             }
             String xml = sb.toString().substring(sb.toString().indexOf("<?xml"), sb.toString().indexOf("</plist>")+8);
             NSDictionary parse = (NSDictionary) PropertyListParser.parse(xml.getBytes());
-            String udid = (String) parse.get("UDID").toJavaObject();
+            udid = (String) parse.get("UDID").toJavaObject();
             System.out.println("当前设备udid: " + udid);
-            itemService = analyzeUDID(udid, id);
-            System.out.println("itemService文件名为: " + itemService);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String redirect = Config.redirect + "/app/" + id;
+        String redirect = Config.redirect + "/app/" + encryptHex + "?socketId=" + AESUtils.encryptHex(udid);
+        response.setHeader("Location", redirect);
+        response.setStatus(301);
+        calculate(udid, encryptHex);
+    }
+
+    /**
+     * create by: iizvv
+     * description: 重定向后的耗时操作
+     * create time: 2019-09-03 19:02
+     *
+
+     * @return void
+     */
+    void calculate(String udid, String encryptHex) {
+        long begin = System.currentTimeMillis();
+        Result result = new Result();
+        String itemService = analyzeUDID(udid, AESUtils.decryptStr(encryptHex));
+        System.out.println("itemService文件名为: " + itemService);
         if (itemService != null) {
             if (itemService.equalsIgnoreCase("1")) {
                 System.out.println("没有找到合适的账号");
-                redirect+="?message=没有找到合适的账号";
+                result.setMsg("当前已无可使用帐号");
             }else if (itemService.equalsIgnoreCase("2")) {
                 System.out.println("当前ipa已无下载次数");
-                redirect+="?message=当前ipa已无下载次数";
+                result.setMsg("当前ipa已无下载次数, 请联系联系管理员");
+            }else if (itemService.equalsIgnoreCase("3")){
+                System.out.println("未找到ipa文件");
+                result.setMsg("未找到ipa文件");
             }else {
                 String encode = "itms-services://?action=download-manifest&url=" + Config.aliTempHost + "/" + itemService;
-                redirect += "?itemService=" + URLEncoder.encode(encode, "UTF-8" );
+                try {
+                    result.setCode(1);
+                    result.setData(URLEncoder.encode(encode, "UTF-8" ));
+                    pushToWebSocket(AESUtils.encryptHex(udid), result);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         }else {
             System.out.println("签名失败");
         }
         long end = System.currentTimeMillis();
-        long result = (end - begin)/1000;
-        System.out.println("自动签名执行耗时: " + result + "秒");
-        response.setHeader("Location", redirect);
-        response.setStatus(301);
+        long time = (end - begin)/1000;
+        System.out.println("自动签名执行耗时: " + time + "秒");
     }
-
 
 
     /**
@@ -156,7 +178,7 @@ public class UDIDController {
                 itemService = "2";
             }
         }else {
-            itemService = "2";
+            itemService = "3";
         }
         return itemService;
     }
@@ -343,9 +365,9 @@ public class UDIDController {
 
       * @return void
       */
-    void pushToWebSocket(@PathVariable String socketId) {
+    void pushToWebSocket(@PathVariable String socketId, Result result) {
         try {
-            WebSocketServer.sendInfo("OK",socketId);
+            WebSocketServer.sendInfo(JSON.toJSONString(result),socketId);
         } catch (IOException e) {
             e.printStackTrace();
         }

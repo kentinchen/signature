@@ -1,4 +1,5 @@
 online/iizvv/controls/DeviceController.class
+online/iizvv/controls/UploadFileController.class
 online/iizvv/pojo/Authorize.class
 online/iizvv/dao/UserDao.class
 online/iizvv/core/config/BeanRegisterConfig.class
@@ -11,12 +12,16 @@ online/iizvv/utils/MD5Utils.class
 online/iizvv/utils/Shell.class
 online/iizvv/service/DeviceServiceImpl.class
 online/iizvv/pojo/Device.class
+online/iizvv/core/config/WebSocketConfig.class
 online/iizvv/pojo/User.class
 online/iizvv/service/AppleServiceImpl.class
 online/iizvv/utils/ITSUtils.class
+online/iizvv/server/SaticScheduleTask.class
 online/iizvv/core/pojo/Result.class
+online/iizvv/filter/ApiFilter.class
 online/iizvv/utils/FileManager.class
 online/iizvv/dao/AppleDao.class
+online/iizvv/utils/AESUtils.class
 online/iizvv/dao/PackageDao.class
 online/iizvv/dao/DeviceDao.class
 online/iizvv/server/WebSocketServer.class
