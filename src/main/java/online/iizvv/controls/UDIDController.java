@@ -23,6 +23,7 @@ import online.iizvv.service.DeviceServiceImpl;
 import online.iizvv.service.PackageServiceImpl;
 import online.iizvv.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,38 +90,46 @@ public class UDIDController {
             udid = (String) parse.get("UDID").toJavaObject();
             System.out.println("当前设备udid: " + udid);
             udidMap.put(udid, new Result(2, null, "正在签名中"));
+            calculate(udid, encryptHex);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String redirect = Config.redirect + "/app/" + encryptHex + "?socketId=" + AESUtils.encryptHex(udid);
+        String redirect = /*Config.redirect +*/ "http://192.168.99.239:8080/app/" + encryptHex + "?encryptHex=" + AESUtils.encryptHex(udid);
         response.setHeader("Location", redirect);
         response.setStatus(301);
-        calculate(udid, encryptHex);
     }
 
     @ApiOperation(value="/getSignatureStatus", notes="获取当前IPA签名状态", produces = "application/json")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "udid", value = "设备udid", required = true),
+            @ApiImplicitParam(name = "encryptHex", value = "encryptHex", required = true),
     })
     @PostMapping("/getSignatureStatus")
-    public Result getSignatureStatus(String udid) {
-        Result result = udidMap.get(udid);
+    public Result getSignatureStatus(String encryptHex) {
+        String hexStr = AESUtils.decryptHexStr(encryptHex);
+        System.out.println("查询的设备hex: " + encryptHex + ", 设备UDID: " + hexStr);
+        Result result = udidMap.get(hexStr);
+        if (result == null) {
+            return new Result(3, null, "此次操作已完成， 请勿重复操作");
+        }
         if (result.getCode()!=2) {
-            result = udidMap.remove(udid);
+            result = udidMap.remove(hexStr);
+            System.out.println("删除hex：" + result.toString());
         }
         return result;
     }
 
     /**
      * create by: iizvv
-     * description: 重定向后的耗时操作
+     * description: 重定向后的耗时操作, 异步操作
      * create time: 2019-09-03 19:02
      *
 
      * @return void
      */
+    @Async
     void calculate(String udid, String encryptHex) {
         long begin = System.currentTimeMillis();
+        System.out.println("开始签名操作");
         String itemService = analyzeUDID(udid, AESUtils.decryptStr(encryptHex));
         System.out.println("itemService文件名为: " + itemService);
         if (itemService != null) {
@@ -153,6 +162,7 @@ public class UDIDController {
         long end = System.currentTimeMillis();
         long time = (end - begin)/1000;
         System.out.println("自动签名执行耗时: " + time + "秒");
+        System.out.println("所有操作已完成");
     }
 
 

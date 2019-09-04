@@ -204,6 +204,7 @@ public class PackageController {
                 }
                 pck.setImgs(StringUtils.join(imgs, ","));
             }
+            pck.setLink(Config.redirect +"/app/" + AESUtils.encryptHex(String.valueOf(id)));
             pck.setMobileconfig(Config.aliMainHost + "/" + pck.getMobileconfig());
             result.setCode(1);
             result.setMsg("获取成功");

@@ -32,20 +32,32 @@ public class AESUtils {
 
     /**
       * create by: iizvv
-      * description: 解密
+      * description: 解密为long
       * create time: 2019-09-03 09:38
+
+      * @return long
+      */
+    public static long decryptStr(String encryptHex) {
+        String hexStr = decryptHexStr(encryptHex);
+        if (isNumeric(hexStr)) {
+            return Integer.valueOf(hexStr);
+        }
+        return 0;
+    }
+
+    /**
+      * create by: iizvv
+      * description: 解密为str
+      * create time: 2019-09-04 15:18
 
       * @return str
       */
-    public static long decryptStr(String encryptHex) {
+    public static String decryptHexStr(String encryptHex) {
         SymmetricCrypto aes = new SymmetricCrypto(SymmetricAlgorithm.AES, Config.aesKey.getBytes());
         //解密为字符串
         String decryptStr = aes.decryptStr(encryptHex, CharsetUtil.CHARSET_UTF_8);
         System.out.println(decryptStr);
-        if (isNumeric(decryptStr)) {
-            return Integer.valueOf(decryptStr);
-        }
-        return 0;
+        return decryptStr;
     }
 
     /**
