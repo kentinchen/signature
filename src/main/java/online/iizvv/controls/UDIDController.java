@@ -187,7 +187,6 @@ public class UDIDController {
                         System.out.println("找到合适帐号， 开始添加设备");
                         // 找到合适的帐号
                         String resignature = insertDevice(id, udid, apple, pck.getLink());
-                        dpService.insertDP(device.getId(), id);
                         packageService.updatePackageDeviceCountById(id);
                         itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
                     }
@@ -202,6 +201,7 @@ public class UDIDController {
                         System.out.println("此设备已下载过此应用, 当前次不消耗设备量");
                     }else {
                         System.out.println("此设备未下载过此应用, 当前次消耗设备量");
+                        System.out.println("device_id: " + device.toString() + ", package_id: " + id);
                         dpService.insertDP(device.getId(), id);
                         packageService.updatePackageDeviceCountById(id);
                     }
@@ -238,6 +238,7 @@ public class UDIDController {
             appleService.updateDevicesCount(apple.getId());
             if (i==1) {
                 Device device = deviceService.getDeviceByUDID(udid);
+                dpService.insertDP(device.getId(), id);
                 key = resignature(apple, device, link);
             }
         }else {

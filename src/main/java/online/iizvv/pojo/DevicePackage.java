@@ -10,11 +10,13 @@ public class DevicePackage {
 
   @ApiModelProperty(value = "id")
   private long id;
-  @ApiModelProperty(value = "id")
+  @ApiModelProperty(value = "packageId")
   private long packageId;
-  @ApiModelProperty(value = "id")
+  @ApiModelProperty(value = "deviceId")
   private long deviceId;
-  @ApiModelProperty(value = "id")
+  @ApiModelProperty(value = "isUse")
+  private boolean isUse;
+  @ApiModelProperty(value = "createTime")
   private Date createTime;
 
 
@@ -53,12 +55,21 @@ public class DevicePackage {
     this.createTime = createTime;
   }
 
+  public boolean isUse() {
+    return isUse;
+  }
+
+  public void setUse(boolean use) {
+    isUse = use;
+  }
+
   @Override
   public String toString() {
     return "DevicePackage{" +
             "id=" + id +
             ", packageId=" + packageId +
             ", deviceId=" + deviceId +
+            ", isUse=" + isUse +
             ", createTime=" + createTime +
             '}';
   }

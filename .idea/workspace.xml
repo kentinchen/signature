@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="72c9fa7a-ab92-4882-8ea1-8de913202eee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/WebSocketConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/AppleDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/AppleDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DPDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DPDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/server/SaticScheduleTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/server/SaticScheduleTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/server/WebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/server/WebSocketServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/service/AppleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/service/AppleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/DevicePackage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/DevicePackage.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,8 +25,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-754">
-              <caret line="240" column="55" lean-forward="true" selection-start-line="240" selection-start-column="55" selection-end-line="240" selection-end-column="55" />
+            <state relative-caret-position="99">
+              <caret line="176" column="55" lean-forward="true" selection-start-line="176" selection-start-column="55" selection-end-line="176" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -47,14 +43,18 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/DevicePackage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="53" column="3" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
+            <state relative-caret-position="353">
+              <caret line="66" column="16" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#842#843#0" expanded="true" />
                 <element signature="e#869#870#0" expanded="true" />
                 <element signature="e#917#918#0" expanded="true" />
                 <element signature="e#955#956#0" expanded="true" />
+                <element signature="e#1066#1067#0" expanded="true" />
+                <element signature="e#1088#1089#0" expanded="true" />
+                <element signature="e#1125#1126#0" expanded="true" />
+                <element signature="e#1146#1147#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -63,8 +63,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="30" column="11" selection-start-line="30" selection-start-column="11" selection-end-line="30" selection-end-column="11" />
+            <state relative-caret-position="308">
+              <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
               <folding>
                 <element signature="e#637#638#0" expanded="true" />
                 <element signature="e#689#690#0" expanded="true" />
@@ -78,7 +78,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/AppleServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
+            <state relative-caret-position="372">
               <caret line="34" column="10" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="10" />
               <folding>
                 <element signature="e#740#741#0" expanded="true" />
@@ -95,8 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/DPServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
+            <state relative-caret-position="481">
+              <caret line="40" column="19" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#598#599#0" expanded="true" />
@@ -115,10 +115,27 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Device.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding>
+                <element signature="e#811#812#0" expanded="true" />
+                <element signature="e#835#836#0" expanded="true" />
+                <element signature="e#1188#1189#0" expanded="true" />
+                <element signature="e#1215#1216#0" expanded="true" />
+                <element signature="e#1263#1264#0" expanded="true" />
+                <element signature="e#1301#1302#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" selection-start-line="14" selection-end-line="14" selection-end-column="7" />
+            <state relative-caret-position="177">
+              <caret line="36" column="21" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -126,11 +143,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/DPDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+            <state relative-caret-position="106">
+              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -199,15 +216,15 @@
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/server/SaticScheduleTask.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/server/WebSocketServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/WebSocketConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/DevicePackage.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DPDap.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/AppleDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/AppleServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/DPServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DPDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/DevicePackage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java" />
       </list>
     </option>
   </component>
@@ -468,13 +485,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63075000" />
+    <option name="totallyTimeSpent" value="64973000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="269" y="23" width="1744" height="1011" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26733255" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26733255" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -484,7 +500,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.31664854" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31664854" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.21436344" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -859,21 +875,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="33" lean-forward="true" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="33" />
-          <folding>
-            <element signature="e#811#812#0" expanded="true" />
-            <element signature="e#835#836#0" expanded="true" />
-            <element signature="e#1188#1189#0" expanded="true" />
-            <element signature="e#1215#1216#0" expanded="true" />
-            <element signature="e#1263#1264#0" expanded="true" />
-            <element signature="e#1301#1302#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Package.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="524">
@@ -915,20 +916,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/DevicePackage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="53" column="3" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#842#843#0" expanded="true" />
-            <element signature="e#869#870#0" expanded="true" />
-            <element signature="e#917#918#0" expanded="true" />
-            <element signature="e#955#956#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/AppleDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="248">
@@ -936,38 +923,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/AppleServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Device.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="34" column="10" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="10" />
+        <state relative-caret-position="75">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding>
-            <element signature="e#740#741#0" expanded="true" />
-            <element signature="e#789#790#0" expanded="true" />
-            <element signature="e#807#808#0" expanded="true" />
-            <element signature="e#872#873#0" expanded="true" />
-            <element signature="e#921#922#0" expanded="true" />
-            <element signature="e#976#977#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="30" column="11" selection-start-line="30" selection-start-column="11" selection-end-line="30" selection-end-column="11" />
-          <folding>
-            <element signature="e#637#638#0" expanded="true" />
-            <element signature="e#689#690#0" expanded="true" />
-            <element signature="e#492#493#0" expanded="true" />
-            <element signature="e#546#547#0" expanded="true" />
+            <element signature="e#811#812#0" expanded="true" />
+            <element signature="e#835#836#0" expanded="true" />
+            <element signature="e#1188#1189#0" expanded="true" />
+            <element signature="e#1215#1216#0" expanded="true" />
+            <element signature="e#1263#1264#0" expanded="true" />
+            <element signature="e#1301#1302#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/DPServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
+        <state relative-caret-position="481">
+          <caret line="40" column="19" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#598#599#0" expanded="true" />
@@ -984,27 +958,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/AppleServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-754">
-          <caret line="240" column="55" lean-forward="true" selection-start-line="240" selection-start-column="55" selection-end-line="240" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" selection-start-line="14" selection-end-line="14" selection-end-column="7" />
+        <state relative-caret-position="372">
+          <caret line="34" column="10" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="10" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#740#741#0" expanded="true" />
+            <element signature="e#789#790#0" expanded="true" />
+            <element signature="e#807#808#0" expanded="true" />
+            <element signature="e#872#873#0" expanded="true" />
+            <element signature="e#921#922#0" expanded="true" />
+            <element signature="e#976#977#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/DPDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+        <state relative-caret-position="106">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/DevicePackage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="66" column="16" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#842#843#0" expanded="true" />
+            <element signature="e#869#870#0" expanded="true" />
+            <element signature="e#917#918#0" expanded="true" />
+            <element signature="e#955#956#0" expanded="true" />
+            <element signature="e#1066#1067#0" expanded="true" />
+            <element signature="e#1088#1089#0" expanded="true" />
+            <element signature="e#1125#1126#0" expanded="true" />
+            <element signature="e#1146#1147#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="176" column="55" lean-forward="true" selection-start-line="176" selection-start-column="55" selection-end-line="176" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+          <folding>
+            <element signature="e#637#638#0" expanded="true" />
+            <element signature="e#689#690#0" expanded="true" />
+            <element signature="e#492#493#0" expanded="true" />
+            <element signature="e#546#547#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="36" column="21" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

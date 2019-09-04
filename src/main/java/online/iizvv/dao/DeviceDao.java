@@ -34,7 +34,7 @@ public interface DeviceDao {
 
      * @return Device
      */
-    @Select("SELECT apple_id, device_id FROM device WHERE udid = #{udid} AND is_use = true")
+    @Select("SELECT * FROM device WHERE udid = #{udid} AND is_use = true")
     Device getDeviceByUDID(String udid);
 
     /**

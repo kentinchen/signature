@@ -32,7 +32,7 @@ public interface DPDao {
 
      * @return int
      */
-    @Insert("INSERT INTO device_package (device_id, package_id) VALUES (#{deviceId}, #{packageId})")
+    @Insert("INSERT INTO device_package (package_id, device_id) VALUES (#{packageId}, #{deviceId})")
     int insertDP(long deviceId, long packageId);
 
     /**
