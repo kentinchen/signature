@@ -33,6 +33,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ：iizvv
@@ -57,6 +59,8 @@ public class UDIDController {
 
     @Autowired
     private FileManager fileManager;
+
+    private Map <String, Result>udidMap = new HashMap<String, Result>();
 
     @ApiOperation(value="/getUDID", notes="获取设备udid", produces = "application/json")
     @ApiImplicitParams(value = {
@@ -84,6 +88,7 @@ public class UDIDController {
             NSDictionary parse = (NSDictionary) PropertyListParser.parse(xml.getBytes());
             udid = (String) parse.get("UDID").toJavaObject();
             System.out.println("当前设备udid: " + udid);
+            udidMap.put(udid, new Result(2, null, "正在签名中"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,6 +96,19 @@ public class UDIDController {
         response.setHeader("Location", redirect);
         response.setStatus(301);
         calculate(udid, encryptHex);
+    }
+
+    @ApiOperation(value="/getSignatureStatus", notes="获取当前IPA签名状态", produces = "application/json")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "udid", value = "设备udid", required = true),
+    })
+    @PostMapping("/getSignatureStatus")
+    public Result getSignatureStatus(String udid) {
+        Result result = udidMap.get(udid);
+        if (result.getCode()!=2) {
+            result = udidMap.remove(udid);
+        }
+        return result;
     }
 
     /**
@@ -103,10 +121,10 @@ public class UDIDController {
      */
     void calculate(String udid, String encryptHex) {
         long begin = System.currentTimeMillis();
-        Result result = new Result();
         String itemService = analyzeUDID(udid, AESUtils.decryptStr(encryptHex));
         System.out.println("itemService文件名为: " + itemService);
         if (itemService != null) {
+            Result result = new Result();
             if (itemService.equalsIgnoreCase("1")) {
                 System.out.println("没有找到合适的账号");
                 result.setMsg("当前已无可使用帐号");
@@ -121,13 +139,16 @@ public class UDIDController {
                 try {
                     result.setCode(1);
                     result.setData(URLEncoder.encode(encode, "UTF-8" ));
-                    pushToWebSocket(AESUtils.encryptHex(udid), result);
+//                    pushToWebSocket(AESUtils.encryptHex(udid), result);
                 } catch (UnsupportedEncodingException e) {
+                    result.setMsg("编码失败, 请稍后再试");
                     e.printStackTrace();
                 }
+                udidMap.put(udid, result);
             }
         }else {
             System.out.println("签名失败");
+            udidMap.put(udid, new Result(0, null, "签名失败, 请稍后再试"));
         }
         long end = System.currentTimeMillis();
         long time = (end - begin)/1000;
