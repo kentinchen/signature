@@ -24,6 +24,18 @@ public class AppleServiceImpl {
         return appleDao.insertAppleAccount(apple);
     }
 
+    /**
+     * create by: iizvv
+     * description: 设置帐号是否可用
+     * create time: 2019-09-04 21:35
+     *
+
+     * @return boolean
+     */
+    public boolean updateAppleIsUse(long id, boolean isUse) {
+        return appleDao.updateAppleIsUse(id, isUse)>0;
+    }
+
     public int updateP12(String p12, long id) {
         return appleDao.updateP12(p12, id);
     }

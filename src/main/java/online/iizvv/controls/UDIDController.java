@@ -19,6 +19,7 @@ import online.iizvv.pojo.Device;
 import online.iizvv.pojo.Package;
 import online.iizvv.server.WebSocketServer;
 import online.iizvv.service.AppleServiceImpl;
+import online.iizvv.service.DPServiceImpl;
 import online.iizvv.service.DeviceServiceImpl;
 import online.iizvv.service.PackageServiceImpl;
 import online.iizvv.utils.*;
@@ -36,6 +37,7 @@ import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 /**
  * @author ：iizvv
@@ -59,9 +61,10 @@ public class UDIDController {
     private PackageServiceImpl packageService;
 
     @Autowired
-    private FileManager fileManager;
+    private DPServiceImpl dpService;
 
-    private Map <String, Result>udidMap = new HashMap<String, Result>();
+    @Autowired
+    private FileManager fileManager;
 
     @ApiOperation(value="/getUDID", notes="获取设备udid", produces = "application/json")
     @ApiImplicitParams(value = {
@@ -89,12 +92,13 @@ public class UDIDController {
             NSDictionary parse = (NSDictionary) PropertyListParser.parse(xml.getBytes());
             udid = (String) parse.get("UDID").toJavaObject();
             System.out.println("当前设备udid: " + udid);
-            udidMap.put(udid, new Result(2, null, "正在签名中"));
-            calculate(udid, encryptHex);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String redirect = /*Config.redirect +*/ "http://192.168.99.239:8080/app/" + encryptHex + "?encryptHex=" + AESUtils.encryptHex(udid);
+        String redirect = Config.redirect + "/app/" +
+                encryptHex + "?encryptHex=" +
+                AESUtils.encryptHex(udid + "/"+ AESUtils.decryptStr(encryptHex));
+        System.out.println("开始重定向至h5: " + redirect);
         response.setHeader("Location", redirect);
         response.setStatus(301);
     }
@@ -106,63 +110,51 @@ public class UDIDController {
     @PostMapping("/getSignatureStatus")
     public Result getSignatureStatus(String encryptHex) {
         String hexStr = AESUtils.decryptHexStr(encryptHex);
-        System.out.println("查询的设备hex: " + encryptHex + ", 设备UDID: " + hexStr);
-        Result result = udidMap.get(hexStr);
-        if (result == null) {
-            return new Result(3, null, "此次操作已完成， 请勿重复操作");
-        }
-        if (result.getCode()!=2) {
-            result = udidMap.remove(hexStr);
-            System.out.println("删除hex：" + result.toString());
-        }
-        return result;
+        String[] split = hexStr.split("/");
+        return calculate(split[0], Integer.valueOf(split[1]));
     }
 
     /**
      * create by: iizvv
-     * description: 重定向后的耗时操作, 异步操作
+     * description: 重定向后的耗时操作
      * create time: 2019-09-03 19:02
      *
 
      * @return void
      */
-    @Async
-    void calculate(String udid, String encryptHex) {
+    Result calculate(String udid, long id) {
+        Result result = new Result();
         long begin = System.currentTimeMillis();
         System.out.println("开始签名操作");
-        String itemService = analyzeUDID(udid, AESUtils.decryptStr(encryptHex));
+        String itemService = analyzeUDID(udid, id);
         System.out.println("itemService文件名为: " + itemService);
         if (itemService != null) {
-            Result result = new Result();
+            result.setCode(0);
             if (itemService.equalsIgnoreCase("1")) {
                 System.out.println("没有找到合适的账号");
                 result.setMsg("当前已无可使用帐号");
             }else if (itemService.equalsIgnoreCase("2")) {
                 System.out.println("当前ipa已无下载次数");
-                result.setMsg("当前ipa已无下载次数, 请联系联系管理员");
-            }else if (itemService.equalsIgnoreCase("3")){
+                result.setMsg("当前ipa已无下载次数, 请联系管理员修改");
+            }else if (itemService.equalsIgnoreCase("3")) {
                 System.out.println("未找到ipa文件");
                 result.setMsg("未找到ipa文件");
             }else {
-                String encode = "itms-services://?action=download-manifest&url=" + Config.aliTempHost + "/" + itemService;
-                try {
-                    result.setCode(1);
-                    result.setData(URLEncoder.encode(encode, "UTF-8" ));
-//                    pushToWebSocket(AESUtils.encryptHex(udid), result);
-                } catch (UnsupportedEncodingException e) {
-                    result.setMsg("编码失败, 请稍后再试");
-                    e.printStackTrace();
-                }
-                udidMap.put(udid, result);
+                String itms = "itms-services://?action=download-manifest&url=" + Config.aliTempHost + "/" + itemService;
+                result.setCode(1);
+                result.setMsg("签名成功");
+                result.setData(itms);
+                packageService.updatePackageDownloadCountById(id);
             }
         }else {
             System.out.println("签名失败");
-            udidMap.put(udid, new Result(0, null, "签名失败, 请稍后再试"));
+            result.setMsg("签名失败");
         }
         long end = System.currentTimeMillis();
         long time = (end - begin)/1000;
         System.out.println("自动签名执行耗时: " + time + "秒");
         System.out.println("所有操作已完成");
+        return result;
     }
 
 
@@ -180,7 +172,7 @@ public class UDIDController {
         Package pck = packageService.getPackageById(id);
         if (pck!=null) {
             // 判断当前ipa是否还有可继续下载
-            if (pck.getUseDevice()<=pck.getTotalDevice()) {
+            if (pck.getUseDevice()<pck.getTotalDevice()) {
                 System.out.println("开始寻找可用帐号");
                 Device device = deviceService.getDeviceByUDID(udid);
                 if (device==null) {
@@ -195,6 +187,8 @@ public class UDIDController {
                         System.out.println("找到合适帐号， 开始添加设备");
                         // 找到合适的帐号
                         String resignature = insertDevice(id, udid, apple, pck.getLink());
+                        dpService.insertDP(device.getId(), id);
+                        packageService.updatePackageDeviceCountById(id);
                         itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
                     }
                 }else {
@@ -202,8 +196,15 @@ public class UDIDController {
                     // 设备存在
                     Apple apple = appleService.getAppleAccountById(device.getAppleId());
                     System.out.println("帐号信息获取成功: " + apple.toString());
-                    String resignature = resignature(apple, device.getDeviceId(), pck.getLink());
+                    String resignature = resignature(apple, device, pck.getLink());
                     itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
+                    if (dpService.getDPByIds(device.getId(), id) != null) {
+                        System.out.println("此设备已下载过此应用, 当前次不消耗设备量");
+                    }else {
+                        System.out.println("此设备未下载过此应用, 当前次消耗设备量");
+                        dpService.insertDP(device.getId(), id);
+                        packageService.updatePackageDeviceCountById(id);
+                    }
                 }
             }else {
                 itemService = "2";
@@ -227,22 +228,22 @@ public class UDIDController {
         String key = null;
         String devId = null;
         System.out.println("开始添加设备");
-        boolean b = packageService.updatePackageDeviceCountById(id);
-        if (b) {
-            try {
-                devId = ITSUtils.insertDevice(udid, new Authorize(apple.getP8(), apple.getIss(), apple.getKid()));
-            } catch (InvalidKeyException e) {
-                e.printStackTrace();
+        try {
+            devId = ITSUtils.insertDevice(udid, new Authorize(apple.getP8(), apple.getIss(), apple.getKid()));
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
+        if (devId!=null) {
+            int i = deviceService.insertDevice(udid, apple.getId(), devId);
+            appleService.updateDevicesCount(apple.getId());
+            if (i==1) {
+                Device device = deviceService.getDeviceByUDID(udid);
+                key = resignature(apple, device, link);
             }
-            if (devId!=null) {
-                int i = deviceService.insertDevice(udid, apple.getId(), devId);
-                if (i==1) {
-                    appleService.updateDevicesCount(apple.getId());
-                    key = resignature(apple, devId, link);
-                }
-            }else {
-                packageService.rowBackPackageDeviceCountById(id);
-            }
+        }else {
+            System.out.println("帐号不可用, 继续寻找可用帐号");
+            appleService.updateAppleIsUse(apple.getId(), false);
+            analyzeUDID(udid, id);
         }
         return key;
     }
@@ -254,7 +255,7 @@ public class UDIDController {
 
       * @return String
       */
-    String resignature(Apple apple, String devId, String appLink) {
+    String resignature(Apple apple, Device device, String appLink) {
         String key = null;
         // ResourceUtils.getURL("classpath:").getPath()
         String classPath = "/root/";
@@ -262,7 +263,7 @@ public class UDIDController {
         File mobileprovision = null;
         try {
             System.out.println("开始创建签名证书");
-            mobileprovision = ITSUtils.insertProfile(apple, devId, classPath);
+            mobileprovision = ITSUtils.insertProfile(apple, device.getDeviceId(), classPath);
         } catch (InvalidKeyException e) {
             System.out.println("签名证书创建失败");
             e.printStackTrace();
@@ -306,6 +307,11 @@ public class UDIDController {
                     p12.delete();
                 }
             }
+        }else {
+            System.out.println("创建证书失败, 将帐号标记为不可用, 寻找新的帐号");
+            appleService.updateAppleIsUse(apple.getId(), false);
+            dpService.updateDPIsUse(device.getId(), false);
+            deviceService.updatePackageIsUse(device.getId(), false);
         }
         return key;
     }

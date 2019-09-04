@@ -20,6 +20,18 @@ public class DeviceServiceImpl {
     @Autowired
     private DeviceDao deviceDao;
 
+    /**
+     * create by: iizvv
+     * description: 设置设备是否可用
+     * create time: 2019-09-04 21:35
+     *
+
+     * @return boolean
+     */
+    public boolean updatePackageIsUse(long id, boolean isUse) {
+        return deviceDao.updatePackageIsUse(id, isUse)>0;
+    }
+
     public Device getDeviceByUDID(String udid) {
         return deviceDao.getDeviceByUDID(udid);
     }

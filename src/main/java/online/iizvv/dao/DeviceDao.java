@@ -1,10 +1,7 @@
 package online.iizvv.dao;
 
 import online.iizvv.pojo.Device;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -17,6 +14,17 @@ import java.util.List;
  */
 @Mapper
 public interface DeviceDao {
+
+    /**
+     * create by: iizvv
+     * description: 设置设备是否可用
+     * create time: 2019-09-04 21:35
+     *
+
+     * @return int
+     */
+    @Update("UPDATE package SET is_use = #{isUse} WHERE id = #{id}")
+    int updatePackageIsUse(long id, boolean isUse);
 
     /**
      * create by: iizvv

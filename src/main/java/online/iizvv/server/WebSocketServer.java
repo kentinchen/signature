@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 
-@ServerEndpoint("/websocket/{socketId}")
-@Component
+//@ServerEndpoint("/websocket/{socketId}")
+//@Component
 public class WebSocketServer {
 
     static Log log= LogFactory.get(WebSocketServer.class);

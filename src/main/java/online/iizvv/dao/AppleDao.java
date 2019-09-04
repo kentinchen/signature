@@ -29,6 +29,17 @@ public interface AppleDao {
     int insertAppleAccount(Apple apple);
 
     /**
+     * create by: iizvv
+     * description: 设置帐号是否可用
+     * create time: 2019-09-04 21:35
+     *
+
+     * @return int
+     */
+    @Update("UPDATE apple SET is_use = #{isUse} WHERE id = #{id}")
+    int updateAppleIsUse(long id, boolean isUse);
+
+    /**
       * create by: iizvv
       * description: 更新账号P12
       * create time: 2019-07-06 14:59
