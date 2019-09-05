@@ -95,7 +95,7 @@ public class UDIDController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String redirect = Config.redirect + "/app/" +
+        String redirect = Config.h5Host + "/app/" +
                 encryptHex + "?encryptHex=" +
                 AESUtils.encryptHex(udid + "/"+ AESUtils.decryptStr(encryptHex));
         System.out.println("开始重定向至h5: " + redirect);
@@ -140,10 +140,9 @@ public class UDIDController {
                 System.out.println("未找到ipa文件");
                 result.setMsg("未找到ipa文件");
             }else {
-                String itms = "itms-services://?action=download-manifest&url=" + Config.aliTempHost + "/" + itemService;
                 result.setCode(1);
                 result.setMsg("签名成功");
-                result.setData(itms);
+                result.setData("itms-services://?action=download-manifest&url=" + Config.aliTempHost + "/" + itemService);
                 packageService.updatePackageDownloadCountById(id);
             }
         }else {

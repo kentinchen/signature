@@ -12,7 +12,7 @@ public class Config {
     public final static String payloadDescription = "该配置文件帮助用户进行APP授权安装！";
 
     /** 后台请求地址域名 例：https://api.test.com */
-    public final static String udidURL = "https://api.iizvv.online";
+    public final static String apiHost = "https://api.iizvv.online";
 
     /** 组织名称 */
     public final static String payloadOrganization = "Apple Inc.";
@@ -45,7 +45,7 @@ public class Config {
     public final static String vpcAliMainHost = "https://auto-main-file.oss-cn-zhangjiakou-internal.aliyuncs.com";
 
     /** 前端h5域名 例：https://www.test.com */
-    public final static String redirect = "https://auto.iizvv.online";
+    public final static String h5Host = "https://auto.iizvv.online";
 
 
     /** 请求头键 */

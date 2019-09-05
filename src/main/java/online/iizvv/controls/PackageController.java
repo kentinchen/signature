@@ -213,7 +213,7 @@ public class PackageController {
                 }
                 pck.setImgs(StringUtils.join(imgs, ","));
             }
-            pck.setLink(Config.redirect +"/app/" + AESUtils.encryptHex(String.valueOf(id)));
+            pck.setLink(Config.h5Host +"/app/" + AESUtils.encryptHex(String.valueOf(id)));
             pck.setMobileconfig(Config.aliMainHost + "/" + pck.getMobileconfig());
             result.setCode(1);
             result.setMsg("获取成功");
@@ -414,7 +414,7 @@ public class PackageController {
                 "        <key>PayloadContent</key>\n" +
                 "        <dict>\n" +
                 "            <key>URL</key>\n" +
-                "            <string>"+ Config.udidURL +"/udid/getUDID?encryptHex="+ AESUtils.encryptHex(String.valueOf(id)) +"</string> <!--接收数据的接口地址-->\n" +
+                "            <string>"+ Config.apiHost +"/udid/getUDID?encryptHex="+ AESUtils.encryptHex(String.valueOf(id)) +"</string> <!--接收数据的接口地址-->\n" +
                 "            <key>DeviceAttributes</key>\n" +
                 "            <array>\n" +
                 "                <string>SERIAL</string>\n" +
