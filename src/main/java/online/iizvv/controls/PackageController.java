@@ -190,9 +190,18 @@ public class PackageController {
             @ApiImplicitParam(name = "id", value = "ipaId", required = true)
     })
     @GetMapping("/getPackageById")
-    public Result<Package> getPackageById(long id) {
+    public Result<Package> getPackageById(HttpServletRequest request, long id) {
         Result result = new Result();
-        Package pck = packageService.getPackageById(id);
+        String authorization = request.getHeader(Config.Authorization);
+        Claims claims = JwtHelper.verifyJwt(authorization);
+        long level = (Integer)claims.get("level");
+        Package pck;
+        if (level == 1) {
+            pck = packageService.getPackageById(id);
+        }else {
+            long userId = (Integer)claims.get("userId");
+            pck = packageService.getPackageByIdAndUserId(userId, id);
+        }
         if (pck==null) {
             result.setMsg("内容不存在");
         }else {

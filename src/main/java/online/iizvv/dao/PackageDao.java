@@ -131,6 +131,15 @@ public interface PackageDao {
     @Select("SELECT * FROM package WHERE id=#{id}")
     Package getPackageById(long id);
 
+    /**
+      * create by: iizvv
+      * description: 获取指定用户的指定ipa
+      * create time: 2019-09-05 14:36
+
+      * @return Package
+      */
+    @Select("SELECT * FROM package WHERE user_id=#{userId} AND id=#{id}")
+    Package getPackageByIdAndUserId(long userId, long id);
 
     /**
       * create by: iizvv
