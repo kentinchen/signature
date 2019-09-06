@@ -69,4 +69,24 @@ public interface DPDao {
     @Delete("DELETE FROM device_package WHERE device_id = #{deviceId} AND package_id = #{packageId}")
     int deleteDPByIds(long deviceId, long packageId);
 
+    /**
+     * create by: iizvv
+     * description: 根据设备删除关联信息
+     * create time: 2019-09-06 12:10
+
+     * @return
+     */
+    @Delete("DELETE FROM device_package WHERE device_id = #{deviceId}")
+    int deleteDPByDeviceId(long deviceId);
+
+    /**
+     * create by: iizvv
+     * description: 根据ipa删除关联信息
+     * create time: 2019-09-06 12:10
+
+     * @return
+     */
+    @Delete("DELETE FROM device_package WHERE package_id = #{packageId}")
+    int deleteDPByPackageId(long packageId);
+
 }

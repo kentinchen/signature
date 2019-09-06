@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import online.iizvv.pojo.Package;
 import online.iizvv.core.pojo.Result;
+import online.iizvv.service.DPServiceImpl;
 import online.iizvv.service.PackageServiceImpl;
 import online.iizvv.core.config.Config;
 import online.iizvv.utils.AESUtils;
@@ -52,6 +53,9 @@ public class PackageController {
 
     @Autowired
     private FileManager fileManager;
+
+    @Autowired
+    private DPServiceImpl dpService;
 
     @ApiOperation(value = "/insertPackage", notes = "上传ipa", produces = "application/json")
     @ApiImplicitParams(value = {
@@ -284,6 +288,9 @@ public class PackageController {
     @PostMapping("/deletePackageById")
     public Result deleteById(long id) {
         Result result = new Result();
+        System.out.println("开始删除中间关系表");
+        dpService.deleteDPByPackageId(id);
+        System.out.println("开始删除ipa文件");
         boolean b = packageService.deletePackageById(id);
         if (b) {
             result.setCode(1);

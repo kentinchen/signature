@@ -10,7 +10,9 @@ import online.iizvv.core.config.Config;
 import online.iizvv.pojo.Apple;
 import online.iizvv.pojo.Authorize;
 import online.iizvv.core.pojo.Result;
+import online.iizvv.pojo.Device;
 import online.iizvv.service.AppleServiceImpl;
+import online.iizvv.service.DPServiceImpl;
 import online.iizvv.service.DeviceServiceImpl;
 import online.iizvv.utils.FileManager;
 import online.iizvv.utils.ITSUtils;
@@ -47,6 +49,9 @@ public class AppleController {
     private DeviceServiceImpl deviceService;
 
     @Autowired
+    private DPServiceImpl dpService;
+
+    @Autowired
     private FileManager fileManager;
 
 
@@ -79,45 +84,45 @@ public class AppleController {
     @PostMapping("/insertAppleAccount")
     public Result insertAppleAccount(String account, String iss, String kid, String csr, String p8) {
         Result result = new Result();
-            if (appleService.getAppleAccountByAccount(account)==null) {
-                // 可以写入数据库
-                Map map = null;
-                try {
-                  map = ITSUtils.getNumberOfAvailableDevices(new Authorize(p8, iss, kid, csr));
-                }catch (Exception e) {
-                    e.printStackTrace();
-                    result.setMsg("帐号信息有误， 请检查后重新提交");
-                }
-                if (map != null) {
-                    String cerId = (String)map.get("cerId");
-                    String bundleIds = (String) map.get("bundleIds");
-                    int number = (int)map.get("number");
-                    Apple apple = new Apple();
-                    apple.setAccount(account);
-                    apple.setCount(number);
-                    apple.setP8(p8);
-                    apple.setIss(iss);
-                    apple.setKid(kid);
-                    apple.setCerId(cerId);
-                    apple.setBundleIds(bundleIds);
-                    int r = appleService.insertAppleAccount(apple);
-                    if (r==1) {
-                        List<Map> devices = (List)map.get("devices");
-                        for (Map<String, String> item : devices) {
-                            deviceService.insertDevice(item.get("udid"), apple.getId(), item.get("deviceId"));
-                        }
-                        result.setData(apple.getId());
-                        result.setCode(1);
-                        result.setMsg("开发者账号添加成功");
-                    }else {
-                        result.setMsg("数据添加失败，请检查证书文件是否正确");
-                    }
-                }
-
-            }else {
-                // 账号已存在
-                result.setMsg("账号已存在， 请勿重复添加");
+        if (appleService.getAppleAccountByAccount(account)==null) {
+            // 可以写入数据库
+            Map map = null;
+            try {
+                map = ITSUtils.getNumberOfAvailableDevices(new Authorize(p8, iss, kid, csr));
+            }catch (Exception e) {
+                e.printStackTrace();
+                result.setMsg("帐号信息有误， 请检查后重新提交");
             }
+            if (map != null) {
+                String cerId = (String)map.get("cerId");
+                String bundleIds = (String) map.get("bundleIds");
+                int number = (int)map.get("number");
+                Apple apple = new Apple();
+                apple.setAccount(account);
+                apple.setCount(number);
+                apple.setP8(p8);
+                apple.setIss(iss);
+                apple.setKid(kid);
+                apple.setCerId(cerId);
+                apple.setBundleIds(bundleIds);
+                int r = appleService.insertAppleAccount(apple);
+                if (r==1) {
+                    List<Map> devices = (List)map.get("devices");
+                    for (Map<String, String> item : devices) {
+                        deviceService.insertDevice(item.get("udid"), apple.getId(), item.get("deviceId"));
+                    }
+                    result.setData(apple.getId());
+                    result.setCode(1);
+                    result.setMsg("开发者账号添加成功");
+                }else {
+                    result.setMsg("数据添加失败，请检查证书文件是否正确");
+                }
+            }
+
+        }else {
+            // 账号已存在
+            result.setMsg("账号已存在， 请勿重复添加");
+        }
         return result;
     }
 
@@ -159,6 +164,10 @@ public class AppleController {
         long level = (Integer)claims.get("level");
         if (level==1) {
             try {
+                for (Device device : deviceService.getAllByAppleId(id)) {
+                    System.out.println("正在删除设备: " + device.toString());
+                    dpService.deleteDPByDeviceId(device.getId());
+                }
                 deviceService.deleteByAppleId(id);
                 appleService.deleteById(id);
                 result.setCode(1);

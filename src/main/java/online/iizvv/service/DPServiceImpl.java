@@ -2,6 +2,7 @@ package online.iizvv.service;
 
 import online.iizvv.dao.DPDao;
 import online.iizvv.pojo.DevicePackage;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,8 +76,31 @@ public class DPServiceImpl {
 
      * @return int
      */
-    public int deleteDPByIds(long deviceId, long packageId) {
-        return dpDao.deleteDPByIds(deviceId, packageId);
+    public boolean deleteDPByIds(long deviceId, long packageId) {
+        return dpDao.deleteDPByIds(deviceId, packageId)>0;
+    }
+
+    /**
+     * create by: iizvv
+     * description: 根据设备删除关联信息
+     * create time: 2019-09-04 21:03
+     *
+
+     * @return boolean
+     */
+    public boolean deleteDPByDeviceId(long deviceId) {
+        return dpDao.deleteDPByDeviceId(deviceId)>0;
+    }
+
+    /**
+     * create by: iizvv
+     * description: 根据ipa删除关联信息
+     * create time: 2019-09-06 12:10
+
+     * @return boolean
+     */
+    public boolean deleteDPByPackageId(long packageId) {
+        return dpDao.deleteDPByPackageId(packageId)>0;
     }
 
 }
