@@ -34,15 +34,15 @@ public interface DeviceDao {
 
      * @return Device
      */
-    @Select("SELECT * FROM device WHERE udid = #{udid} AND is_use = true")
+    @Select("SELECT * FROM device WHERE udid = #{udid} AND is_use = true LIMIT 1")
     Device getDeviceByUDID(String udid);
 
     /**
      * create by: iizvv
      * description: 获取帐号下的所有设备
      * create time: 2019-08-19 21:49
-     * 
-     
+     *
+
      * @return List
      */
     @Select("SELECT * FROM device WHERE apple_id=#{id}")
@@ -52,9 +52,9 @@ public interface DeviceDao {
      * create by: iizvv
      * description: 删除帐号下的所有设备
      * create time: 2019-08-20 06:22
-     * 
-     
-     * @return 
+     *
+
+     * @return
      */
     @Delete("DELETE FROM device WHERE apple_id = #{id}")
     int deleteByAppleId(long id);

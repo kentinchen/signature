@@ -241,11 +241,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="995" />
-    <option name="y" value="178" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="791" />
+    <option name="y" value="104" />
     <option name="width" value="1769" />
-    <option name="height" value="1273" />
+    <option name="height" value="1272" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
