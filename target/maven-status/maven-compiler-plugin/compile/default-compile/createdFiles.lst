@@ -6,6 +6,7 @@ online/iizvv/pojo/DevicePackage.class
 online/iizvv/dao/UserDao.class
 online/iizvv/core/config/BeanRegisterConfig.class
 online/iizvv/utils/FileManager$1.class
+online/iizvv/controls/AppleController.class
 online/iizvv/controls/UDIDController.class
 online/iizvv/pojo/Package.class
 online/iizvv/pojo/Apple.class

@@ -93,7 +93,9 @@ public class AppleController {
                 e.printStackTrace();
                 result.setMsg("帐号信息有误， 请检查后重新提交");
             }
-            if (map != null) {
+            String msg = (String)map.get("msg");
+            if (map!=null && msg==null) {
+                List<Map> devices = (List)map.get("devices");
                 String cerId = (String)map.get("cerId");
                 String bundleIds = (String) map.get("bundleIds");
                 int number = (int)map.get("number");
@@ -107,7 +109,6 @@ public class AppleController {
                 apple.setBundleIds(bundleIds);
                 int r = appleService.insertAppleAccount(apple);
                 if (r==1) {
-                    List<Map> devices = (List)map.get("devices");
                     for (Map<String, String> item : devices) {
                         deviceService.insertDevice(item.get("udid"), apple.getId(), item.get("deviceId"));
                     }
@@ -117,8 +118,9 @@ public class AppleController {
                 }else {
                     result.setMsg("数据添加失败，请检查证书文件是否正确");
                 }
+            }else {
+                result.setMsg(msg);
             }
-
         }else {
             // 账号已存在
             result.setMsg("账号已存在， 请勿重复添加");

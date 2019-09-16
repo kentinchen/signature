@@ -102,7 +102,7 @@ public interface AppleDao {
 
      * @return Apple
      */
-    @Select("SELECT * FROM apple where is_use = true ORDER BY count DESC LIMIT 1")
+    @Select("SELECT * FROM apple where is_use = true AND count>0 ORDER BY count DESC LIMIT 1")
     Apple getBeUsableAppleAccount();
 
 }

@@ -11,6 +11,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import online.iizvv.core.config.Config;
 import online.iizvv.pojo.Apple;
 import online.iizvv.pojo.Authorize;
+import online.iizvv.service.DeviceServiceImpl;
 import sun.security.ec.ECPrivateKeyImpl;
 
 import java.io.BufferedOutputStream;
@@ -43,30 +44,35 @@ public class ITSUtils {
                 execute().body();
         System.out.println(result);
         Map map = JSON.parseObject(result, Map.class);
-        JSONArray data = (JSONArray)map.get("data");
-        List devices = new LinkedList();
-        for (Object datum : data) {
-            Map device = new HashMap();
-            Map m = (Map) datum;
-            String id = (String)m.get("id");
-            Map attributes = (Map)m.get("attributes");
-            String udid = (String)attributes.get("udid");
-            device.put("deviceId", id);
-            device.put("udid", udid);
-            devices.add(device);
+        JSONArray errors = (JSONArray)map.get("errors");
+        if (errors!=null) {
+            res.put("msg", "与苹果建立连接失败, 帐号无法使用或p8文件不正确：errors: " + errors);
+        }else {
+            JSONArray data = (JSONArray)map.get("data");
+            List devices = new LinkedList();
+            for (Object datum : data) {
+                Map device = new HashMap();
+                Map m = (Map) datum;
+                String id = (String)m.get("id");
+                Map attributes = (Map)m.get("attributes");
+                String udid = (String)attributes.get("udid");
+                device.put("deviceId", id);
+                device.put("udid", udid);
+                devices.add(device);
+            }
+            removeCertificates(header);
+            removeBundleIds(header);
+            String cerId = insertCertificates(header, authorize.getCsr());
+            String bundleIds = insertBundleIds(header);
+            Map meta = (Map) map.get("meta");
+            Map paging = (Map)meta.get("paging");
+            int total = (int) paging.get("total");
+            res.put("number", Config.total-total);
+            res.put("devices", devices);
+            res.put("cerId", cerId);
+            res.put("bundleIds", bundleIds);
+            System.out.println(res);
         }
-        removeCertificates(header);
-        removeBundleIds(header);
-        String cerId = insertCertificates(header, authorize.getCsr());
-        String bundleIds = insertBundleIds(header);
-        Map meta = (Map) map.get("meta");
-        Map paging = (Map)meta.get("paging");
-        int total = (int) paging.get("total");
-        res.put("number", Config.total-total);
-        res.put("devices", devices);
-        res.put("cerId", cerId);
-        res.put("bundleIds", bundleIds);
-        System.out.println(res);
         return res;
     }
 
