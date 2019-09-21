@@ -1,14 +1,6 @@
 package online.iizvv.core.config;
 
 public class Config {
-
-    /** 当前版本 */
-    public final static String version = "2.5";
-
-    /** 账号最大可容纳设备量 */
-    public final static int total = 100;
-
-
     
     /** 组织名称 */
     public final static String payloadOrganization = "Apple Inc.";
@@ -21,14 +13,11 @@ public class Config {
 
 
 
-
-
     /** 后台请求地址域名 例：https://api.test.com */
     public final static String apiHost = "https://";
 
     /** 前端h5域名 例：https://www.test.com */
     public final static String h5Host = "https://";
-
 
 
 
@@ -46,7 +35,7 @@ public class Config {
     public final static String aliMainBucket = "";
 
 
-    /** 临时内容 Bucket 域名 例：https://ipa2.oss-cn-zhangjiakou.aliyuncs.com*/
+    /** 临时内容 Bucket 域名 例：https://ipa2.oss-cn-zhangjiakou.aliyuncs.com */
     public final static String aliTempHost = "https://";
 
     /** 临时内容空间名 */
@@ -56,17 +45,28 @@ public class Config {
     /** 内网地域节点 例：https://oss-cn-zhangjiakou-internal.aliyuncs.com */
     public final static String vpcEndpoint = "https://";
 
-    /** 内网主内容 Bucket 域名 例：https://ipa1.oss-cn-zhangjiakou-internal.aliyuncs.com*/
+    /** 内网主内容 Bucket 域名 例：https://ipa1.oss-cn-zhangjiakou-internal.aliyuncs.com */
     public final static String vpcAliMainHost = "https://";
 
 
 
 
 
+
+
+
+    
+    /**  以下信息无需修改 */
+    /** 当前版本 */
+    public final static String version = "2.5";
+
+    /** 账号最大可容纳设备量 */
+    public final static int total = 100;
+
     /** 请求头键 */
     public final static String Authorization = "Authorization";
 
-    /** 加密key */
+    /** 加解密ipaId时使用的key */
     public final static String aesKey = "$%6AA^123*^%@!@$";
 
 }
