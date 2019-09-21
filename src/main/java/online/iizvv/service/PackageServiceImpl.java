@@ -48,6 +48,19 @@ public class PackageServiceImpl {
 
     /**
      * create by: iizvv
+     * description: 更新ipa是否限制下载
+     * create time: 2019-09-21 17:16
+
+     * @return boolean
+     */
+    public boolean updatePackageStateById(long id, boolean state) {
+        int aPackage = packageDao.updatePackageStateById(id, state);
+        return aPackage>0;
+    }
+
+
+    /**
+     * create by: iizvv
      * description: 更新简介
      * create time: 2019-09-02 19:10
      *

@@ -28,13 +28,15 @@ public class BeanRegisterConfig {
                 "/user/getUserInfo");
         registration.addUrlPatterns("/apple/*");
         registration.addUrlPatterns("/device/*");
-        registration.addUrlPatterns("/package/deletePackageById",
+        registration.addUrlPatterns(
+                "/package/deletePackageById",
                 "/package/getAllPackage",
                 "/package/insertPackage",
                 "/package/updatePackageById",
                 "/package/updatePackageImgsById",
                 "/package/updatePackageSummaryById",
-                "/package/updatePackageTotalDeviceById");
+                "/package/updatePackageTotalDeviceById",
+                "/package/updatePackageStateById");
         return registration;
     }
 }

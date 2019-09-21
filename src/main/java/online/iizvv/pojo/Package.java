@@ -53,6 +53,9 @@ public class Package {
   @ApiModelProperty(value = "简介")
   private String summary;
 
+  @ApiModelProperty(value = "是否限制使用")
+  private boolean isStint;
+
   @ApiModelProperty(value = "创建时间")
   private Date createTime;
 
@@ -177,6 +180,14 @@ public class Package {
     this.summary = summary;
   }
 
+  public boolean isStint() {
+    return isStint;
+  }
+
+  public void setStint(boolean stint) {
+    isStint = stint;
+  }
+
   public Date getCreateTime() {
     return createTime;
   }
@@ -184,6 +195,7 @@ public class Package {
   public void setCreateTime(Date createTime) {
     this.createTime = createTime;
   }
+
 
   @Override
   public String toString() {
@@ -203,6 +215,7 @@ public class Package {
             ", buildVersion='" + buildVersion + '\'' +
             ", miniVersion='" + miniVersion + '\'' +
             ", summary='" + summary + '\'' +
+            ", isStint=" + isStint +
             ", createTime=" + createTime +
             '}';
   }

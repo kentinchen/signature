@@ -60,7 +60,6 @@ public class PackageController {
     @ApiOperation(value = "/insertPackage", notes = "上传ipa", produces = "application/json")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "file", value = "ipa文件", required = true),
-            @ApiImplicitParam(name = "totalCount", value = "可下载次数"),
     })
     @PostMapping("/insertPackage")
     public Result insertPackage(HttpServletRequest request, MultipartFile file) {
@@ -68,15 +67,32 @@ public class PackageController {
         return result;
     }
 
-
     @ApiOperation(value = "/updatePackageById", notes = "更新ipa", produces = "application/json")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "file", value = "ipa文件", required = true),
-            @ApiImplicitParam(name = "id", value = "ipaId"),
+            @ApiImplicitParam(name = "id", value = "ipaId", required = true),
     })
     @PostMapping("/updatePackageById")
     public Result updatePackageById(HttpServletRequest request, MultipartFile file, long id) {
         Result result = databaseWithIPA(request, file, id);
+        return result;
+    }
+
+    @ApiOperation(value = "/updatePackageStateById", notes = "上传ipa", produces = "application/json")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "packageId", required = true),
+            @ApiImplicitParam(name = "state", value = "是否限制下载"),
+    })
+    @PostMapping("/updatePackageStateById")
+    public Result updatePackageState(long id, boolean state) {
+        Result result = new Result();
+        boolean b = packageService.updatePackageStateById(id, state);
+        if (b) {
+            result.setCode(1);
+            result.setMsg("状态修改成功");
+        }else {
+            result.setMsg("状态修改失败");
+        }
         return result;
     }
 
@@ -97,51 +113,6 @@ public class PackageController {
         }
         return result;
     }
-
-//    @ApiOperation(value = "/updatePackageImgsById", notes = "更新预览图")
-//    @ApiImplicitParams(value = {
-//            @ApiImplicitParam(name = "id", value = "ipaId", required = true),
-//            @ApiImplicitParam(name = "file", value = "图片文件"),
-//    })
-//    @PostMapping("/updatePackageImgsById")
-//    public Result updatePackageImgsById(long id, @RequestParam("file")MultipartFile[] file) {
-//        Result result = new Result();
-//        if (file.length > 10) {
-//            result.setMsg("图片最多不能超过10张");
-//        }else {
-//            List <String>list = new LinkedList();
-//            for (MultipartFile multipartFile : file) {
-//                if (multipartFile.getContentType().equalsIgnoreCase("image/png") ||
-//                multipartFile.getContentType().equalsIgnoreCase("image/jpeg")) {
-//                    System.out.println("开始上传文件: " + multipartFile.getOriginalFilename() +
-//                            ", 文件类型: " + multipartFile.getContentType());
-//                    try {
-//                        String imgName = IdUtil.simpleUUID();
-//                        BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
-//                        if (bufferedImage!=null){
-//                            Integer width = bufferedImage.getWidth();
-//                            Integer height = bufferedImage.getHeight();
-//                            imgName+="("+width+"A"+height+")";
-//                        }
-//                        imgName+=".jpeg";
-//                        fileManager.uploadFile(multipartFile.getBytes(), imgName, false);
-//                        list.add(imgName);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//
-//            boolean b = packageService.updatePackageImgsById(id, StringUtils.join(list, ","));
-//            if (b) {
-//                result.setCode(1);
-//                result.setMsg("预览图上传成功");
-//            }else {
-//                result.setMsg("预览图上传失败");
-//            }
-//        }
-//        return result;
-//    }
 
     @ApiOperation(value = "/updatePackageImgsById", notes = "更新预览图")
     @ApiImplicitParams(value = {

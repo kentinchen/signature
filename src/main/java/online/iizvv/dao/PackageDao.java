@@ -39,6 +39,16 @@ public interface PackageDao {
     int updatePackage(Package pck);
 
     /**
+      * create by: iizvv
+      * description: 更新ipa是否限制下载
+      * create time: 2019-09-21 17:16
+
+      * @return int
+      */
+    @Update("UPDATE package SET is_stint = #{state} WHERE id = #{id}")
+    int updatePackageStateById(long id, boolean state);
+
+    /**
      * create by: iizvv
      * description: 更新简介
      * create time: 2019-09-02 19:05
