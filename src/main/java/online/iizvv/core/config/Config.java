@@ -2,6 +2,9 @@ package online.iizvv.core.config;
 
 public class Config {
 
+    /** 当前版本 */
+    public final static String version = "2.5";
+
     /** 账号最大可容纳设备量 */
     public final static int total = 100;
 

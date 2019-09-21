@@ -119,7 +119,7 @@ public class ITSUtils {
         String name = UUID.randomUUID().toString().replace("-", "");
         Map attributes = new HashMap();
         attributes.put("name", name);
-        attributes.put("profileType", "IOS_APP_DEVELOPMENT");
+        attributes.put("profileType", "IOS_APP_ADHOC");
         body.put("attributes", attributes);
         Map relationships = new HashMap();
         Map bundleId = new HashMap();
@@ -269,7 +269,7 @@ public class ITSUtils {
         body.put("type", "certificates");
         Map attributes = new HashMap();
         attributes.put("csrContent", csr);
-        attributes.put("certificateType", "IOS_DEVELOPMENT");
+        attributes.put("certificateType", "IOS_APP_ADHOC");
         body.put("attributes", attributes);
         Map data = new HashMap();
         data.put("data", body);
