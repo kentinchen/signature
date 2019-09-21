@@ -55,7 +55,7 @@ public class Config {
 
 
 
-    
+
     /**  以下信息无需修改 */
     /** 当前版本 */
     public final static String version = "2.5";
