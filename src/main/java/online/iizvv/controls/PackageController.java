@@ -96,6 +96,20 @@ public class PackageController {
         return result;
     }
 
+
+    @ApiOperation(value = "/updatePackageStateById", notes = "上传ipa", produces = "application/json")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "packageId", required = true),
+            @ApiImplicitParam(name = "count", value = "生成的密钥数量"),
+    })
+    @PostMapping("/updatePackageStateById")
+    public Result insertPackageKeysById(long id, long count) {
+        Result result = new Result();
+
+        return result;
+    }
+
+
     @ApiOperation(value = "/updatePackageSummaryById", notes = "更新简介")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "id", value = "ipaId", required = true),
