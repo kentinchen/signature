@@ -153,6 +153,17 @@ public interface PackageDao {
     Package getPackageByIdAndUserId(long userId, long id);
 
     /**
+     * create by: iizvv
+     * description: 获取指定IPA的证书名称
+     * create time: 2019-09-23 06:41
+     *
+
+     * @return String
+     */
+    @Select("SELECT mobileconfig FROM package WHERE id=#{id}")
+    String getMobileconfigById(long id);
+
+    /**
       * create by: iizvv
       * description: 获取指定IPA下载名称
       * create time: 2019-07-06 09:12

@@ -35,7 +35,7 @@ public interface PKDao {
      
      * @return 
      */
-    @Update("UPDATE package_key SET is_use = #{false}, use_time = CURRENT_TIMESTAMP WHERE id = #{id}")
+    @Update("UPDATE package_key SET is_use = false, use_time = CURRENT_TIMESTAMP WHERE id = #{id}")
     int updateKeyStateById(long id);
 
     /**
@@ -58,7 +58,7 @@ public interface PKDao {
 
      * @return PackageKey
      */
-    @Select("SELECT * FROM package WHERE package_id = #{packageId} AND key = #{key} AND is_use = true")
+    @Select("SELECT * FROM package_key WHERE package_id = #{packageId} AND `key` = #{key} AND is_use = true")
     PackageKey getPackageKeyInfoByKey(long packageId, String key);
 
     /**

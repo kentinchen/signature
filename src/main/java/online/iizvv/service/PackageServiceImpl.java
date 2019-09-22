@@ -171,6 +171,19 @@ public class PackageServiceImpl {
     }
 
     /**
+     * create by: iizvv
+     * description: 获取指定IPA的证书地址
+     * create time: 2019-09-23 06:41
+     *
+
+     * @return String
+     */
+    public String getMobileconfigById(long id) {
+        String mobileconfig = packageDao.getMobileconfigById(id);
+        return mobileconfig;
+    }
+
+    /**
       * create by: iizvv
       * description: 通过用户获取指定ipa
       * create time: 2019-09-05 14:34

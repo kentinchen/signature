@@ -353,39 +353,33 @@ public class PackageController {
             @ApiImplicitParam(name = "id", value = "ipaId", required = true)
     })
     @PostMapping("/verificationKeyById")
-    public Result<Package> verificationKeyById(String id, String key) {
+    public Result verificationKeyById(String id, String key) {
         Result result = new Result();
-        long packageId = AESUtils.decryptStr(id);
-        PackageKey packageKey = pkService.getPackageKeyInfoByKey(packageId, key);
-        if (packageKey == null) {
-            result.setMsg("当前授权码不可用");
-        }else {
-            result.setCode(1);
-            result.setMsg("当前授权码可使用，开始获取应用信息");
-            Package pck = packageService.getPackageById(packageId);
-            if (pck==null) {
-                result.setMsg("当前应用不存在");
+        if (id.length() >= 16) {
+            long packageId = AESUtils.decryptStr(id);
+            PackageKey packageKey = pkService.getPackageKeyInfoByKey(packageId, key);
+            if (packageKey == null) {
+                result.setMsg("当前授权码不可用");
             }else {
-                boolean state = pkService.updateKeyStateById(packageKey.getId());
-                if (state) {
-                    System.out.println("授权码状态已改变");
-                }else {
-                    System.out.println("授权码状态改变失败");
-                }
-                pck.setId(0);
-                pck.setIcon(Config.aliMainHost + "/" + pck.getIcon());
-                if (pck.getImgs()!=null) {
-                    List imgs = new LinkedList();
-                    for (String s : pck.getImgs().split(",")) {
-                        imgs.add(Config.aliMainHost + "/" + s);
-                    }
-                    pck.setImgs(StringUtils.join(imgs, ","));
-                }
-                pck.setMobileconfig(Config.aliMainHost + "/" + pck.getMobileconfig());
                 result.setCode(1);
-                result.setMsg("获取成功");
-                result.setData(pck);
+                result.setMsg("当前授权码可使用，开始获取应用信息");
+                String mobileconfig = packageService.getMobileconfigById(packageId);
+                if (mobileconfig==null) {
+                    result.setMsg("当前应用不存在");
+                }else {
+                    boolean state = pkService.updateKeyStateById(packageKey.getId());
+                    if (state) {
+                        System.out.println("授权码状态已改变");
+                    }else {
+                        System.out.println("授权码状态改变失败");
+                    }
+                    result.setCode(1);
+                    result.setMsg("获取成功");
+                    result.setData(Config.aliMainHost + "/" + mobileconfig);
+                }
             }
+        }else {
+            result.setMsg("信息获取失败");
         }
         return result;
     }
