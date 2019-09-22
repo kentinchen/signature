@@ -1,9 +1,9 @@
 spring:
   datasource:
     name: signature
-    url: jdbc:mysql://localhost:3306/signature
+    url: jdbc:mysql://121.40.244.47:3306/app
     username: root
-    password: dongAI1221
+    password:
     type: com.mysql.cj.jdbc.MysqlDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     tomcat:
@@ -17,11 +17,8 @@ spring:
 
   servlet:
     multipart:
-      max-file-size: 2048MB
-      max-request-size: 2048MB
-  mvc:
-    async:
-      request-timeout: 80000
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 mybatis:
   configuration:
@@ -29,7 +26,7 @@ mybatis:
     map-underscore-to-camel-case: true
 
 server:
-  port: 8082
+  port: 8080
 
 # 要扫描的包记录日志信息
 #logging:

@@ -1,6 +1,7 @@
 package online.iizvv.controls;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.lang.UUID;
@@ -16,7 +17,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import online.iizvv.pojo.Package;
 import online.iizvv.core.pojo.Result;
+import online.iizvv.pojo.PackageKey;
 import online.iizvv.service.DPServiceImpl;
+import online.iizvv.service.PKServiceImpl;
 import online.iizvv.service.PackageServiceImpl;
 import online.iizvv.core.config.Config;
 import online.iizvv.utils.AESUtils;
@@ -29,9 +32,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.LinkedList;
@@ -57,6 +65,9 @@ public class PackageController {
     @Autowired
     private DPServiceImpl dpService;
 
+    @Autowired
+    private PKServiceImpl pkService;
+
     @ApiOperation(value = "/insertPackage", notes = "上传ipa", produces = "application/json")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "file", value = "ipa文件", required = true),
@@ -78,7 +89,7 @@ public class PackageController {
         return result;
     }
 
-    @ApiOperation(value = "/updatePackageStateById", notes = "上传ipa", produces = "application/json")
+    @ApiOperation(value = "/updatePackageStateById", notes = "更新ipa是否使用密钥下载状态", produces = "application/json")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "id", value = "packageId", required = true),
             @ApiImplicitParam(name = "state", value = "是否限制下载"),
@@ -97,18 +108,83 @@ public class PackageController {
     }
 
 
-    @ApiOperation(value = "/updatePackageStateById", notes = "上传ipa", produces = "application/json")
+    @ApiOperation(value = "/insertPackageKeysById", notes = "添加密钥", produces = "application/json")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "id", value = "packageId", required = true),
             @ApiImplicitParam(name = "count", value = "生成的密钥数量"),
     })
-    @PostMapping("/updatePackageStateById")
+    @PostMapping("/insertPackageKeysById")
     public Result insertPackageKeysById(long id, long count) {
         Result result = new Result();
-
+        if (count > 0 && count <= 201) {
+            result.setMsg("单次生成数量在1-200之间");
+        }else {
+            List list = new LinkedList();
+            for (long i = 0; i < count; i++) {
+                String uuid = IdUtil.simpleUUID();
+                boolean b = pkService.insertKeyByPackageId(id, uuid);
+                if (b) {
+                    list.add(uuid);
+                    System.out.println(uuid + "  添加成功");
+                }else {
+                    System.out.println(uuid + "  添加失败");
+                }
+            }
+            if (list.size() > 0) {
+                result.setMsg("已成功生成" + list.size() + "个密钥");
+                result.setCode(1);
+                result.setData(list);
+            }else {
+                result.setMsg("密钥生成失败， 请稍后再试");
+            }
+        }
         return result;
     }
 
+    @ApiOperation(value = "/deletePackageKeysById", notes = "删除密钥", produces = "application/json")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "keyId", value = "keyId", required = true),
+    })
+    @PostMapping("/deletePackageKeysById")
+    public Result deletePackageKeysById(long keyId) {
+        Result result = new Result();
+        boolean b = pkService.deleteKeyById(keyId);
+        if (b) {
+            result.setCode(1);
+            result.setMsg("删除密钥成功");
+        }else {
+            result.setMsg("密钥删除失败, 请稍后再试");
+        }
+        return result;
+    }
+
+    @ApiOperation(value = "/getAllUnusedKeysById", notes = "获取未使用密钥", produces = "application/json")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "packageId", required = true),
+    })
+    @GetMapping("/getAllUnusedKeysById")
+    public Result getAllUnusedKeysByPackageId(long id) {
+        Result result = new Result();
+        List<PackageKey> keys = pkService.getAllUnusedKeysByPackageId(id);
+        result.setMsg("数据获取成功");
+        result.setCode(1);
+        result.setData(keys);
+        return result;
+    }
+
+    @ApiOperation(value = "/getAllUsedKeysById", notes = "获取未使用密钥", produces = "application/json")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "packageId", required = true),
+    })
+    @GetMapping("/getAllUsedKeysById")
+    public Result getAllUsedKeysById(long id) {
+        Result result = new Result();
+        List<PackageKey> keyList = pkService.getAllUsedKeysByPackageId(id);
+        result.setMsg("数据获取成功");
+        result.setCode(1);
+        result.setData(keyList);
+        return result;
+    }
 
     @ApiOperation(value = "/updatePackageSummaryById", notes = "更新简介")
     @ApiImplicitParams(value = {
@@ -150,9 +226,33 @@ public class PackageController {
         return result;
     }
 
+//    @ApiOperation(value="/getAllPackageByUserId", notes="获取指定用户上传的全部ipa", produces = "application/json")
+//    @ApiImplicitParams(value = {
+//            @ApiImplicitParam(name = "userId", value = "用户id", required = true),
+//    })
+//    @GetMapping("/getAllPackageByUserId")
+//    public Result<Package> getAllPackageByUserId(HttpServletRequest request, long userId) {
+//        Result result = new Result();
+//        String authorization = request.getHeader(Config.Authorization);
+//        Claims claims = JwtHelper.verifyJwt(authorization);
+//        long level = (Integer)claims.get("level");
+//        if (level == 1) {
+//            List<Package> packageList = packageService.getAllPackageById(userId);
+//            result.setCode(1);
+//            result.setData(packageList);
+//            result.setMsg("数据获取成功");
+//        }else {
+//            result.setMsg("用户权限不足");
+//        }
+//        return result;
+//    }
+
     @ApiOperation(value = "/getAllPackage", notes = "获取全部IPA")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true),
+    })
     @GetMapping("/getAllPackage")
-    public Result<List<Package>> getAllPackage(HttpServletRequest request) {
+    public Result<List<Package>> getAllPackage(HttpServletRequest request, long userId) {
         String ua = request.getHeader("User-Agent");
         System.out.println("当前用户User-Agent: " + ua );
         String authorization = request.getHeader(Config.Authorization);
@@ -160,7 +260,11 @@ public class PackageController {
         long level = (Integer)claims.get("level");
         List<Package> allPackage = null;
         if (level == 1) {
-            allPackage = packageService.getAllPackage();
+            if (userId > 0) {
+                allPackage = packageService.getAllPackageByUserId(userId);
+            }else {
+                allPackage = packageService.getAllPackage();
+            }
         }else {
             allPackage = packageService.getAllPackageByUserId((Integer)claims.get("userId"));
         }
@@ -218,8 +322,8 @@ public class PackageController {
     @GetMapping("/getPackageH5ById")
     public Result<Package> getPackageH5ById(String id) {
         Result result = new Result();
-        long i = AESUtils.decryptStr(id);
-        Package pck = packageService.getPackageById(i);
+        long packageId = AESUtils.decryptStr(id);
+        Package pck = packageService.getPackageById(packageId);
         if (pck==null) {
             result.setMsg("内容不存在");
         }else {
@@ -232,10 +336,56 @@ public class PackageController {
                 }
                 pck.setImgs(StringUtils.join(imgs, ","));
             }
-            pck.setMobileconfig(Config.aliMainHost + "/" + pck.getMobileconfig());
+            if (!pck.isStint()) {
+                pck.setMobileconfig(Config.aliMainHost + "/" + pck.getMobileconfig());
+            }else {
+                pck.setMobileconfig(null);
+            }
             result.setCode(1);
             result.setMsg("获取成功");
             result.setData(pck);
+        }
+        return result;
+    }
+
+    @ApiOperation(value = "/verificationKeyById", notes = "验证授权码是否可用")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "ipaId", required = true)
+    })
+    @PostMapping("/verificationKeyById")
+    public Result<Package> verificationKeyById(String id, String key) {
+        Result result = new Result();
+        long packageId = AESUtils.decryptStr(id);
+        PackageKey packageKey = pkService.getPackageKeyInfoByKey(packageId, key);
+        if (packageKey == null) {
+            result.setMsg("当前授权码不可用");
+        }else {
+            result.setCode(1);
+            result.setMsg("当前授权码可使用，开始获取应用信息");
+            Package pck = packageService.getPackageById(packageId);
+            if (pck==null) {
+                result.setMsg("当前应用不存在");
+            }else {
+                boolean state = pkService.updateKeyStateById(packageKey.getId());
+                if (state) {
+                    System.out.println("授权码状态已改变");
+                }else {
+                    System.out.println("授权码状态改变失败");
+                }
+                pck.setId(0);
+                pck.setIcon(Config.aliMainHost + "/" + pck.getIcon());
+                if (pck.getImgs()!=null) {
+                    List imgs = new LinkedList();
+                    for (String s : pck.getImgs().split(",")) {
+                        imgs.add(Config.aliMainHost + "/" + s);
+                    }
+                    pck.setImgs(StringUtils.join(imgs, ","));
+                }
+                pck.setMobileconfig(Config.aliMainHost + "/" + pck.getMobileconfig());
+                result.setCode(1);
+                result.setMsg("获取成功");
+                result.setData(pck);
+            }
         }
         return result;
     }

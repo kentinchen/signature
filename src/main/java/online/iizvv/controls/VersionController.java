@@ -27,7 +27,12 @@ public class VersionController {
     public Result<Map> getVersionInfo() {
         Map map = new HashMap();
         map.put("version", Config.version);
-        map.put("info", "- 修复无p12文件账号被使用的问题；\n- 修改证书格式为IOS_APP_ADHOC; \n - 添加账号时主动判断使用的文件是否正确");
+        map.put("info", "- 增加授权码功能; \n " +
+                "- 增加管理员可单独查看某个用户上传的ipas; \n " +
+                "- 增加上传ipa时显示当前ipa的基本信息; \n " +
+                "- 修复无p12文件账号被使用的问题; \n " +
+                "- 修改证书格式为IOS_APP_ADHOC; \n " +
+                "- 添加账号时主动判断使用的文件是否正确; ");
         return new Result(1, map, "信息获取成功");
     }
 

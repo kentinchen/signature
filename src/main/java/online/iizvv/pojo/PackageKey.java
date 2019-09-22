@@ -1,10 +1,12 @@
 package online.iizvv.pojo;
 
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
+@ApiModel(value = "密钥对象")
 public class PackageKey {
 
   @ApiModelProperty(value = "id")
@@ -15,6 +17,8 @@ public class PackageKey {
   private boolean isUse;
   @ApiModelProperty(value = "packageId")
   private long packageId;
+  @ApiModelProperty(value = "使用时间")
+  private Date useTime;
   @ApiModelProperty(value = "创建时间")
   private Date createTime;
 
@@ -51,6 +55,14 @@ public class PackageKey {
     this.packageId = packageId;
   }
 
+  public Date getUseTime() {
+    return useTime;
+  }
+
+  public void setUseTime(Date useTime) {
+    this.useTime = useTime;
+  }
+
   public Date getCreateTime() {
     return createTime;
   }
@@ -59,6 +71,7 @@ public class PackageKey {
     this.createTime = createTime;
   }
 
+
   @Override
   public String toString() {
     return "PackageKey{" +
@@ -66,6 +79,7 @@ public class PackageKey {
             ", key='" + key + '\'' +
             ", isUse=" + isUse +
             ", packageId=" + packageId +
+            ", useTime=" + useTime +
             ", createTime=" + createTime +
             '}';
   }

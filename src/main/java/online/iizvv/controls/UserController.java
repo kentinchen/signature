@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import online.iizvv.core.config.Config;
 import online.iizvv.core.pojo.Result;
+import online.iizvv.pojo.Package;
 import online.iizvv.pojo.User;
 import online.iizvv.service.UserServiceImpl;
 import online.iizvv.utils.JwtHelper;

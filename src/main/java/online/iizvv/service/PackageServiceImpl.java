@@ -172,7 +172,7 @@ public class PackageServiceImpl {
 
     /**
       * create by: iizvv
-      * description: 通过用户获取制定ipa
+      * description: 通过用户获取指定ipa
       * create time: 2019-09-05 14:34
 
       * @return Package
@@ -180,6 +180,18 @@ public class PackageServiceImpl {
     public Package getPackageByIdAndUserId(long userId, long id) {
         Package aPackage = packageDao.getPackageByIdAndUserId(userId, id);
         return aPackage;
+    }
+
+    /**
+     * create by: iizvv
+     * description: 获取当前用户上传的ipa列表
+     * create time: 2019-09-22 12:50
+     *
+
+     * @return List
+     */
+    public List <Package> getAllPackageById(long userId) {
+        return packageDao.getAllPackageById(userId);
     }
 
     /**

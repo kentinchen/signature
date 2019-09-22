@@ -1,5 +1,6 @@
 package online.iizvv.utils;
 
+import cn.hutool.core.codec.Base64;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.*;
@@ -104,6 +105,44 @@ public class FileManager {
         OSS ossClient = new OSSClientBuilder().build(Config.vpcEndpoint, Config.accessKeyID, Config.accessKeySecret);
         ossClient.putObject(bucket, objName, new ByteArrayInputStream(bytes));
         ossClient.shutdown();
+    }
+
+    /**
+     * create by: iizvv
+     * description: base64转文件
+     * create time: 2019-07-04 17:12
+
+     * @return File
+     */
+    public File base64ToFile(String base64, String fileName) {
+        File file = null;
+        BufferedOutputStream bos = null;
+        java.io.FileOutputStream fos = null;
+        try {
+            byte[] bytes = Base64.decode(base64);
+            file=new File(fileName);
+            fos = new java.io.FileOutputStream(file);
+            bos = new BufferedOutputStream(fos);
+            bos.write(bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (bos != null) {
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return file;
     }
 
     /**

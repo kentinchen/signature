@@ -12,6 +12,7 @@ import java.util.List;
  * @modified By：
  * @version: 1.0
  */
+@Mapper
 public interface PackageDao {
 
     /**
@@ -170,6 +171,17 @@ public interface PackageDao {
       */
     @Select("SELECT * FROM package")
     List<Package> getAllPackage();
+
+    /**
+     * create by: iizvv
+     * description: 获取指定用户上传的ipa列表
+     * create time: 2019-09-22 12:50
+     *
+
+     * @return List
+     */
+    @Select("SELECT * FROM package WHERE user_id = #{userId}")
+    List <Package> getAllPackageById(long userId);
 
     /**
      * create by: iizvv

@@ -182,8 +182,12 @@ public class UDIDController {
                         System.out.println("找到合适帐号， 开始添加设备");
                         // 找到合适的帐号
                         String resignature = insertDevice(id, udid, apple, pck.getLink());
-                        packageService.updatePackageDeviceCountById(id);
-                        itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
+                        if (resignature == null) {
+                            itemService = "1";
+                        }else {
+                            packageService.updatePackageDeviceCountById(id);
+                            itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
+                        }
                     }
                 }else {
                     System.out.println("设备存在， 开始获取帐号信息");
@@ -229,12 +233,23 @@ public class UDIDController {
             e.printStackTrace();
         }
         if (devId!=null) {
-            int i = deviceService.insertDevice(udid, apple.getId(), devId);
-            appleService.updateDevicesCount(apple.getId());
-            if (i==1) {
-                Device device = deviceService.getDeviceByUDID(udid);
-                dpService.insertDP(device.getId(), id);
-                key = resignature(apple, device, link);
+            if (devId.equalsIgnoreCase("errors")) {
+                System.out.println("帐号: " + apple.getAccount() + " 已不可使用, 继续寻找可用帐号");
+                appleService.updateAppleIsUse(apple.getId(), false);
+                analyzeUDID(udid, id);
+            }else {
+                int i = deviceService.insertDevice(udid, apple.getId(), devId);
+                appleService.updateDevicesCount(apple.getId());
+                if (i==1) {
+                    Device device = deviceService.getDeviceByUDID(udid);
+                    dpService.insertDP(device.getId(), id);
+                    key = resignature(apple, device, link);
+                    if (key.equalsIgnoreCase( "errors")) {
+                        appleService.updateAppleIsUse(apple.getId(), false);
+                        System.out.println("帐号不可用, 继续寻找可用帐号");
+                        analyzeUDID(udid, id);
+                    }
+                }
             }
         }else {
             System.out.println("帐号不可用, 继续寻找可用帐号");
@@ -259,7 +274,13 @@ public class UDIDController {
         File mobileprovision = null;
         try {
             System.out.println("开始创建签名证书");
-            mobileprovision = ITSUtils.insertProfile(apple, device.getDeviceId(), classPath);
+            String profile = ITSUtils.insertProfile(apple, device.getDeviceId());
+            if (profile.equalsIgnoreCase("errors")) {
+                System.out.println("帐号: " + apple.getAccount() + "已无法使用");
+                return "errors";
+            }else if (profile != null) {
+                mobileprovision = fileManager.base64ToFile(profile, classPath + IdUtil.simpleUUID() + ".mobileprovision");
+            }
         } catch (InvalidKeyException e) {
             System.out.println("签名证书创建失败");
             e.printStackTrace();

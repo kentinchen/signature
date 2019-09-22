@@ -2,6 +2,7 @@ package online.iizvv.utils;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -113,10 +114,10 @@ public class ITSUtils {
 
      * @return File
      */
-    public static File insertProfile(Apple apple, String devId, String path) throws InvalidKeyException {
+    public static String insertProfile(Apple apple, String devId) throws InvalidKeyException {
         Map body = new HashMap();
         body.put("type", "profiles");
-        String name = UUID.randomUUID().toString().replace("-", "");
+        String name = IdUtil.simpleUUID();
         Map attributes = new HashMap();
         attributes.put("name", name);
         attributes.put("profileType", "IOS_APP_ADHOC");
@@ -153,11 +154,14 @@ public class ITSUtils {
                 body(JSON.toJSONString(data)).execute().body();
         System.out.println("证书创建执行完成: " + result);
         Map map = JSON.parseObject(result, Map.class);
+        JSONArray errors = (JSONArray)map.get("errors");
+        if (errors != null) {
+            return "errors";
+        }
         Map o = (Map) map.get("data");
         Map o2 = (Map) o.get("attributes");
         String profileContent = (String) o2.get("profileContent");
-        File file = base64ToFile(profileContent, path + name + ".mobileprovision");
-        return file;
+        return profileContent;
     }
 
     /**
@@ -217,43 +221,7 @@ public class ITSUtils {
         }
     }
 
-    /**
-     * create by: iizvv
-     * description: base64转文件
-     * create time: 2019-07-04 17:12
 
-     * @return File
-     */
-    static File base64ToFile(String base64, String fileName) {
-        File file = null;
-        BufferedOutputStream bos = null;
-        java.io.FileOutputStream fos = null;
-        try {
-            byte[] bytes = Base64.decode(base64);
-            file=new File(fileName);
-            fos = new java.io.FileOutputStream(file);
-            bos = new BufferedOutputStream(fos);
-            bos.write(bytes);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (bos != null) {
-                try {
-                    bos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return file;
-    }
 
     /**
      * create by: iizvv
@@ -279,8 +247,12 @@ public class ITSUtils {
                 execute().body();
         System.out.println(result);
         Map map = JSON.parseObject(result, Map.class);
+        JSONArray errors = (JSONArray)map.get("errors");
+        if (errors != null) {
+            return "errors";
+        }
         Map data1 = (Map) map.get("data");
-        String id = (String)data1.get("id");
+        String id = (String) data1.get("id");
         return id;
     }
 

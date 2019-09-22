@@ -25,13 +25,20 @@ public class BeanRegisterConfig {
         registration.addUrlPatterns(
                 "/user/getAllUser",
                 "/user/getAllReviewUser",
-                "/user/getUserInfo");
+                "/user/getUserInfo",
+                "/user/checkUserById");
         registration.addUrlPatterns("/apple/*");
         registration.addUrlPatterns("/device/*");
         registration.addUrlPatterns(
                 "/package/deletePackageById",
+                "/package/deletePackageKeysById",
                 "/package/getAllPackage",
+                "/package/getAllPackageByUserId",
+                "/package/getAllUnusedKeysById",
+                "/package/getAllUsedKeysById",
+                "/package/getPackageById",
                 "/package/insertPackage",
+                "/package/insertPackageKeysById",
                 "/package/updatePackageById",
                 "/package/updatePackageImgsById",
                 "/package/updatePackageSummaryById",

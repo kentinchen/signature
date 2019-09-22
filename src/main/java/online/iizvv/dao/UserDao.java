@@ -1,5 +1,6 @@
 package online.iizvv.dao;
 
+import online.iizvv.pojo.Package;
 import online.iizvv.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
