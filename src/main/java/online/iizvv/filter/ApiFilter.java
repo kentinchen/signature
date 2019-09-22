@@ -3,6 +3,7 @@ package online.iizvv.filter;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.Claims;
+import online.iizvv.core.config.Config;
 import online.iizvv.core.pojo.Result;
 import online.iizvv.utils.JwtHelper;
 
@@ -34,7 +35,7 @@ public class ApiFilter implements Filter {
         System.out.println("当前时间: " + DateUtil.now() +
                 "\n当前用户User-Agent: " + ua +
                 "\n当前请求接口: " + request.getRequestURL().toString());
-        String token = request.getHeader("Authorization"); //获取请求传来的token
+        String token = request.getHeader(Config.Authorization); //获取请求传来的token
         Claims claims = JwtHelper.verifyJwt(token); //验证token
         if (claims == null) {
             Result result = new Result();

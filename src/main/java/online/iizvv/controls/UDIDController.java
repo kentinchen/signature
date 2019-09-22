@@ -24,10 +24,7 @@ import online.iizvv.service.DeviceServiceImpl;
 import online.iizvv.service.PackageServiceImpl;
 import online.iizvv.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -103,7 +100,7 @@ public class UDIDController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "encryptHex", value = "encryptHex", required = true),
     })
-    @PostMapping("/getSignatureStatus")
+    @GetMapping("/getSignatureStatus")
     public Result getSignatureStatus(String encryptHex) {
         String hexStr = AESUtils.decryptHexStr(encryptHex);
         String[] split = hexStr.split("/");
