@@ -116,7 +116,7 @@ public class PackageController {
     @PostMapping("/insertPackageKeysById")
     public Result insertPackageKeysById(long id, long count) {
         Result result = new Result();
-        if (count > 0 && count <= 201) {
+        if (count > 0 && count < 201) {
             result.setMsg("单次生成数量在1-200之间");
         }else {
             List list = new LinkedList();
