@@ -14,39 +14,39 @@ public class Config {
 
 
     /** 后台请求地址域名 例：https://api.test.com */
-    public final static String apiHost = "https://api.iizvv.online";
+    public final static String apiHost = "https://";
 
     /** 前端h5域名 例：https://www.test.com */
-    public final static String h5Host = "https://auto.iizvv.online";
+    public final static String h5Host = "https://";
 
 
 
     /** access key */
-    public final static String accessKeyID = "LTAIsQ3I75GkpTYd";
+    public final static String accessKeyID = "";
 
     /** secret key */
-    public final static String accessKeySecret = "Y8a8q3FCnA0lQqeQh22OuciDCNw88C";
+    public final static String accessKeySecret = "";
 
 
     /** 主内容 Bucket 域名 例：https://ipa1.oss-cn-zhangjiakou.aliyuncs.com */
-    public final static String aliMainHost = "https://file.iizvv.online";
+    public final static String aliMainHost = "https://";
 
     /** 主内容空间名 */
-    public final static String aliMainBucket = "auto-main-file";
+    public final static String aliMainBucket = "";
 
 
     /** 临时内容 Bucket 域名 例：https://ipa2.oss-cn-zhangjiakou.aliyuncs.com */
-    public final static String aliTempHost = "https://auto-ipa2.oss-cn-zhangjiakou.aliyuncs.com";
+    public final static String aliTempHost = "https://";
 
     /** 临时内容空间名 */
-    public final static String aliTempBucket = "auto-ipa2";
+    public final static String aliTempBucket = "";
 
 
     /** 内网地域节点 例：https://oss-cn-zhangjiakou-internal.aliyuncs.com */
-    public final static String vpcEndpoint = "https://oss-cn-zhangjiakou-internal.aliyuncs.com";
+    public final static String vpcEndpoint = "https://";
 
     /** 内网主内容 Bucket 域名 例：https://ipa1.oss-cn-zhangjiakou-internal.aliyuncs.com */
-    public final static String vpcAliMainHost = "https://auto-main-file.oss-cn-zhangjiakou-internal.aliyuncs.com";
+    public final static String vpcAliMainHost = "https://";
 
 
 
@@ -55,7 +55,7 @@ public class Config {
 
     /**  以下信息无需修改 */
     /** 当前版本 */
-    public final static String version = "2.6";
+    public final static String version = "2.6.1";
 
     /** 账号最大可容纳设备量 */
     public final static int total = 100;

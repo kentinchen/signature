@@ -24,7 +24,7 @@ public class VersionController {
 
     @ApiOperation(value="/getVersionInfo", notes="获取当前版本信息", produces = "application/json")
     @GetMapping("/getVersionInfo")
-    public Result<Map> getVersionInfo() {
+    public Result<Map> getVersionInfo() throws InterruptedException {
         Map map = new HashMap();
         map.put("version", Config.version);
         map.put("info", "- 增加授权码功能; \n " +

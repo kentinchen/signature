@@ -1,11 +1,11 @@
 package online.iizvv.controls;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.dd.plist.NSDictionary;
 import com.dd.plist.PropertyListFormatException;
@@ -32,18 +32,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
+
 
 /**
  * @author ：iizvv
@@ -112,32 +108,39 @@ public class PackageController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "id", value = "packageId", required = true),
             @ApiImplicitParam(name = "count", value = "生成的密钥数量"),
+            @ApiImplicitParam(name = "bit", value = "生成的密钥位数")
     })
     @PostMapping("/insertPackageKeysById")
-    public Result insertPackageKeysById(long id, long count) {
+    public Result insertPackageKeysById(long id, int count, int bit) {
         Result result = new Result();
-        if (count > 0 && count < 201) {
-            result.setMsg("单次生成数量在1-200之间");
+        if (bit < 6) {
+            result.setMsg("授权码位数最小不能小于六位");
         }else {
-            List list = new LinkedList();
-            for (long i = 0; i < count; i++) {
-                String uuid = IdUtil.simpleUUID();
-                boolean b = pkService.insertKeyByPackageId(id, uuid);
-                if (b) {
-                    list.add(uuid);
-                    System.out.println(uuid + "  添加成功");
-                }else {
-                    System.out.println(uuid + "  添加失败");
+            if (count > 0 && count < 201) {
+                List list = new LinkedList();
+                for (long i = 0; i < count; i++) {
+                    String code = randomCode(bit);
+                    boolean b = pkService.insertKeyByPackageId(id, code);
+                    if (b) {
+                        list.add(code);
+                        System.out.println(code + "  添加成功");
+                    }else {
+                        System.out.println(code + "  添加失败");
+                    }
                 }
-            }
-            if (list.size() > 0) {
-                result.setMsg("已成功生成" + list.size() + "个密钥");
-                result.setCode(1);
-                result.setData(list);
+                if (list.size() > 0) {
+                    result.setMsg("此次成功生成" + list.size() + "个密钥, 失败" + (count-list.size()) + "个");
+                    result.setCode(1);
+                    result.setData(list);
+                }else {
+                    result.setMsg("密钥生成失败， 请稍后再试");
+                }
+
             }else {
-                result.setMsg("密钥生成失败， 请稍后再试");
+                result.setMsg("单次生成数量在1-200之间");
             }
         }
+
         return result;
     }
 
@@ -226,30 +229,9 @@ public class PackageController {
         return result;
     }
 
-//    @ApiOperation(value="/getAllPackageByUserId", notes="获取指定用户上传的全部ipa", produces = "application/json")
-//    @ApiImplicitParams(value = {
-//            @ApiImplicitParam(name = "userId", value = "用户id", required = true),
-//    })
-//    @GetMapping("/getAllPackageByUserId")
-//    public Result<Package> getAllPackageByUserId(HttpServletRequest request, long userId) {
-//        Result result = new Result();
-//        String authorization = request.getHeader(Config.Authorization);
-//        Claims claims = JwtHelper.verifyJwt(authorization);
-//        long level = (Integer)claims.get("level");
-//        if (level == 1) {
-//            List<Package> packageList = packageService.getAllPackageById(userId);
-//            result.setCode(1);
-//            result.setData(packageList);
-//            result.setMsg("数据获取成功");
-//        }else {
-//            result.setMsg("用户权限不足");
-//        }
-//        return result;
-//    }
-
     @ApiOperation(value = "/getAllPackage", notes = "获取全部IPA")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "userId", value = "用户id", required = true),
+            @ApiImplicitParam(name = "userId", value = "用户id"),
     })
     @GetMapping("/getAllPackage")
     public Result<List<Package>> getAllPackage(HttpServletRequest request, long userId) {
@@ -260,7 +242,7 @@ public class PackageController {
         long level = (Integer)claims.get("level");
         List<Package> allPackage = null;
         if (level == 1) {
-            if (userId > 0) {
+            if (Long.valueOf(userId) != null && userId > 0) {
                 allPackage = packageService.getAllPackageByUserId(userId);
             }else {
                 allPackage = packageService.getAllPackage();
@@ -367,11 +349,17 @@ public class PackageController {
                 if (mobileconfig==null) {
                     result.setMsg("当前应用不存在");
                 }else {
-                    boolean state = pkService.updateKeyStateById(packageKey.getId());
-                    if (state) {
-                        System.out.println("授权码状态已改变");
+                    boolean b = pkService.updateKeyStateById(packageKey.getId());
+                    if (b) {
+                        System.out.println("授权码状态改变成功");
                     }else {
                         System.out.println("授权码状态改变失败");
+                    }
+                    boolean state = pkService.deleteKeyById(packageKey.getId());
+                    if (state) {
+                        System.out.println("授权码删除成功");
+                    }else {
+                        System.out.println("授权码删除失败");
                     }
                     result.setCode(1);
                     result.setMsg("获取成功");
@@ -714,6 +702,52 @@ public class PackageController {
             result.setMsg("文件不存在， 检查路径是否正确");
         }
         return result;
+    }
+
+
+    /**
+      * create by: iizvv
+      * description: 获取授权码
+      * create time: 2019-09-23 13:53
+      
+      * @return String
+      */
+    String randomCode(int bit) {
+        StringBuilder str = new StringBuilder();
+        while (str.length() != bit) {
+            int i = RandomUtil.randomInt(10);
+            if (i%2==0) {
+                String value;
+                if (RandomUtil.randomInt()%3==0) {
+                    value = asciiToString(String.valueOf(RandomUtil.randomInt(65, 91)));
+                }else {
+                    value = asciiToString(String.valueOf(RandomUtil.randomInt(97, 123)));
+                }
+                str.append(value);
+            }
+            str.append(i);
+            if (str.length() > bit) {
+                str.deleteCharAt(bit);
+            }
+        }
+        return str.toString();
+    }
+
+    /**
+      * create by: iizvv
+      * description: ascii转string
+      * create time: 2019-09-23 13:51
+
+      * @return String
+      */
+    String asciiToString(String value)
+    {
+        StringBuffer sbu = new StringBuffer();
+        String[] chars = value.split(",");
+        for (int i = 0; i < chars.length; i++) {
+            sbu.append((char) Integer.parseInt(chars[i]));
+        }
+        return sbu.toString();
     }
 
 }
