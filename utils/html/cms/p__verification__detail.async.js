@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[13],{C6d8:function(n,e,t){"use strict";t.r(e),t.d(e,"default",function(){return i});var r=t("q1tI"),a=t.n(r);class i extends a.a.Component{render(){return a.a.createElement("div",null,"VerificationDetail")}}}}]);
