@@ -135,6 +135,7 @@ public class AppleController {
     })
     @PostMapping("/uploadP12")
     public Result uploadP12(long id, MultipartFile file) throws IOException {
+        System.out.println("开始上传配p12文件：" + file.getOriginalFilename());
         Result result = new Result();
         String p12 = IdUtil.simpleUUID() + ".p12";
         if (file.getContentType().equalsIgnoreCase("application/x-pkcs12")) {
