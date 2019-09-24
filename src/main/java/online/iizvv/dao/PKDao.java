@@ -49,6 +49,16 @@ public interface PKDao {
     @Delete("DELETE FROM package_key WHERE id = #{id}")
     int deleteKeyById(long id);
 
+    /**
+     * create by: iizvv
+     * description: 删除指定ipa的密钥
+     * create time: 2019-09-24 19:37
+     *
+
+     * @return int
+     */
+    @Delete("DELETE FROM package_key WHERE package_id = #{packageId}")
+    int deleteKeyByPackageId(long packageId);
 
     /**
      * create by: iizvv

@@ -407,6 +407,8 @@ public class PackageController {
         Result result = new Result();
         System.out.println("开始删除中间关系表");
         dpService.deleteDPByPackageId(id);
+        System.out.println("开始删除密钥");
+        pkService.deleteKeyByPackageId(id);
         System.out.println("开始删除ipa文件");
         boolean b = packageService.deletePackageById(id);
         if (b) {

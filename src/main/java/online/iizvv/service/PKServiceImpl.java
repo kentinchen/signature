@@ -26,7 +26,7 @@ public class PKServiceImpl {
      * create time: 2019-09-22 11:05
      *
 
-     * @return int
+     * @return boolean
      */
     public boolean insertKeyByPackageId(long packageId, String key) {
         int aPk = pkDao.insertKeyByPackageId(packageId, key);
@@ -40,7 +40,7 @@ public class PKServiceImpl {
      * create time: 2019-09-22 11:13
      *
 
-     * @return
+     * @return boolean
      */
     public boolean updateKeyStateById(long id) {
         int aPK = pkDao.updateKeyStateById(id);
@@ -53,10 +53,23 @@ public class PKServiceImpl {
      * create time: 2019-09-22 11:19
      *
 
-     * @return int
+     * @return boolean
      */
     public boolean deleteKeyById(long id) {
         int aPK = pkDao.deleteKeyById(id);
+        return aPK>0;
+    }
+
+    /**
+     * create by: iizvv
+     * description: 删除指定ipa的密钥
+     * create time: 2019-09-24 19:37
+     *
+
+     * @return boolean
+     */
+    public boolean deleteKeyByPackageId(long packageId) {
+        int aPK = pkDao.deleteKeyByPackageId(packageId);
         return aPK>0;
     }
 

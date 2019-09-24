@@ -47,7 +47,7 @@ public class ITSUtils {
         Map map = JSON.parseObject(result, Map.class);
         JSONArray errors = (JSONArray)map.get("errors");
         if (errors!=null) {
-            res.put("msg", "与苹果建立连接失败, 帐号无法使用或p8文件不正确：errors: " + errors);
+            res.put("msg", "与苹果建立连接失败, 帐号无法使用或p8文件不正确：errors: " + result);
         }else {
             JSONArray data = (JSONArray)map.get("data");
             List devices = new LinkedList();
@@ -63,16 +63,20 @@ public class ITSUtils {
             }
             removeCertificates(header);
             removeBundleIds(header);
-            String cerId = insertCertificates(header, authorize.getCsr());
-            String bundleIds = insertBundleIds(header);
-            Map meta = (Map) map.get("meta");
-            Map paging = (Map)meta.get("paging");
-            int total = (int) paging.get("total");
-            res.put("number", Config.total-total);
-            res.put("devices", devices);
-            res.put("cerId", cerId);
-            res.put("bundleIds", bundleIds);
-            System.out.println(res);
+            Map <String, String>cerMap = insertCertificates(header, authorize.getCsr());
+            if (cerMap.get("msg") != null) {
+                res.put("msg", "创建cer文件失败: errors:" + cerMap.get("msg"));
+            }else {
+                String bundleIds = insertBundleIds(header);
+                Map meta = (Map) map.get("meta");
+                Map paging = (Map)meta.get("paging");
+                int total = (int) paging.get("total");
+                res.put("number", Config.total-total);
+                res.put("devices", devices);
+                res.put("cerId", cerMap.get("id"));
+                res.put("bundleIds", bundleIds);
+                System.out.println(res);
+            }
         }
         return res;
     }
@@ -173,13 +177,14 @@ public class ITSUtils {
      * @return void
      */
     static void removeCertificates(Map header) {
+        System.out.println("开始删除所有已存在证书");
         String url = "https://api.appstoreconnect.apple.com/v1/certificates";
         String result = HttpRequest.
                 get(url).
                 addHeaders(header).
                 execute().
                 body();
-        System.out.println(result);
+        System.out.println("获取完成：" + result);
         Map map = JSON.parseObject(result, Map.class);
         JSONArray data = (JSONArray)map.get("data");
         for (Object datum : data) {
@@ -189,25 +194,26 @@ public class ITSUtils {
                     addHeaders(header).
                     execute().
                     body();
-            System.out.println(result2);
+            System.out.println("删除完成：" + result2);
         }
     }
 
     /**
-      * create by: iizvv
-      * description: 删除所有绑定的ids
-      * create time: 2019-07-01 14:41
-      *
-      * @return void
-      */
+     * create by: iizvv
+     * description: 删除所有绑定的ids
+     * create time: 2019-07-01 14:41
+     *
+     * @return void
+     */
     static void removeBundleIds(Map header) {
+        System.out.println("开始删除绑定的ids");
         String url = "https://api.appstoreconnect.apple.com/v1/bundleIds";
         String result = HttpRequest.
                 get(url).
                 addHeaders(header).
                 execute().
                 body();
-        System.out.println(result);
+        System.out.println("获取完成: " + result);
         Map map = JSON.parseObject(result, Map.class);
         JSONArray data = (JSONArray) map.get("data");
         for (Object datum : data) {
@@ -217,7 +223,7 @@ public class ITSUtils {
                     addHeaders(header).
                     execute().
                     body();
-            System.out.println(result2);
+            System.out.println("删除完成：" + result2);
         }
     }
 
@@ -231,7 +237,9 @@ public class ITSUtils {
 
      * @return 创建的证书id
      */
-    static String insertCertificates(Map header, String csr) {
+    static Map <String, String>insertCertificates(Map header, String csr) {
+        System.out.println("开始创建cer证书");
+        HashMap hashMap = new HashMap();
         String url = "https://api.appstoreconnect.apple.com/v1/certificates";
         Map body = new HashMap();
         body.put("type", "certificates");
@@ -245,25 +253,29 @@ public class ITSUtils {
                 addHeaders(header).
                 body(JSON.toJSONString(data)).
                 execute().body();
-        System.out.println(result);
+        System.out.println("创建完成: " + result);
         Map map = JSON.parseObject(result, Map.class);
         JSONArray errors = (JSONArray)map.get("errors");
         if (errors != null) {
-            return "errors";
+            System.out.println("创建失败: " + result);
+            hashMap.put("msg", result);
+            return hashMap;
         }
         Map data1 = (Map) map.get("data");
         String id = (String) data1.get("id");
-        return id;
+        hashMap.put("id", id);
+        return hashMap;
     }
 
     /**
-      * create by: iizvv
-      * description: 创建BundleIds
-      * create time: 2019-07-01 15:00
-      *
-      * @return id
-      */
+     * create by: iizvv
+     * description: 创建BundleIds
+     * create time: 2019-07-01 15:00
+     *
+     * @return id
+     */
     static String insertBundleIds(Map header) {
+        System.out.println("开始创建BundleIds");
         String url = "https://api.appstoreconnect.apple.com/v1/bundleIds";
         Map body = new HashMap();
         body.put("type", "bundleIds");
@@ -278,7 +290,7 @@ public class ITSUtils {
                 addHeaders(header).
                 body(JSON.toJSONString(data)).
                 execute().body();
-        System.out.println(result);
+        System.out.println("创建完：" + result);
         Map map = JSON.parseObject(result, Map.class);
         Map data1 = (Map) map.get("data");
         String id = (String)data1.get("id");
@@ -302,7 +314,6 @@ public class ITSUtils {
                 setHeaderParam(JwsHeader.ALGORITHM, "ES256").
                 setHeaderParam(JwsHeader.KEY_ID,kid).
                 setHeaderParam(JwsHeader.TYPE, "JWT").
-
                 setIssuer(iss).
                 claim("exp", System.currentTimeMillis()/1000 +  60 * 10).
                 setAudience("appstoreconnect-v1").
@@ -311,6 +322,7 @@ public class ITSUtils {
         Map map = new HashMap();
         map.put("Content-Type", "application/json");
         map.put("Authorization", "Bearer " + token);
+        System.out.println("jwt=" + map);
         return map;
     }
 
