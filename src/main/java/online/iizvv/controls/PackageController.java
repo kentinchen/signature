@@ -426,7 +426,8 @@ public class PackageController {
      * @return void
      */
     Package analyzeIPA(MultipartFile file) throws ParserConfigurationException, ParseException, SAXException, PropertyListFormatException, IOException {
-        File excelFile = File.createTempFile(UUID.randomUUID().toString(), ".ipa");
+        System.out.println("开始解析ipa文件");
+        File excelFile = File.createTempFile(IdUtil.simpleUUID(), ".ipa");
         file.transferTo(excelFile);
         File ipa = ZipUtil.unzip(excelFile);
         File app = getAppFile(ipa);
@@ -439,22 +440,27 @@ public class PackageController {
         if (parse.containsKey("CFBundleDisplayName")) {
             name = parse.get("CFBundleDisplayName").toString();
         }
+        System.out.println("ipa名称为: " + name);
         String version = "";
         if (parse.containsKey("CFBundleShortVersionString")) {
             version = parse.get("CFBundleShortVersionString").toString();
         }
+        System.out.println("当前版本为: " + version);
         String buildVersion = "";
         if (parse.containsKey("CFBundleVersion")) {
             buildVersion = parse.get("CFBundleVersion").toString();
         }
+        System.out.println("编译版本为: " + buildVersion);
         String miniVersion = "";
         if (parse.containsKey("MinimumOSVersion")) {
             miniVersion = parse.get("MinimumOSVersion").toString();
         }
+        System.out.println("最小支持系统版本为: " + miniVersion);
         String bundleIdentifier = "";
         if (parse.containsKey("CFBundleIdentifier")) {
             bundleIdentifier = parse.get("CFBundleIdentifier").toString();
         }
+        System.out.println("bundleIdentifier为: " + bundleIdentifier);
         NSDictionary icons = null;
         if (parse.containsKey("CFBundleIcons")) {
             icons = (NSDictionary) parse.get("CFBundleIcons");
@@ -467,10 +473,15 @@ public class PackageController {
             iconLink = (String) list.get(list.size()-1);
             String iconPath = app.getAbsolutePath() + "/" + iconLink;
             File icon = new File( iconPath + "@3x.png");
-            if (icon==null) {
+            if (!icon.exists()) {
                 icon = new File(iconPath+"@2x.png");
             }
-            iconLink = uploadIcon(icon);
+            if (!icon.exists()) {
+                icon = new File(iconPath + ".png");
+            }
+            if (icon.exists()) {
+                iconLink = uploadIcon(icon);
+            }
             icon.delete();
         }
         String appLink = uploadAppFile(excelFile);
@@ -642,6 +653,7 @@ public class PackageController {
             String fileName = file.getOriginalFilename();
             String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
             if (suffix.equalsIgnoreCase("ipa")) {
+                System.out.println("上传的文件为ipa文件");
                 // 上传的文件为ipa文件
                 Package aPackage = null;
                 try {
@@ -706,12 +718,12 @@ public class PackageController {
 
 
     /**
-      * create by: iizvv
-      * description: 获取授权码
-      * create time: 2019-09-23 13:53
-      
-      * @return String
-      */
+     * create by: iizvv
+     * description: 获取授权码
+     * create time: 2019-09-23 13:53
+
+     * @return String
+     */
     String randomCode(int bit) {
         StringBuilder str = new StringBuilder();
         while (str.length() != bit) {
@@ -734,12 +746,12 @@ public class PackageController {
     }
 
     /**
-      * create by: iizvv
-      * description: ascii转string
-      * create time: 2019-09-23 13:51
+     * create by: iizvv
+     * description: ascii转string
+     * create time: 2019-09-23 13:51
 
-      * @return String
-      */
+     * @return String
+     */
     String asciiToString(String value)
     {
         StringBuffer sbu = new StringBuffer();
