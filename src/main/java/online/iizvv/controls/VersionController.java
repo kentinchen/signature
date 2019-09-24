@@ -27,7 +27,9 @@ public class VersionController {
     public Result<Map> getVersionInfo() throws InterruptedException {
         Map map = new HashMap();
         map.put("version", Config.version);
-        map.put("info", "- 增加授权码功能; \n " +
+        map.put("info", "- 移除第三方签名工具的依赖; \n " +
+                "- 优化签名操作, 减少整体流程耗时; \n " +
+                "- 增加授权码功能; \n " +
                 "- 增加管理员可单独查看某个用户上传的ipas; \n " +
                 "- 增加上传ipa时显示当前ipa的基本信息; \n " +
                 "- 修复无p12文件账号被使用的问题; \n " +

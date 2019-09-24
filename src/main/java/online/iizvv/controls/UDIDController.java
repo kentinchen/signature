@@ -300,9 +300,16 @@ public class UDIDController {
                 System.out.println("p12下载完成: " + p12Url);
                 File p12 = new File(classPath+apple.getP12());
                 // 调用本地shell脚本并传递必须参数
-                command = "/root/ausign.sh " + app.getAbsolutePath() + " " +
+//                command = "/root/ausign.sh " + app.getAbsolutePath() + " " +
+//                        p12.getAbsolutePath() + " " +
+//                        mobileprovision.getAbsolutePath();
+                // 最终下载的ipa文件
+                File file = new File(classPath + IdUtil.simpleUUID() + ".ipa");
+                command = classPath + "zsign.sh " +
                         p12.getAbsolutePath() + " " +
-                        mobileprovision.getAbsolutePath();
+                        mobileprovision.getAbsolutePath() + " " +
+                        file.getAbsolutePath() + " " +
+                        app.getAbsolutePath();
                 System.out.println("调用shell进行签名: " + command);
                 try {
                     begin = System.currentTimeMillis();
@@ -311,7 +318,7 @@ public class UDIDController {
                     time = (end - begin)/1000;
                     System.out.println("签名脚本执行耗时: " + time + "秒");
                     if (result) {
-                        key = uploadIPA(app);
+                        key = uploadIPA(file);
                     }
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
@@ -319,6 +326,7 @@ public class UDIDController {
                     mobileprovision.delete();
                     app.delete();
                     p12.delete();
+                    file.delete();
                 }
             }
         }else {

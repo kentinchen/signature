@@ -1,7 +1,9 @@
 package online.iizvv.core.config;
 
 public class Config {
-    
+
+    /***********************************选填******************************/
+
     /** 组织名称 */
     public final static String payloadOrganization = "Apple Inc.";
 
@@ -11,14 +13,16 @@ public class Config {
     /** 安装证书时显示的描述 */
     public final static String payloadDescription = "该配置文件帮助用户进行APP授权安装！";
 
+    /*********************************************************************/
 
+
+    /***********************************必填******************************/
 
     /** 后台请求地址域名 例：https://api.test.com */
     public final static String apiHost = "https://";
 
     /** 前端h5域名 例：https://www.test.com */
     public final static String h5Host = "https://";
-
 
 
     /** access key */
@@ -48,14 +52,14 @@ public class Config {
     /** 内网主内容 Bucket 域名 例：https://ipa1.oss-cn-zhangjiakou-internal.aliyuncs.com */
     public final static String vpcAliMainHost = "https://";
 
-
+    /*********************************************************************/
 
 
 
 
     /**  以下信息无需修改 */
     /** 当前版本 */
-    public final static String version = "2.6.1";
+    public final static String version = "3.0";
 
     /** 账号最大可容纳设备量 */
     public final static int total = 100;

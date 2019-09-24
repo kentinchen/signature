@@ -2,10 +2,7 @@ package online.iizvv.dao;
 
 import online.iizvv.pojo.Package;
 import online.iizvv.pojo.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -17,6 +14,7 @@ import java.util.List;
  * @version: 1.0
  */
 
+@Mapper
 public interface UserDao {
 
     /**

@@ -1,8 +1,6 @@
 package online.iizvv.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * @author ：iizvv
@@ -14,21 +12,43 @@ import java.io.InputStreamReader;
 public class Shell {
 
     /**
-      * create by: iizvv
-      * description: 执行shell
-      * create time: 2019-07-05 09:17
+     * create by: iizvv
+     * description: 执行shell
+     * create time: 2019-07-05 09:17
 
-      * @return 是否执行成功
-      */
+     * @return 是否执行成功
+     */
     public static boolean run(String command) throws IOException, InterruptedException {
         Process process = Runtime.getRuntime().exec(command);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
+        printMessage(process.getInputStream());
+        printMessage(process.getErrorStream());
         int exitValue = process.waitFor();
-        while((line = reader.readLine())!= null){
-            System.out.println(line);
-        }
         return exitValue==0;
+    }
+
+    /**
+     * create by: iizvv
+     * description: 异步执行shell
+     * create time: 2019-09-24 11:10
+
+     * @return void
+     */
+    private static void printMessage(final InputStream input) {
+        new Thread(new Runnable() {
+            public void run() {
+                Reader reader = new InputStreamReader(input);
+                BufferedReader bf = new BufferedReader(reader);
+                String line = null;
+                try {
+                    while((line=bf.readLine())!=null)
+                    {
+                        System.out.println(line);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
 }
