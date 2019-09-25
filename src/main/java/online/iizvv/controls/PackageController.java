@@ -3,7 +3,6 @@ package online.iizvv.controls;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
-import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.ZipUtil;
@@ -189,58 +188,16 @@ public class PackageController {
         return result;
     }
 
-    @ApiOperation(value = "/updatePackageSummaryById", notes = "更新简介")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "id", value = "ipaId", required = true),
-            @ApiImplicitParam(name = "summary", value = "简介内容"),
-    })
-    @PostMapping("/updatePackageSummaryById")
-    public Result updatePackageSummaryById(long id, String summary) {
-        Result result = new Result();
-        boolean b = packageService.updatePackageSummaryById(id, summary);
-        if (b) {
-            result.setCode(1);
-            result.setMsg("简介更新成功");
-        }else {
-            result.setMsg("简介更新失败");
-        }
-        return result;
-    }
-
-    @ApiOperation(value = "/updatePackageImgsById", notes = "更新预览图")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "id", value = "ipaId", required = true),
-            @ApiImplicitParam(name = "file", value = "图片文件"),
-    })
-    @PostMapping("/updatePackageImgsById")
-    public Result updatePackageImgsById(long id, String imgs) {
-        Result result = new Result();
-        if (imgs==null || imgs.isEmpty()) {
-            imgs = "";
-        }
-        imgs = imgs.trim();
-        boolean b = packageService.updatePackageImgsById(id, imgs.replace(Config.aliMainHost + "/", ""));
-        if (b) {
-            result.setCode(1);
-            result.setMsg("预览图上传成功");
-        }else {
-            result.setMsg("预览图上传失败");
-        }
-        return result;
-    }
-
     @ApiOperation(value = "/getAllPackage", notes = "获取全部IPA")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "userId", value = "用户id"),
     })
     @GetMapping("/getAllPackage")
     public Result<List<Package>> getAllPackage(HttpServletRequest request, long userId) {
-        String ua = request.getHeader("User-Agent");
-        System.out.println("当前用户User-Agent: " + ua );
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long level = (Integer)claims.get("level");
-        List<Package> allPackage = null;
+        long level = (Integer)claims.get(Config.level);
+        List<Package> allPackage;
         if (level == 1) {
             if (Long.valueOf(userId) != null && userId > 0) {
                 allPackage = packageService.getAllPackageByUserId(userId);
@@ -248,7 +205,7 @@ public class PackageController {
                 allPackage = packageService.getAllPackage();
             }
         }else {
-            allPackage = packageService.getAllPackageByUserId((Integer)claims.get("userId"));
+            allPackage = packageService.getAllPackageByUserId((Integer)claims.get(Config.userId));
         }
         Result result = new Result();
         for (Package aPackage : allPackage) {
@@ -269,12 +226,12 @@ public class PackageController {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long level = (Integer)claims.get("level");
+        long level = (Integer)claims.get(Config.level);
         Package pck;
         if (level == 1) {
             pck = packageService.getPackageById(id);
         }else {
-            long userId = (Integer)claims.get("userId");
+            long userId = (Integer)claims.get(Config.userId);
             pck = packageService.getPackageByIdAndUserId(userId, id);
         }
         if (pck==null) {
@@ -330,6 +287,48 @@ public class PackageController {
         return result;
     }
 
+
+    @ApiOperation(value = "/updatePackageSummaryById", notes = "更新简介")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "ipaId", required = true),
+            @ApiImplicitParam(name = "summary", value = "简介内容"),
+    })
+    @PostMapping("/updatePackageSummaryById")
+    public Result updatePackageSummaryById(long id, String summary) {
+        Result result = new Result();
+        boolean b = packageService.updatePackageSummaryById(id, summary);
+        if (b) {
+            result.setCode(1);
+            result.setMsg("简介更新成功");
+        }else {
+            result.setMsg("简介更新失败");
+        }
+        return result;
+    }
+
+    @ApiOperation(value = "/updatePackageImgsById", notes = "更新预览图")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "ipaId", required = true),
+            @ApiImplicitParam(name = "file", value = "图片文件"),
+    })
+    @PostMapping("/updatePackageImgsById")
+    public Result updatePackageImgsById(long id, String imgs) {
+        Result result = new Result();
+        if (imgs==null || imgs.isEmpty()) {
+            imgs = "";
+        }
+        imgs = imgs.trim();
+        boolean b = packageService.updatePackageImgsById(id, imgs.replace(Config.aliMainHost + "/", ""));
+        if (b) {
+            result.setCode(1);
+            result.setMsg("预览图上传成功");
+        }else {
+            result.setMsg("预览图上传失败");
+        }
+        return result;
+    }
+
+
     @ApiOperation(value = "/verificationKeyById", notes = "验证授权码是否可用")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "id", value = "ipaId", required = true)
@@ -382,7 +381,7 @@ public class PackageController {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long level = (Integer)claims.get("level");
+        long level = (Integer)claims.get(Config.level);
         if (level == 1) {
             boolean b = packageService.updatePackageTotalDeviceById(id, count);
             if (b) {
@@ -430,7 +429,9 @@ public class PackageController {
     Package analyzeIPA(MultipartFile file) throws ParserConfigurationException, ParseException, SAXException, PropertyListFormatException, IOException {
         System.out.println("开始解析ipa文件");
         File excelFile = File.createTempFile(IdUtil.simpleUUID(), ".ipa");
+        System.out.println("开始转换文件");
         file.transferTo(excelFile);
+        System.out.println("开始解压文件");
         File ipa = ZipUtil.unzip(excelFile);
         File app = getAppFile(ipa);
         File info = new File(app.getAbsolutePath()+"/Info.plist");
@@ -585,11 +586,11 @@ public class PackageController {
         writer.write(xml);
         System.out.println("开始执行shell");
         String mobileconfig = tempName + "_.mobileconfig";
-        String com = "/root/mobileconfig.sh " + writer.getFile().getAbsolutePath() + " " + mobileconfig;
+        String com = Config.rootPath + "mobileconfig.sh " + writer.getFile().getAbsolutePath() + " " + mobileconfig;
         try {
             Shell.run(com);
             System.out.println("shell执行成功, 文件位置为: " + mobileconfig);
-            File file = new File("/root/" + mobileconfig);
+            File file = new File(Config.rootPath + mobileconfig);
             mobileconfig = uploadMobileconfig(file);
             file.delete();
         } catch (Exception e) {
@@ -649,9 +650,9 @@ public class PackageController {
     Result databaseWithIPA(HttpServletRequest request, MultipartFile file, long id) {
         Result result = new Result();
         if (file!=null) {
-            String authorization = request.getHeader("Authorization");
+            String authorization = request.getHeader(Config.Authorization);
             Claims claims = JwtHelper.verifyJwt(authorization);
-            long userId = (Integer)claims.get("userId");
+            long userId = (Integer)claims.get(Config.userId);
             String fileName = file.getOriginalFilename();
             String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
             if (suffix.equalsIgnoreCase("ipa")) {

@@ -45,7 +45,7 @@ public class ITSUtils {
                 execute().body();
         System.out.println(result);
         Map map = JSON.parseObject(result, Map.class);
-        JSONArray errors = (JSONArray)map.get("errors");
+        JSONArray errors = (JSONArray)map.get(Config.errors);
         if (errors!=null) {
             res.put("msg", "与苹果建立连接失败, 帐号无法使用或p8文件不正确：errors: " + result);
         }else {
@@ -103,8 +103,12 @@ public class ITSUtils {
         String result = HttpRequest.post(url).
                 addHeaders(getToken(authorize.getP8(), authorize.getIss(), authorize.getKid())).
                 body(JSON.toJSONString(data)).execute().body();
-        System.out.println("添加账号执行完成: " + result);
+        System.out.println("添加设备执行完成: " + result);
         Map map = JSON.parseObject(result, Map.class);
+        JSONArray errors = (JSONArray)map.get(Config.errors);
+        if (errors != null) {
+            return Config.errors;
+        }
         Map data1 = (Map) map.get("data");
         String id = (String)data1.get("id");
         return id;
@@ -158,9 +162,9 @@ public class ITSUtils {
                 body(JSON.toJSONString(data)).execute().body();
         System.out.println("证书创建执行完成: " + result);
         Map map = JSON.parseObject(result, Map.class);
-        JSONArray errors = (JSONArray)map.get("errors");
+        JSONArray errors = (JSONArray)map.get(Config.errors);
         if (errors != null) {
-            return "errors";
+            return Config.errors;
         }
         Map o = (Map) map.get("data");
         Map o2 = (Map) o.get("attributes");
@@ -255,7 +259,7 @@ public class ITSUtils {
                 execute().body();
         System.out.println("创建完成: " + result);
         Map map = JSON.parseObject(result, Map.class);
-        JSONArray errors = (JSONArray)map.get("errors");
+        JSONArray errors = (JSONArray)map.get(Config.errors);
         if (errors != null) {
             System.out.println("创建失败: " + result);
             hashMap.put("msg", result);
@@ -321,7 +325,7 @@ public class ITSUtils {
                 compact();
         Map map = new HashMap();
         map.put("Content-Type", "application/json");
-        map.put("Authorization", "Bearer " + token);
+        map.put(Config.Authorization, "Bearer " + token);
         System.out.println("jwt=" + map);
         return map;
     }

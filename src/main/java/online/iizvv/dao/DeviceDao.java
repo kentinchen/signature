@@ -23,8 +23,8 @@ public interface DeviceDao {
 
      * @return int
      */
-    @Update("UPDATE package SET is_use = #{isUse} WHERE id = #{id}")
-    int updatePackageIsUse(long id, boolean isUse);
+    @Update("UPDATE device SET is_use = #{isUse} WHERE apple_id = #{appleId}")
+    int updateDeviceIsUseByAppleId(long appleId, boolean isUse);
 
     /**
      * create by: iizvv

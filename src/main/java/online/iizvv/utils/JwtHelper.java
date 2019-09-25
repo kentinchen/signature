@@ -16,9 +16,9 @@ import java.util.Map;
 public class JwtHelper {
 
     /**
-     * token 过期时间, 单位: 秒. 这个值表示 30 天
+     * token 过期时间, 单位: 秒. 这个值表示 15 天
      */
-    private static final long TOKEN_EXPIRED_TIME = (30 * (24 * (60 * 60))) * 1000;
+    private static final long TOKEN_EXPIRED_TIME = (15 * (24 * (60 * 60))) * 1000;
 
     /**
      * jwt 加密解密密钥

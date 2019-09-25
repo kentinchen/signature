@@ -66,7 +66,7 @@ public class UDIDController {
     @PostMapping("/getUDID")
     public void getUDID(HttpServletResponse response, HttpServletRequest request, String encryptHex) throws UnsupportedEncodingException {
         response.setContentType("text/html;charset=UTF-8");
-        String ua = request.getHeader("User-Agent");
+        String ua = request.getHeader(Config.ua);
         System.out.println("当前时间: " + DateUtil.now() + "\n当前用户User-Agent: " + ua);
         String udid = null;
         try {
@@ -167,39 +167,27 @@ public class UDIDController {
             if (pck.getUseDevice()<pck.getTotalDevice()) {
                 System.out.println("开始寻找可用帐号");
                 Device device = deviceService.getDeviceByUDID(udid);
+                // 设备不存在于任何帐号下，或设备所处帐号已无法使用
                 if (device==null) {
-                    // 设备不存在于任何帐号下， 或设备所处帐号已无法使用
-                    System.out.println("设备不存在, 或设备所处帐号已无法使用");
-                    Apple apple = appleService.getBeUsableAppleAccount();
-                    if (apple==null) {
-                        // 没有找到合适的帐号
-                        System.out.println("没有找到合适的帐号");
-                        itemService = "1";
-                    }else {
-                        System.out.println("找到合适帐号， 开始添加设备");
-                        // 找到合适的帐号
-                        String resignature = insertDevice(id, udid, apple, pck.getLink());
-                        if (resignature == null) {
-                            itemService = "1";
-                        }else {
-                            packageService.updatePackageDeviceCountById(id);
-                            itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
-                        }
-                    }
+                    itemService = getItemService(id, udid, pck);
                 }else {
                     System.out.println("设备存在， 开始获取帐号信息");
                     // 设备存在
                     Apple apple = appleService.getAppleAccountById(device.getAppleId());
                     System.out.println("帐号信息获取成功: " + apple.toString());
                     String resignature = resignature(apple, device, pck.getLink());
-                    itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
-                    if (dpService.getDPByIds(device.getId(), id) != null) {
-                        System.out.println("此设备已下载过此应用, 当前次不消耗设备量");
+                    if (resignature != null && !resignature.equalsIgnoreCase(Config.errors)) {
+                        itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
+                        if (dpService.getDPByIds(device.getId(), id) != null) {
+                            System.out.println("此设备已下载过此应用, 当前次不消耗设备量");
+                        }else {
+                            System.out.println("此设备未下载过此应用, 当前次消耗设备量");
+                            System.out.println("device_id: " + device.toString() + ", package_id: " + id);
+                            dpService.insertDP(device.getId(), id);
+                            packageService.updatePackageDeviceCountById(id);
+                        }
                     }else {
-                        System.out.println("此设备未下载过此应用, 当前次消耗设备量");
-                        System.out.println("device_id: " + device.toString() + ", package_id: " + id);
-                        dpService.insertDP(device.getId(), id);
-                        packageService.updatePackageDeviceCountById(id);
+                        itemService = getItemService(id, udid, pck);
                     }
                 }
             }else {
@@ -207,6 +195,35 @@ public class UDIDController {
             }
         }else {
             itemService = "3";
+        }
+        return itemService;
+    }
+
+    /**
+      * create by: iizvv
+      * description: 获取最终执行结果
+      * create time: 2019-09-25 13:22
+
+      * @return itemService
+      */
+    String getItemService(long id, String udid, Package pck) {
+        String itemService;
+        System.out.println("设备不存在, 或设备所处帐号已无法使用, 寻找新的可用账号");
+        Apple apple = appleService.getBeUsableAppleAccount();
+        // 没有找到合适的帐号
+        if (apple==null) {
+            System.out.println("没有找到合适的帐号");
+            itemService = "1";
+        }else {
+            System.out.println("找到合适帐号， 开始添加设备");
+            // 找到合适的帐号
+            String resignature = insertDevice(id, udid, apple, pck.getLink());
+            if (resignature == null) {
+                itemService = "1";
+            }else {
+                packageService.updatePackageDeviceCountById(id);
+                itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
+            }
         }
         return itemService;
     }
@@ -229,29 +246,35 @@ public class UDIDController {
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         }
-        if (devId!=null) {
-            if (devId.equalsIgnoreCase("errors")) {
-                System.out.println("帐号: " + apple.getAccount() + " 已不可使用, 继续寻找可用帐号");
-                appleService.updateAppleIsUse(apple.getId(), false);
-                analyzeUDID(udid, id);
-            }else {
-                int i = deviceService.insertDevice(udid, apple.getId(), devId);
-                appleService.updateDevicesCount(apple.getId());
-                if (i==1) {
-                    Device device = deviceService.getDeviceByUDID(udid);
-                    dpService.insertDP(device.getId(), id);
-                    key = resignature(apple, device, link);
-                    if (key.equalsIgnoreCase( "errors")) {
-                        appleService.updateAppleIsUse(apple.getId(), false);
-                        System.out.println("帐号不可用, 继续寻找可用帐号");
-                        analyzeUDID(udid, id);
-                    }
-                }
+        if (devId!=null && !devId.equalsIgnoreCase(Config.errors)) {
+            boolean b = deviceService.insertDevice(udid, apple.getId(), devId);
+            appleService.updateDevicesCount(apple.getId());
+            if (b) {
+                Device device = deviceService.getDeviceByUDID(udid);
+                dpService.insertDP(device.getId(), id);
+                key = resignature(apple, device, link);
             }
-        }else {
+        }
+        if (devId == null ||
+                devId.equalsIgnoreCase(Config.errors) ||
+                key == null ||
+                key.equalsIgnoreCase(Config.errors)) {
             System.out.println("帐号不可用, 继续寻找可用帐号");
-            appleService.updateAppleIsUse(apple.getId(), false);
-            analyzeUDID(udid, id);
+            boolean b = appleService.updateAppleIsUse(apple.getId(), false);
+            deviceService.updateDeviceIsUseByAppleId(apple.getId(), false);
+            if (b) {
+                System.out.println("已将账号: " + apple.getAccount() + ", 以及账号下设备标记为不可用");
+            }else {
+                System.out.println("账号: " + apple.getAccount() + "标记失败");
+            }
+            System.out.println("开始寻找新的账号");
+            apple = appleService.getBeUsableAppleAccount();
+            if (apple != null) {
+                key = insertDevice(id, udid, apple, link);
+            }
+        }
+        if (apple == null) {
+            return null;
         }
         return key;
     }
@@ -264,76 +287,67 @@ public class UDIDController {
       * @return String
       */
     String resignature(Apple apple, Device device, String appLink) {
-        String key = null;
+        String key = Config.errors;
         // ResourceUtils.getURL("classpath:").getPath()
-        String classPath = "/root/";
+//        String classPath = "/root/";
         long begin = System.currentTimeMillis();
         File mobileprovision = null;
         try {
             System.out.println("开始创建签名证书");
             String profile = ITSUtils.insertProfile(apple, device.getDeviceId());
-            if (profile.equalsIgnoreCase("errors")) {
-                System.out.println("帐号: " + apple.getAccount() + "已无法使用");
-                return "errors";
-            }else if (profile != null) {
-                mobileprovision = fileManager.base64ToFile(profile, classPath + IdUtil.simpleUUID() + ".mobileprovision");
+            System.out.println("证书内容为: " + profile);
+            if (profile != null && !profile.equalsIgnoreCase(Config.errors)) {
+                System.out.println("证书创建成功");
+                mobileprovision = fileManager.base64ToFile(profile,
+                        Config.rootPath + IdUtil.simpleUUID() + ".mobileprovision");
             }
         } catch (InvalidKeyException e) {
             System.out.println("签名证书创建失败");
             e.printStackTrace();
         }
-        if (mobileprovision!=null) {
-            long end = System.currentTimeMillis();
-            long time = (end - begin)/1000;
-            System.out.println("创建证书耗时: " + time + "秒");
+        long end = System.currentTimeMillis();
+        long time = (end - begin)/1000;
+        System.out.println("创建证书耗时: " + time + "秒");
+        if (mobileprovision!=null && mobileprovision.exists()) {
             String command = null;
-            if (mobileprovision==null) {
-                System.out.println("文件创建失败");
-            }else {
-                System.out.println("文件创建成功");
-                String appUrl = Config.vpcAliMainHost + "/" + appLink;
-                HttpUtil.downloadFile(appUrl, classPath);
-                System.out.println("ipa下载完成: " + appUrl);
-                File app = new File(classPath+appLink);
-                String p12Url = Config.vpcAliMainHost + "/" + apple.getP12();
-                HttpUtil.downloadFile(p12Url, classPath);
-                System.out.println("p12下载完成: " + p12Url);
-                File p12 = new File(classPath+apple.getP12());
-                // 调用本地shell脚本并传递必须参数
+            System.out.println("文件创建成功");
+            String appUrl = Config.vpcAliMainHost + "/" + appLink;
+            HttpUtil.downloadFile(appUrl, Config.rootPath);
+            System.out.println("ipa下载完成: " + appUrl);
+            File app = new File(Config.rootPath+appLink);
+            String p12Url = Config.vpcAliMainHost + "/" + apple.getP12();
+            HttpUtil.downloadFile(p12Url, Config.rootPath);
+            System.out.println("p12下载完成: " + p12Url);
+            File p12 = new File(Config.rootPath+apple.getP12());
+            // 调用本地shell脚本并传递必须参数
 //                command = "/root/ausign.sh " + app.getAbsolutePath() + " " +
 //                        p12.getAbsolutePath() + " " +
 //                        mobileprovision.getAbsolutePath();
-                // 最终下载的ipa文件
-                File file = new File(classPath + IdUtil.simpleUUID() + ".ipa");
-                command = classPath + "zsign.sh " +
-                        p12.getAbsolutePath() + " " +
-                        mobileprovision.getAbsolutePath() + " " +
-                        file.getAbsolutePath() + " " +
-                        app.getAbsolutePath();
-                System.out.println("调用shell进行签名: " + command);
-                try {
-                    begin = System.currentTimeMillis();
-                    boolean result = Shell.run(command);
-                    end = System.currentTimeMillis();
-                    time = (end - begin)/1000;
-                    System.out.println("签名脚本执行耗时: " + time + "秒");
-                    if (result) {
-                        key = uploadIPA(file);
-                    }
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    mobileprovision.delete();
-                    app.delete();
-                    p12.delete();
-                    file.delete();
+            // 最终下载的ipa文件
+            File file = new File(Config.rootPath + IdUtil.simpleUUID() + ".ipa");
+            command = Config.rootPath + "zsign.sh " +
+                    p12.getAbsolutePath() + " " +
+                    mobileprovision.getAbsolutePath() + " " +
+                    file.getAbsolutePath() + " " +
+                    app.getAbsolutePath();
+            System.out.println("调用shell进行签名: " + command);
+            try {
+                begin = System.currentTimeMillis();
+                boolean result = Shell.run(command);
+                end = System.currentTimeMillis();
+                time = (end - begin)/1000;
+                System.out.println("签名脚本执行耗时: " + time + "秒");
+                if (result) {
+                    key = uploadIPA(file);
                 }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                mobileprovision.delete();
+                app.delete();
+                p12.delete();
+                file.delete();
             }
-        }else {
-            System.out.println("创建证书失败, 将帐号标记为不可用, 寻找新的帐号");
-            appleService.updateAppleIsUse(apple.getId(), false);
-            dpService.updateDPIsUse(device.getId(), false);
-            deviceService.updatePackageIsUse(device.getId(), false);
         }
         return key;
     }

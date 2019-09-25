@@ -61,7 +61,7 @@ public class AppleController {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long level = (Integer)claims.get("level");
+        long level = (Integer)claims.get(Config.level);
         if (level==1) {
             List<Apple> apples = appleService.getAllAppleAccounts();
             result.setCode(1);
@@ -164,7 +164,7 @@ public class AppleController {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long level = (Integer)claims.get("level");
+        long level = (Integer)claims.get(Config.level);
         if (level==1) {
             try {
                 for (Device device : deviceService.getAllByAppleId(id)) {

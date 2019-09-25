@@ -78,9 +78,16 @@ public interface AppleDao {
      
      * @return Apple
      */
-    @Select("SELECT * FROM apple WHERE id=#{id}")
+    @Select("SELECT * FROM apple WHERE id=#{id} AND is_use = true")
     Apple getAppleAccountById(long id);
 
+    /**
+      * create by: iizvv
+      * description: 获取开发者账号信息
+      * create time: 2019-09-25 11:34
+
+      * @return apple
+      */
     @Select("SELECT * FROM apple WHERE account=#{account}")
     Apple getAppleAccountByAccount(String account);
 

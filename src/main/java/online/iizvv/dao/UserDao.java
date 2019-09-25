@@ -29,6 +29,16 @@ public interface UserDao {
     int register(String username, String password, long level);
 
     /**
+      * create by: iizvv
+      * description: 删除指定用户
+      * create time: 2019-09-25 08:48
+      
+      * @return int
+      */
+    @Delete("DELETE FROM user WHERE id = #{id}")
+    int deleteUserById(long id);
+
+    /**
      * create by: iizvv
      * description: 登录
      * create time: 2019-08-25 09:37
@@ -103,6 +113,27 @@ public interface UserDao {
      * @return
      */
     @Update("UPDATE user SET level = #{level} WHERE id=#{id}")
-    int checkUserById(long id, long level);
+    int updateUserLevelById(long id, long level);
+
+    /**
+      * create by: iizvv
+      * description: 修改用户密码
+      * create time: 2019-09-25 10:03
+
+      * @return int
+      */
+    @Update("UPDATE user SET password = #{password} WHERE id=#{id}")
+    int updateUserPasswordById(long id, String password);
+
+    /**
+      * create by: iizvv
+      * description: 使用原始密码修改密码
+      * create time: 2019-09-25 10:06
+
+      * @return int
+      */
+    @Update("UPDATE user SET password = #{password} WHERE id=#{id} AND password = #{oldPassword}")
+    int updateUserPasswordByIdAndOldPassword(long id, String oldPassword, String password);
+
 
 }

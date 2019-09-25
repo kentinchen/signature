@@ -28,8 +28,8 @@ public class DeviceServiceImpl {
 
      * @return boolean
      */
-    public boolean updatePackageIsUse(long id, boolean isUse) {
-        return deviceDao.updatePackageIsUse(id, isUse)>0;
+    public boolean updateDeviceIsUseByAppleId(long appleId, boolean isUse){
+        return deviceDao.updateDeviceIsUseByAppleId(appleId, isUse)>0;
     }
 
     public Device getDeviceByUDID(String udid) {
@@ -40,12 +40,12 @@ public class DeviceServiceImpl {
         return deviceDao.getAllByAppleId(id);
     }
 
-    public int deleteByAppleId(long id) {
-        return deviceDao.deleteByAppleId(id);
+    public boolean deleteByAppleId(long id) {
+        return deviceDao.deleteByAppleId(id)>0;
     }
 
-    public int insertDevice(String udid, Long appleId, String  deviceId) {
-        return deviceDao.insertDevice(udid, appleId, deviceId);
+    public boolean insertDevice(String udid, Long appleId, String  deviceId) {
+        return deviceDao.insertDevice(udid, appleId, deviceId)>0;
     }
 
 }

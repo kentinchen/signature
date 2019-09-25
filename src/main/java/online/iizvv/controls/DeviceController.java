@@ -2,6 +2,7 @@ package online.iizvv.controls;
 
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.*;
+import online.iizvv.core.config.Config;
 import online.iizvv.pojo.Device;
 import online.iizvv.core.pojo.Result;
 import online.iizvv.service.DeviceServiceImpl;
@@ -26,9 +27,9 @@ public class DeviceController {
     @GetMapping("/getAllByAppleId")
     public Result getAll(HttpServletRequest request, long id) {
         Result result = new Result();
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long level = (Integer)claims.get("level");
+        long level = (Integer)claims.get(Config.level);
         if (level == 1) {
             List<Device> list = deviceService.getAllByAppleId(id);
             result.setData(list);

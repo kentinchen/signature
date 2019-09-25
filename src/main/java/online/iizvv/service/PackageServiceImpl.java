@@ -160,6 +160,17 @@ public class PackageServiceImpl {
 
     /**
      * create by: iizvv
+     * description: 删除指定用户上传的ipa文件
+     * create time: 2019-08-21 12:37
+
+     * @return int
+     */
+    public boolean deletePackageByUserId(long userId) {
+        return packageDao.deletePackageByUserId(userId)>0;
+    }
+
+    /**
+     * create by: iizvv
      * description: 获取指定IPA
      * create time: 2019-07-03 16:47
 

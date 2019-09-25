@@ -131,6 +131,15 @@ public interface PackageDao {
     @Delete("DELETE FROM package WHERE id=#{id}")
     int deletePackageById(long id);
 
+    /**
+     * create by: iizvv
+     * description: 删除指定用户上传的ipa文件
+     * create time: 2019-08-21 12:37
+
+     * @return int
+     */
+    @Delete("DELETE FROM package WHERE user_id=#{userId}")
+    int deletePackageByUserId(long userId);
 
     /**
       * create by: iizvv

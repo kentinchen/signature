@@ -59,7 +59,7 @@ public class Config {
 
     /**  以下信息无需修改 */
     /** 当前版本 */
-    public final static String version = "3.0.1";
+    public final static String version = "3.0.2";
 
     /** 账号最大可容纳设备量 */
     public final static int total = 100;
@@ -69,5 +69,23 @@ public class Config {
 
     /** 加解密ipaId时使用的key */
     public final static String aesKey = "$%6AA^123*^%@!@$";
+
+    /** 用户请求ua信息 */
+    public final static String ua = "User-Agent";
+
+    /** root路径 */
+    public final static String rootPath = "/root/";
+
+    /** 签名过程中失败标记 */
+    public final static String errors = "errors";
+
+    /** jwt中的用户等级 */
+    public final static String level = "level";
+
+    /** jwt中的用户id */
+    public final static String userId = "userId";
+
+    /** jwt中的用户名 */
+    public final static String username = "username";
 
 }

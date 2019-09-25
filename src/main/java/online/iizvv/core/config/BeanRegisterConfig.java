@@ -21,12 +21,15 @@ public class BeanRegisterConfig {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new ApiFilter());
         //需要过滤的接口
+        registration.addUrlPatterns("/version/*");
         registration.addUrlPatterns("/file/*");
         registration.addUrlPatterns(
                 "/user/getAllUser",
                 "/user/getAllReviewUser",
                 "/user/getUserInfo",
-                "/user/checkUserById");
+                "/user/checkUserById",
+                "/user/deleteUserById",
+                "/user/updateUserPassword");
         registration.addUrlPatterns("/apple/*");
         registration.addUrlPatterns("/device/*");
         registration.addUrlPatterns(

@@ -9,6 +9,9 @@ import online.iizvv.core.config.Config;
 import online.iizvv.core.pojo.Result;
 import online.iizvv.pojo.Package;
 import online.iizvv.pojo.User;
+import online.iizvv.service.DPServiceImpl;
+import online.iizvv.service.PKServiceImpl;
+import online.iizvv.service.PackageServiceImpl;
 import online.iizvv.service.UserServiceImpl;
 import online.iizvv.utils.JwtHelper;
 import online.iizvv.utils.MD5Utils;
@@ -38,6 +41,15 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private PackageServiceImpl packageService;
+
+    @Autowired
+    private PKServiceImpl pkService;
+
+    @Autowired
+    DPServiceImpl dpService;
+
     @ApiOperation(value="/register", notes="注册", produces = "application/json")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "username", value = "用户名", required = true),
@@ -51,7 +63,7 @@ public class UserController {
                 if (userService.getUserByUsername(username) != null) {
                     result.setMsg("此用户名已存在");
                 }else {
-                    Boolean bool = userService.register(username, MD5Utils.encrypt(password), 0)>0;
+                    Boolean bool = userService.register(username, MD5Utils.encrypt(password), 0);
                     if (bool) {
                         result.setCode(1);
                         result.setMsg("注册成功, 等待管理员审核");
@@ -61,7 +73,7 @@ public class UserController {
                 }
             }else {
                 System.out.println("用户表为空表， 开始注册管理员");
-                Boolean bool = userService.register(username, MD5Utils.encrypt(password), 1)>0;
+                Boolean bool = userService.register(username, MD5Utils.encrypt(password), 1);
                 if (bool) {
                     result.setCode(1);
                     result.setMsg("注册成功, 此用户为管理员");
@@ -92,9 +104,9 @@ public class UserController {
                     result.setCode(1);
                     result.setMsg("登录成功");
                     Map map = new HashMap();
-                    map.put("level", user.getLevel());
-                    map.put("username", username);
-                    map.put("userId", user.getId());
+                    map.put(Config.level, user.getLevel());
+                    map.put(Config.username, username);
+                    map.put(Config.userId, user.getId());
                     String token = JwtHelper.generateToken(map);
                     result.setData(token);
                 }
@@ -107,13 +119,66 @@ public class UserController {
         return result;
     }
 
+    @ApiOperation(value="/deleteUserById", notes="删除用户", produces = "application/json")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "用户id", required = true),
+    })
+    @PostMapping("/deleteUserById")
+    public Result deleteUserById(HttpServletRequest request, long id){
+        Result result = new Result();
+        String authorization = request.getHeader(Config.Authorization);
+        Claims claims = JwtHelper.verifyJwt(authorization);
+        long level = (Integer)claims.get(Config.level);
+        if (level == 1) {
+            List<Package> packages = packageService.getAllPackageByUserId(id);
+            for (Package aPackage : packages) {
+                pkService.deleteKeyByPackageId(aPackage.getId());
+                dpService.deleteDPByPackageId(aPackage.getId());
+            }
+            packageService.deletePackageByUserId(id);
+            boolean b = userService.deleteUserById(id);
+            if (b) {
+                result.setCode(1);
+                result.setMsg("用户删除成功");
+            }else {
+                result.setMsg("用户删除失败");
+            }
+        }else {
+            result.setMsg("用户权限不足");
+        }
+        return result;
+    }
+
+    @ApiOperation(value="/updateUserPassword", notes="修改密码", produces = "application/json")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "oldPassword", value = "原始密码", required = true),
+            @ApiImplicitParam(name = "password", value = "新密码", required = true),
+    })
+    @PostMapping("/updateUserPassword")
+    public Result updateUserPassword(HttpServletRequest request, String oldPassword, String password) {
+        Result result = new Result();
+        String authorization = request.getHeader(Config.Authorization);
+        Claims claims = JwtHelper.verifyJwt(authorization);
+        long userId = (Integer)claims.get(Config.userId);
+        boolean b = userService.updateUserPasswordByIdAndOldPassword(userId,
+                MD5Utils.encrypt(oldPassword),
+                MD5Utils.encrypt(password));
+        if (b) {
+            result.setMsg("密码修改成功");
+            result.setCode(1);
+        }else {
+            result.setMsg("密码修改失败");
+        }
+        return result;
+    }
+
     @ApiOperation(value="/getAllReviewUser", notes="待审核用户列表", produces = "application/json")
     @GetMapping("/getAllReviewUser")
     public Result <List<User>>getAllReviewUser(HttpServletRequest request) {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long level = (Integer)claims.get("level");
+        long level = (Integer)claims.get(Config.level);
         if (level == 1) {
             List<User> userList = userService.getAllReviewUser();
             result.setData(userList);
@@ -131,7 +196,7 @@ public class UserController {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long level = (Integer)claims.get("level");
+        long level = (Integer)claims.get(Config.level);
         if (level == 1) {
             List<User> userList = userService.getAllUser();
             result.setData(userList);
@@ -153,10 +218,10 @@ public class UserController {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long level = (Integer)claims.get("level");
+        long level = (Integer)claims.get(Config.level);
         if (level == 1) {
-            int i = userService.checkUserById(id, status?2:0);
-            if (i > 0) {
+            boolean b = userService.updateUserLevelById(id, status?2:0);
+            if (b) {
                 result.setMsg("帐号状态修改通过");
                 result.setCode(1);
             }else {
@@ -174,8 +239,8 @@ public class UserController {
         Result result = new Result();
         String authorization = request.getHeader(Config.Authorization);
         Claims claims = JwtHelper.verifyJwt(authorization);
-        long id = (Integer)claims.get("userId");
-        User user = userService.getUserInfo(id);
+        long userId = (Integer)claims.get(Config.userId);
+        User user = userService.getUserInfo(userId);
         if (user!=null) {
             result.setData(user);
             result.setCode(1);
