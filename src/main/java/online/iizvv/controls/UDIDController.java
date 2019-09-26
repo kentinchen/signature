@@ -26,6 +26,7 @@ import online.iizvv.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -58,6 +59,11 @@ public class UDIDController {
     @Autowired
     private FileManager fileManager;
 
+    @Resource
+    private RedisUtil redisUtil;
+
+    // redis中存储的过期时间600s
+    private static int expireTime = 600;
 
     @ApiOperation(value="/getUDID", notes="获取设备udid", produces = "application/json")
     @ApiImplicitParams(value = {
@@ -102,9 +108,33 @@ public class UDIDController {
     })
     @GetMapping("/getSignatureStatus")
     public Result getSignatureStatus(String encryptHex) {
-        String hexStr = AESUtils.decryptHexStr(encryptHex);
-        String[] split = hexStr.split("/");
-        return calculate(split[0], Integer.valueOf(split[1]));
+        Result result = new Result();
+        result.setCode(2);
+        if (!redisUtil.hasKey(encryptHex)) {
+            System.out.println("redis中不存在Key: " + encryptHex);
+            String hexStr = AESUtils.decryptHexStr(encryptHex);
+            String[] split = hexStr.split("/");
+            redisUtil.set(encryptHex, result, expireTime);
+            result = calculate(split[0], Integer.valueOf(split[1]));
+            redisUtil.set(encryptHex, result, expireTime);
+            return result;
+        }
+        System.out.println("redis中存在Key: " + encryptHex);
+        result = (Result)redisUtil.get(encryptHex);
+        if (result.getCode() == 1) {
+            System.out.println("Key: " + encryptHex + "的状态为签名成功, 直接返回数据: " + result.toString());
+            return result;
+        }else {
+            System.out.println("Key: " + encryptHex + "的状态为未成功");
+            while (result.getCode() == 2) {
+                System.out.println("持续查询Key: " + encryptHex);
+                result = (Result) redisUtil.get(encryptHex);
+            }
+            if (result.getCode() == 0) {
+                redisUtil.del(encryptHex);
+            }
+        }
+        return result;
     }
 
     /**
@@ -200,12 +230,12 @@ public class UDIDController {
     }
 
     /**
-      * create by: iizvv
-      * description: 获取最终执行结果
-      * create time: 2019-09-25 13:22
+     * create by: iizvv
+     * description: 获取最终执行结果
+     * create time: 2019-09-25 13:22
 
-      * @return itemService
-      */
+     * @return itemService
+     */
     String getItemService(long id, String udid, Package pck) {
         String itemService;
         System.out.println("设备不存在, 或设备所处帐号已无法使用, 寻找新的可用账号");
@@ -280,12 +310,12 @@ public class UDIDController {
     }
 
     /**
-      * create by: iizvv
-      * description: 重签名
-      * create time: 2019-07-06 08:42
+     * create by: iizvv
+     * description: 重签名
+     * create time: 2019-07-06 08:42
 
-      * @return String
-      */
+     * @return String
+     */
     String resignature(Apple apple, Device device, String appLink) {
         String key = Config.errors;
         // ResourceUtils.getURL("classpath:").getPath()
@@ -312,13 +342,15 @@ public class UDIDController {
             String command = null;
             System.out.println("文件创建成功");
             String appUrl = Config.vpcAliMainHost + "/" + appLink;
-            HttpUtil.downloadFile(appUrl, Config.rootPath);
+            String appPath = Config.rootPath + IdUtil.simpleUUID() + ".ipa";
+            HttpUtil.downloadFile(appUrl, appPath);
             System.out.println("ipa下载完成: " + appUrl);
-            File app = new File(Config.rootPath+appLink);
+            File app = new File(appPath);
             String p12Url = Config.vpcAliMainHost + "/" + apple.getP12();
-            HttpUtil.downloadFile(p12Url, Config.rootPath);
+            String p12Path = Config.rootPath + IdUtil.simpleUUID() + ".p12";
+            HttpUtil.downloadFile(p12Url, p12Path);
             System.out.println("p12下载完成: " + p12Url);
-            File p12 = new File(Config.rootPath+apple.getP12());
+            File p12 = new File(p12Path);
             // 调用本地shell脚本并传递必须参数
 //                command = "/root/ausign.sh " + app.getAbsolutePath() + " " +
 //                        p12.getAbsolutePath() + " " +
@@ -370,12 +402,12 @@ public class UDIDController {
     }
 
     /**
-      * create by: iizvv
-      * description: 下载IPA的item-service
-      * create time: 2019-07-06 10:34
+     * create by: iizvv
+     * description: 下载IPA的item-service
+     * create time: 2019-07-06 10:34
 
-      * @return
-      */
+     * @return
+     */
     String software(String ipaUrl, String id, String version, String title) {
         ipaUrl = Config.aliTempHost + "/" + ipaUrl;
         System.out.println("ipaUrl: " + ipaUrl);
@@ -432,12 +464,12 @@ public class UDIDController {
     }
 
     /**
-      * create by: iizvv
-      * description: 签名完成
-      * create time: 2019-09-03 17:46
+     * create by: iizvv
+     * description: 签名完成
+     * create time: 2019-09-03 17:46
 
-      * @return void
-      */
+     * @return void
+     */
     void pushToWebSocket(@PathVariable String socketId, Result result) {
         try {
             WebSocketServer.sendInfo(JSON.toJSONString(result),socketId);

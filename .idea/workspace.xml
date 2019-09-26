@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="72c9fa7a-ab92-4882-8ea1-8de913202eee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/VersionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/VersionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,18 +20,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/PKDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/VersionController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="479">
@@ -43,14 +31,20 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/BeanRegisterConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="35" column="45" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="60">
+              <caret line="4" column="51" lean-forward="true" selection-start-line="4" selection-start-column="51" selection-end-line="4" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -65,10 +59,14 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application-pro.yml">
+        <entry file="jar://$MAVEN_REPOSITORY$/cn/hutool/hutool-all/4.5.11/hutool-all-4.5.11-sources.jar!/cn/hutool/http/HttpUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+            <state relative-caret-position="300">
+              <caret line="253" column="23" selection-start-line="253" selection-start-column="23" selection-end-line="253" selection-end-column="23" />
+              <folding>
+                <element signature="e#6342#6343#0" expanded="true" />
+                <element signature="e#6394#6395#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -189,7 +187,6 @@
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/AppleDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/PackageDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/PackageServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/utils/JwtHelper.java" />
@@ -199,6 +196,7 @@
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/Config.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application-pro.yml" />
         <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/VersionController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" />
       </list>
     </option>
   </component>
@@ -226,8 +224,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="599" />
-    <option name="y" value="103" />
+    <option name="x" value="296" />
+    <option name="y" value="70" />
     <option name="width" value="1769" />
     <option name="height" value="1011" />
   </component>
@@ -240,7 +238,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -375,6 +372,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -464,17 +462,18 @@
       <workItem from="1569372125954" duration="18875000" />
       <workItem from="1569399109794" duration="73000" />
       <workItem from="1569399759004" duration="46000" />
+      <workItem from="1569459427814" duration="1585000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130204000" />
+    <option name="totallyTimeSpent" value="131789000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="599" y="103" width="1769" height="1011" extended-state="0" />
+    <frame x="296" y="70" width="1769" height="1011" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.31441808" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3178923" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -516,16 +515,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/server/WebSocketServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="3" selection-start-line="19" selection-start-column="3" selection-end-line="20" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/AsyncConfig.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/User.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -830,13 +819,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="319" column="53" selection-start-line="319" selection-start-column="53" selection-end-line="319" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/AppleDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-199">
@@ -884,20 +866,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/BeanRegisterConfig.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application-pro.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="35" column="45" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="52" column="57" selection-start-line="52" selection-start-column="57" selection-end-line="52" selection-end-column="57" />
+        <state relative-caret-position="75">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -936,13 +908,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application-pro.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/VersionController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="479">
@@ -950,6 +915,38 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/cn/hutool/hutool-all/4.5.11/hutool-all-4.5.11-sources.jar!/cn/hutool/http/HttpUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="253" column="23" selection-start-line="253" selection-start-column="23" selection-end-line="253" selection-end-column="23" />
+          <folding>
+            <element signature="e#6342#6343#0" expanded="true" />
+            <element signature="e#6394#6395#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="52" column="57" selection-start-line="52" selection-start-column="57" selection-end-line="52" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/BeanRegisterConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="51" lean-forward="true" selection-start-line="4" selection-start-column="51" selection-end-line="4" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
         </state>
       </provider>
     </entry>
