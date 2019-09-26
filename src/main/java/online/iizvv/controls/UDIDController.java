@@ -119,21 +119,8 @@ public class UDIDController {
             redisUtil.set(encryptHex, result, expireTime);
             return result;
         }
-        System.out.println("redis中存在Key: " + encryptHex);
         result = (Result)redisUtil.get(encryptHex);
-        if (result.getCode() == 1) {
-            System.out.println("Key: " + encryptHex + "的状态为签名成功, 直接返回数据: " + result.toString());
-            return result;
-        }else {
-            System.out.println("Key: " + encryptHex + "的状态为未成功");
-            while (result.getCode() == 2) {
-                System.out.println("持续查询Key: " + encryptHex);
-                result = (Result) redisUtil.get(encryptHex);
-            }
-            if (result.getCode() == 0) {
-                redisUtil.del(encryptHex);
-            }
-        }
+        System.out.println("redis中存在Key: " + encryptHex + " 直接返回信息: " + result.toString());
         return result;
     }
 
@@ -189,7 +176,7 @@ public class UDIDController {
      * @return void
      */
     String analyzeUDID(String udid, long id) {
-        String itemService = null;
+        String itemService;
         System.out.println("获取ipa信息");
         Package pck = packageService.getPackageById(id);
         if (pck!=null) {

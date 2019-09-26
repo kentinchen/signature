@@ -36,6 +36,7 @@ public class VersionController {
         long level = (Integer)claims.get(Config.level);
         Map <String, Object>map = new HashMap<String, Object>();
         List <String>list = new LinkedList<String>();
+        list.add("- 增加缓存功能;");
         list.add("- 增加修改密码;");
         list.add("- 增加授权码;");
         list.add("- 增加上传ipa时显示当前ipa的基本信息;");
