@@ -26,6 +26,8 @@ import online.iizvv.utils.FileManager;
 import online.iizvv.utils.JwtHelper;
 import online.iizvv.utils.Shell;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,6 +64,8 @@ public class PackageController {
 
     @Autowired
     private PKServiceImpl pkService;
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @ApiOperation(value = "/insertPackage", notes = "上传ipa", produces = "application/json")
     @ApiImplicitParams(value = {
@@ -122,9 +126,9 @@ public class PackageController {
                     boolean b = pkService.insertKeyByPackageId(id, code);
                     if (b) {
                         list.add(code);
-                        System.out.println(code + "  添加成功");
+                        log.info(code + "  添加成功");
                     }else {
-                        System.out.println(code + "  添加失败");
+                        log.info(code + "  添加失败");
                     }
                 }
                 if (list.size() > 0) {
@@ -350,15 +354,15 @@ public class PackageController {
                 }else {
                     boolean b = pkService.updateKeyStateById(packageKey.getId());
                     if (b) {
-                        System.out.println("授权码状态改变成功");
+                        log.info("授权码状态改变成功");
                     }else {
-                        System.out.println("授权码状态改变失败");
+                        log.info("授权码状态改变失败");
                     }
                     boolean state = pkService.deleteKeyById(packageKey.getId());
                     if (state) {
-                        System.out.println("授权码删除成功");
+                        log.info("授权码删除成功");
                     }else {
-                        System.out.println("授权码删除失败");
+                        log.info("授权码删除失败");
                     }
                     result.setCode(1);
                     result.setMsg("获取成功");
@@ -404,11 +408,11 @@ public class PackageController {
     @PostMapping("/deletePackageById")
     public Result deleteById(long id) {
         Result result = new Result();
-        System.out.println("开始删除中间关系表");
+        log.info("开始删除中间关系表");
         dpService.deleteDPByPackageId(id);
-        System.out.println("开始删除密钥");
+        log.info("开始删除密钥");
         pkService.deleteKeyByPackageId(id);
-        System.out.println("开始删除ipa文件");
+        log.info("开始删除ipa文件");
         boolean b = packageService.deletePackageById(id);
         if (b) {
             result.setCode(1);
@@ -427,11 +431,11 @@ public class PackageController {
      * @return void
      */
     Package analyzeIPA(MultipartFile file) throws ParserConfigurationException, ParseException, SAXException, PropertyListFormatException, IOException {
-        System.out.println("开始解析ipa文件");
+        log.info("开始解析ipa文件");
         File excelFile = File.createTempFile(IdUtil.simpleUUID(), ".ipa");
-        System.out.println("开始转换文件");
+        log.info("开始转换文件");
         file.transferTo(excelFile);
-        System.out.println("开始解压文件");
+        log.info("开始解压文件");
         File ipa = ZipUtil.unzip(excelFile);
         File app = getAppFile(ipa);
         File info = new File(app.getAbsolutePath()+"/Info.plist");
@@ -443,27 +447,27 @@ public class PackageController {
         if (parse.containsKey("CFBundleDisplayName")) {
             name = parse.get("CFBundleDisplayName").toString();
         }
-        System.out.println("ipa名称为: " + name);
+        log.info("ipa名称为: " + name);
         String version = "";
         if (parse.containsKey("CFBundleShortVersionString")) {
             version = parse.get("CFBundleShortVersionString").toString();
         }
-        System.out.println("当前版本为: " + version);
+        log.info("当前版本为: " + version);
         String buildVersion = "";
         if (parse.containsKey("CFBundleVersion")) {
             buildVersion = parse.get("CFBundleVersion").toString();
         }
-        System.out.println("编译版本为: " + buildVersion);
+        log.info("编译版本为: " + buildVersion);
         String miniVersion = "";
         if (parse.containsKey("MinimumOSVersion")) {
             miniVersion = parse.get("MinimumOSVersion").toString();
         }
-        System.out.println("最小支持系统版本为: " + miniVersion);
+        log.info("最小支持系统版本为: " + miniVersion);
         String bundleIdentifier = "";
         if (parse.containsKey("CFBundleIdentifier")) {
             bundleIdentifier = parse.get("CFBundleIdentifier").toString();
         }
-        System.out.println("bundleIdentifier为: " + bundleIdentifier);
+        log.info("bundleIdentifier为: " + bundleIdentifier);
         NSDictionary icons = null;
         if (parse.containsKey("CFBundleIcons")) {
             icons = (NSDictionary) parse.get("CFBundleIcons");
@@ -490,7 +494,7 @@ public class PackageController {
         String appLink = uploadAppFile(excelFile);
         Package pck = null;
         if (appLink!=null) {
-            System.out.println("ipa文件上传完成");
+            log.info("ipa文件上传完成");
             pck = new Package();
             pck.setName(name);
             pck.setVersion(version);
@@ -500,7 +504,7 @@ public class PackageController {
             pck.setIcon(iconLink);
             pck.setLink(appLink);
         }else {
-            System.out.println("ipa文件上传失败");
+            log.info("ipa文件上传失败");
         }
         FileUtil.del(excelFile);
         FileUtil.del(ipa);
@@ -517,7 +521,7 @@ public class PackageController {
      * @return app
      */
     String uploadAppFile(File file) {
-        System.out.println("开始上传原始ipa文件");
+        log.info("开始上传原始ipa文件");
         String objName = IdUtil.simpleUUID() + ".ipa";
         fileManager.uploadFile(file, objName, false);
         return objName;
@@ -544,7 +548,7 @@ public class PackageController {
      * @return 证书名称
      */
     String creatUDIDMobileconfig(long id) {
-        System.out.println("创建获取UDID所用证书");
+        log.info("创建获取UDID所用证书");
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n" +
                 "<plist version=\"1.0\">\n" +
@@ -584,23 +588,23 @@ public class PackageController {
         String tempMobileconfig = tempName + ".mobileconfig";
         FileWriter writer = new FileWriter(tempMobileconfig);
         writer.write(xml);
-        System.out.println("开始执行shell");
+        log.info("开始执行shell");
         String mobileconfig = tempName + "_.mobileconfig";
         String com = Config.rootPath + "mobileconfig.sh " + writer.getFile().getAbsolutePath() + " " + mobileconfig;
         try {
             Shell.run(com);
-            System.out.println("shell执行成功, 文件位置为: " + mobileconfig);
+            log.info("shell执行成功, 文件位置为: " + mobileconfig);
             File file = new File(Config.rootPath + mobileconfig);
             mobileconfig = uploadMobileconfig(file);
             file.delete();
         } catch (Exception e) {
-            System.out.println("shell执行失败");
+            log.info("shell执行失败");
             mobileconfig = uploadMobileconfig(writer.getFile());
             e.printStackTrace();
         }finally {
             writer.getFile().delete();
         }
-        System.out.println("mobileconfig文件上传结束");
+        log.info("mobileconfig文件上传结束");
         return mobileconfig;
     }
 
@@ -630,9 +634,9 @@ public class PackageController {
         File payload = new File(ipaFile.getAbsolutePath() + "/Payload/");
         if (payload != null) {
             for (File file : payload.listFiles()) {
-                System.out.println(fileManager.getSuffixName(file));
+                log.info(fileManager.getSuffixName(file));
                 if (fileManager.getSuffixName(file).equalsIgnoreCase("app")) {
-                    System.out.println(file.getName());
+                    log.info(file.getName());
                     return file;
                 }
             }
@@ -656,7 +660,7 @@ public class PackageController {
             String fileName = file.getOriginalFilename();
             String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
             if (suffix.equalsIgnoreCase("ipa")) {
-                System.out.println("上传的文件为ipa文件");
+                log.info("上传的文件为ipa文件");
                 // 上传的文件为ipa文件
                 Package aPackage = null;
                 try {
@@ -680,7 +684,7 @@ public class PackageController {
                     }else {
                         boolean b = packageService.insertPackage(aPackage);
                         if (b) {
-                            System.out.println("ipa写入数据库成功");
+                            log.info("ipa写入数据库成功");
                             String mobileconfig = creatUDIDMobileconfig(aPackage.getId());
                             if (mobileconfig != null) {
                                 b = packageService.updatePackageMobileconfigById(aPackage.getId(), mobileconfig);
@@ -688,19 +692,19 @@ public class PackageController {
                                     result.setCode(1);
                                     result.setData(aPackage.getId());
                                     result.setMsg("ipa文件上传完成");
-                                    System.out.println("udid配置文件上传成功");
+                                    log.info("udid配置文件上传成功");
                                 }else {
-                                    System.out.println("配置文件生成或上传失败");
+                                    log.info("配置文件生成或上传失败");
                                     b = packageService.deletePackageById(aPackage.getId());
                                     result.setMsg("ipa文件上传失败, 请重新上传");
                                     if (b) {
-                                        System.out.println("ipa文件删除成功");
+                                        log.info("ipa文件删除成功");
                                     }else {
-                                        System.out.println("ipa文件删除失败");
+                                        log.info("ipa文件删除失败");
                                     }
                                 }
                             }else {
-                                System.out.println("udid配置文件上传失败");
+                                log.info("udid配置文件上传失败");
                             }
                         }else {
                             result.setMsg("数据库写入失败");

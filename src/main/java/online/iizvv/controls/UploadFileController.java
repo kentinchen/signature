@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import online.iizvv.core.config.Config;
 import online.iizvv.core.pojo.Result;
 import online.iizvv.utils.FileManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,8 @@ public class UploadFileController {
     @Autowired
     private FileManager fileManager;
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @ApiOperation(value = "/uploadImage", notes = "更新预览图")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "file", value = "图片文件"),
@@ -42,7 +46,7 @@ public class UploadFileController {
         Result result = new Result();
         if (file.getContentType().equalsIgnoreCase("image/png") ||
                 file.getContentType().equalsIgnoreCase("image/jpeg")) {
-            System.out.println("开始上传文件: " + file.getOriginalFilename() +
+            log.info("开始上传文件: " + file.getOriginalFilename() +
                     ", 文件类型: " + file.getContentType());
             try {
                 String imgName = IdUtil.simpleUUID();

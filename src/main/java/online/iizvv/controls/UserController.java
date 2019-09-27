@@ -15,6 +15,8 @@ import online.iizvv.service.PackageServiceImpl;
 import online.iizvv.service.UserServiceImpl;
 import online.iizvv.utils.JwtHelper;
 import online.iizvv.utils.MD5Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +52,8 @@ public class UserController {
     @Autowired
     DPServiceImpl dpService;
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @ApiOperation(value="/register", notes="注册", produces = "application/json")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "username", value = "用户名", required = true),
@@ -72,7 +76,7 @@ public class UserController {
                     }
                 }
             }else {
-                System.out.println("用户表为空表， 开始注册管理员");
+                log.info("用户表为空表， 开始注册管理员");
                 Boolean bool = userService.register(username, MD5Utils.encrypt(password), 1);
                 if (bool) {
                     result.setCode(1);
