@@ -120,6 +120,10 @@ public class UDIDController {
             return result;
         }
         result = (Result)redisUtil.get(encryptHex);
+        if (result.getCode() == 0) {
+            redisUtil.del(encryptHex);
+            result.setCode(2);
+        }
         System.out.println("redis中存在Key: " + encryptHex + " 直接返回信息: " + result.toString());
         return result;
     }
