@@ -43,7 +43,9 @@ public class VersionController {
         list.add("- 修改证书格式为IOS_APP_ADHOC;");
         list.add("- 优化签名操作, 减少整体流程耗时;");
         list.add("- 修复部分ipa图标无法显示问题;");
+        list.add("- 修复部分ipa解析失败的问题");
         if (level == 1) {
+            list.add("- 增加日志输出;");
             list.add("- 增加删除用户;");
             list.add("- 增加管理员可单独查看某个用户上传的ipas;");
             list.add("- 添加账号时主动判断使用的文件是否正确;");

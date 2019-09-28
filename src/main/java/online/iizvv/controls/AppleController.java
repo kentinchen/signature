@@ -17,6 +17,8 @@ import online.iizvv.service.DeviceServiceImpl;
 import online.iizvv.utils.FileManager;
 import online.iizvv.utils.ITSUtils;
 import online.iizvv.utils.JwtHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -53,6 +55,9 @@ public class AppleController {
 
     @Autowired
     private FileManager fileManager;
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
 
 
     @ApiOperation(value = "/getAllAppleAccounts", notes = "获取全部账号")
@@ -135,7 +140,7 @@ public class AppleController {
     })
     @PostMapping("/uploadP12")
     public Result uploadP12(long id, MultipartFile file) throws IOException {
-        System.out.println("开始上传配p12文件：" + file.getOriginalFilename());
+        log.info("开始上传配p12文件：" + file.getOriginalFilename());
         Result result = new Result();
         String p12 = IdUtil.simpleUUID() + ".p12";
         if (file.getContentType().equalsIgnoreCase("application/x-pkcs12")) {
@@ -168,7 +173,7 @@ public class AppleController {
         if (level==1) {
             try {
                 for (Device device : deviceService.getAllByAppleId(id)) {
-                    System.out.println("正在删除设备: " + device.toString());
+                    log.info("正在删除设备: " + device.toString());
                     dpService.deleteDPByDeviceId(device.getId());
                 }
                 deviceService.deleteByAppleId(id);

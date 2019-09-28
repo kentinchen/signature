@@ -6,6 +6,8 @@ import io.jsonwebtoken.Claims;
 import online.iizvv.core.config.Config;
 import online.iizvv.core.pojo.Result;
 import online.iizvv.utils.JwtHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,8 @@ import java.io.IOException;
  */
 public class ApiFilter implements Filter {
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -32,7 +36,7 @@ public class ApiFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse)servletResponse;
         response.setContentType("text/html;charset=UTF-8");
         String ua = request.getHeader(Config.ua);
-        System.out.println("当前时间: " + DateUtil.now() +
+        log.info("当前时间: " + DateUtil.now() +
                 "\n当前用户User-Agent: " + ua +
                 "\n当前请求接口: " + request.getRequestURL().toString());
         String token = request.getHeader(Config.Authorization); //获取请求传来的token
@@ -42,7 +46,7 @@ public class ApiFilter implements Filter {
             result.setMsg("请重新登录");
             response.getWriter().write(JSON.toJSONString(result));
         }else {
-            System.out.println("当前用户id: " + claims.get(Config.userId));
+            log.info("当前用户id: " + claims.get(Config.userId));
             filterChain.doFilter(request,response);
         }
     }

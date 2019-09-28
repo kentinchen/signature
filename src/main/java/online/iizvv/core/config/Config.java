@@ -59,7 +59,7 @@ public class Config {
 
     /**  以下信息无需修改 */
     /** 当前版本 */
-    public final static String version = "4.0.0";
+    public final static String version = "4.0.1";
 
     /** 账号最大可容纳设备量 */
     public final static int total = 100;
