@@ -471,7 +471,8 @@ public class PackageController {
             icons = (NSDictionary) parse.get("CFBundleIcons~ipad");
         }
         String iconLink = "";
-        if (icons.toJavaObject()!=null) {
+        if (icons!=null) {
+            log.info("CFBundleIcons不为空");
             List list = ((NSDictionary) icons.get("CFBundlePrimaryIcon")).get("CFBundleIconFiles").toJavaObject(List.class);
             iconLink = (String) list.get(list.size()-1);
             String iconPath = app.getAbsolutePath() + "/" + iconLink;
@@ -486,6 +487,21 @@ public class PackageController {
                 iconLink = uploadIcon(icon);
             }
             icon.delete();
+        }else if (parse.containsKey("CFBundleIconFiles")) {
+            log.info("CFBundleIconFiles存在");
+            List iconFiles = parse.get("CFBundleIconFiles").toJavaObject(List.class);
+            if (iconFiles.size()>0) {
+                for (Object iconFile : iconFiles) {
+                    log.debug(iconFile.toString());
+                }
+                iconLink = (String) iconFiles.get(iconFiles.size()-1);
+                String iconPath = app.getAbsolutePath() + "/" + iconLink;
+                File icon = new File( iconPath);
+                if (icon.exists()) {
+                    iconLink = uploadIcon(icon);
+                }
+                icon.delete();
+            }
         }
         String appLink = uploadAppFile(excelFile);
         Package pck = null;
