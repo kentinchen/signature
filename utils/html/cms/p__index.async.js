@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[13],{Dtc0:function(e,n,t){"use strict";t.r(n);t("IzEo");var a=t("bx4M"),o=t("q1tI"),r=t.n(o);n["default"]=function(){return r.a.createElement(a["a"],{bordered:!1},"Welcome Signature Manage!")}}}]);
