@@ -29,23 +29,27 @@ public class Config {
     /** secret key */
     public final static String accessKeySecret = "";
 
+    /** 主内容空间名 */
+    public final static String aliMainBucket = "";
+    
     /** 主内容 Bucket 域名 例：https://ipa1.oss-cn-zhangjiakou.aliyuncs.com */
     public final static String aliMainHost = "https://ipa1.oss-cn-zhangjiakou.aliyuncs.com";
 
-    /** 主内容空间名 */
-    public final static String aliMainBucket = "";
+    /** 内网主内容 Bucket 域名 例：https://ipa1.oss-cn-zhangjiakou-internal.aliyuncs.com */
+    public final static String vpcAliMainHost = "https://ipa1.oss-cn-zhangjiakou-internal.aliyuncs.com";
 
-    /** 临时内容 Bucket 域名 例：https://ipa2.oss-cn-zhangjiakou.aliyuncs.com */
-    public final static String aliTempHost = "https://ipa2.oss-cn-zhangjiakou.aliyuncs.com";
-
+    
     /** 临时内容空间名 */
     public final static String aliTempBucket = "";
+    
+    /** 临时内容 Bucket 域名 例：https://ipa2.oss-cn-zhangjiakou.aliyuncs.com */
+    public final static String aliTempHost = "https://ipa2.oss-cn-zhangjiakou.aliyuncs.com";
+    
 
     /** 内网地域节点 例：https://oss-cn-zhangjiakou-internal.aliyuncs.com */
     public final static String vpcEndpoint = "https://oss-cn-zhangjiakou-internal.aliyuncs.com";
 
-    /** 内网主内容 Bucket 域名 例：https://ipa1.oss-cn-zhangjiakou-internal.aliyuncs.com */
-    public final static String vpcAliMainHost = "https://ipa1.oss-cn-zhangjiakou-internal.aliyuncs.com";
+    
 
     /*********************************************************************/
 
