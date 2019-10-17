@@ -2,6 +2,7 @@ package online.iizvv.core.pojo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Bean;
 
 @ApiModel(value = "基础对象")
 public class Result<T> {

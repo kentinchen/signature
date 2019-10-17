@@ -2,7 +2,7 @@ package online.iizvv.core.config;
 
 public class Config {
 
-    /***********************************选填******************************/
+    /*********************************** 选填 ******************************/
 
     /** 组织名称 */
     public final static String payloadOrganization = "Apple Inc.";
@@ -15,15 +15,13 @@ public class Config {
 
     /*********************************************************************/
 
-
-    /***********************************必填******************************/
+    /*********************************** 必填 ******************************/
 
     /** 后台请求地址域名 例：https://api.test.com */
-    public final static String apiHost = "https://";
+    public final static String apiHost = "https://api.test.com";
 
     /** 前端h5域名 例：https://www.test.com */
-    public final static String h5Host = "https://";
-
+    public final static String h5Host = "https://www.test.com";
 
     /** access key */
     public final static String accessKeyID = "";
@@ -31,35 +29,29 @@ public class Config {
     /** secret key */
     public final static String accessKeySecret = "";
 
-
     /** 主内容 Bucket 域名 例：https://ipa1.oss-cn-zhangjiakou.aliyuncs.com */
-    public final static String aliMainHost = "https://";
+    public final static String aliMainHost = "https://ipa1.oss-cn-zhangjiakou.aliyuncs.com";
 
     /** 主内容空间名 */
     public final static String aliMainBucket = "";
 
-
     /** 临时内容 Bucket 域名 例：https://ipa2.oss-cn-zhangjiakou.aliyuncs.com */
-    public final static String aliTempHost = "https://";
+    public final static String aliTempHost = "https://ipa2.oss-cn-zhangjiakou.aliyuncs.com";
 
     /** 临时内容空间名 */
     public final static String aliTempBucket = "";
 
-
     /** 内网地域节点 例：https://oss-cn-zhangjiakou-internal.aliyuncs.com */
-    public final static String vpcEndpoint = "https://";
+    public final static String vpcEndpoint = "https://oss-cn-zhangjiakou-internal.aliyuncs.com";
 
     /** 内网主内容 Bucket 域名 例：https://ipa1.oss-cn-zhangjiakou-internal.aliyuncs.com */
-    public final static String vpcAliMainHost = "https://";
+    public final static String vpcAliMainHost = "https://ipa1.oss-cn-zhangjiakou-internal.aliyuncs.com";
 
     /*********************************************************************/
 
-
-
-
-    /**  以下信息无需修改 */
+    /** 以下信息无需修改 */
     /** 当前版本 */
-    public final static String version = "4.0.0";
+    public final static String version = "4.0.1";
 
     /** 账号最大可容纳设备量 */
     public final static int total = 100;

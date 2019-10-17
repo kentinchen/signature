@@ -6,7 +6,6 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
-import com.aliyun.oss.common.utils.StringUtils;
 import com.dd.plist.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -185,14 +184,37 @@ public class UDIDController {
      * @return void
      */
     String analyzeUDID(String udid, long id) {
-        String itemService;
+        String itemService = null;
         log.info("获取ipa信息");
         Package pck = packageService.getPackageById(id);
         if (pck!=null) {
             // 判断当前ipa是否还有可继续下载
             if (pck.getUseDevice()<pck.getTotalDevice()) {
                 log.info("开始寻找可用帐号");
-                itemService = getItemService(id, udid, pck);
+                Device device = deviceService.getDeviceByUDID(udid);
+                // 设备不存在于任何帐号下，或设备所处帐号已无法使用
+                if (device==null) {
+                    itemService = getItemService(id, udid, pck);
+                }else {
+                    log.info("设备存在， 开始获取帐号信息");
+                    // 设备存在
+                    Apple apple = appleService.getAppleAccountById(device.getAppleId());
+                    log.info("帐号信息获取成功: " + apple.toString());
+                    String resignature = resignature(apple, device, pck.getLink());
+                    if (resignature != null && !resignature.equalsIgnoreCase(Config.errors)) {
+                        itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
+                        if (dpService.getDPByIds(device.getId(), id) != null) {
+                            log.info("此设备已下载过此应用, 当前次不消耗设备量");
+                        }else {
+                            log.info("此设备未下载过此应用, 当前次消耗设备量");
+                            log.info("device_id: " + device.toString() + ", package_id: " + id);
+                            dpService.insertDP(device.getId(), id);
+                            packageService.updatePackageDeviceCountById(id);
+                        }
+                    }else {
+                        itemService = getItemService(id, udid, pck);
+                    }
+                }
             }else {
                 itemService = "2";
             }
@@ -202,7 +224,6 @@ public class UDIDController {
         return itemService;
     }
 
-
     /**
      * create by: iizvv
      * description: 获取最终执行结果
@@ -211,48 +232,21 @@ public class UDIDController {
      * @return itemService
      */
     String getItemService(long id, String udid, Package pck) {
-        String itemService = "1";
-        Device device = deviceService.getDeviceByUDID(udid);
-        if (device == null) {
-            log.info("设备不存在, 或设备所处帐号已无法使用, 寻找新的可用账号");
-            Apple apple = appleService.getBeUsableAppleAccount();
-            // 没有找到合适的帐号
-            if (apple==null) {
-                log.info("没有找到合适的帐号");
+        String itemService;
+        log.info("设备不存在, 或设备所处帐号已无法使用, 寻找新的可用账号");
+        Apple apple = appleService.getBeUsableAppleAccount();
+        // 没有找到合适的帐号
+        if (apple==null) {
+            log.info("没有找到合适的帐号");
+            itemService = "1";
+        }else {
+            log.info("找到合适帐号， 开始添加设备");
+            // 找到合适的帐号
+            String resignature = insertDevice(id, udid, apple, pck.getLink());
+            if (resignature == null) {
                 itemService = "1";
             }else {
-                log.info("找到合适帐号， 开始添加设备");
-                // 找到合适的帐号
-                String resignature = insertDevice(id, udid, apple, pck.getLink());
-                if (resignature == null) {
-                    itemService = "1";
-                }else if (resignature.equalsIgnoreCase(Config.errors)){
-                    boolean b = appleService.updateAppleIsUse(apple.getId(), false);
-                    deviceService.updateDeviceIsUseByAppleId(apple.getId(), false);
-                    if (b) {
-                        log.info("已将账号: " + apple.getAccount() + ", 以及账号下设备标记为不可用");
-                    }else {
-                        log.info("账号: " + apple.getAccount() + "标记失败");
-                    }
-                    itemService = getItemService(id, udid, pck);
-                }else {
-                    packageService.updatePackageDeviceCountById(id);
-                    itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
-                }
-            }
-        }else {
-            Apple apple = appleService.getAppleAccountById(device.getAppleId());
-            String resignature = resignature(apple, device, pck.getLink());
-            if (resignature.equalsIgnoreCase(Config.errors)){
-                boolean b = appleService.updateAppleIsUse(apple.getId(), false);
-                deviceService.updateDeviceIsUseByAppleId(apple.getId(), false);
-                if (b) {
-                    log.info("已将账号: " + apple.getAccount() + ", 以及账号下设备标记为不可用");
-                }else {
-                    log.info("账号: " + apple.getAccount() + "标记失败");
-                }
-                itemService = getItemService(id, udid, pck);
-            }else if (!StringUtils.isNullOrEmpty(resignature)){
+                packageService.updatePackageDeviceCountById(id);
                 itemService = software(resignature, pck.getBundleIdentifier(), pck.getVersion(), pck.getName());
             }
         }
@@ -269,7 +263,7 @@ public class UDIDController {
      */
     String insertDevice(long id, String udid, Apple apple, String link) {
         // 发现可用账号
-        String key = Config.errors;
+        String key = null;
         String devId = null;
         log.info("开始添加设备");
         try {
@@ -285,6 +279,27 @@ public class UDIDController {
                 dpService.insertDP(device.getId(), id);
                 key = resignature(apple, device, link);
             }
+        }
+        if (devId == null ||
+                devId.equalsIgnoreCase(Config.errors) ||
+                key == null ||
+                key.equalsIgnoreCase(Config.errors)) {
+            log.info("帐号不可用, 继续寻找可用帐号");
+            boolean b = appleService.updateAppleIsUse(apple.getId(), false);
+            deviceService.updateDeviceIsUseByAppleId(apple.getId(), false);
+            if (b) {
+                log.info("已将账号: " + apple.getAccount() + ", 以及账号下设备标记为不可用");
+            }else {
+                log.info("账号: " + apple.getAccount() + "标记失败");
+            }
+            log.info("开始寻找新的账号");
+            apple = appleService.getBeUsableAppleAccount();
+            if (apple != null) {
+                key = insertDevice(id, udid, apple, link);
+            }
+        }
+        if (apple == null) {
+            return null;
         }
         return key;
     }
