@@ -36,6 +36,18 @@ public class AppleServiceImpl {
         return appleDao.updateAppleIsUse(id, isUse)>0;
     }
 
+    /**
+     * create by: iizvv
+     * description: 设置所有帐号为可用
+     * create time: 2019/10/20 4:46 下午
+     *
+
+     * @return boolean
+     */
+    public boolean updateAllAppleUse() {
+        return appleDao.updateAllAppleUse()>0;
+    }
+
     public int updateP12(String p12, long id) {
         return appleDao.updateP12(p12, id);
     }

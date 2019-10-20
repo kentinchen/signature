@@ -36,6 +36,7 @@ public class VersionController {
         long level = (Integer)claims.get(Config.level);
         Map <String, Object>map = new HashMap<String, Object>();
         List <String>list = new LinkedList<String>();
+        list.add("- 增加修改App信息;");
         list.add("- 增加缓存功能;");
         list.add("- 增加修改密码;");
         list.add("- 增加授权码;");
@@ -45,6 +46,7 @@ public class VersionController {
         list.add("- 修复部分ipa图标无法显示问题;");
         list.add("- 修复部分ipa解析失败的问题");
         if (level == 1) {
+            list.add("- 增加重置开发者帐号状态");
             list.add("- 增加日志输出;");
             list.add("- 增加删除用户;");
             list.add("- 增加管理员可单独查看某个用户上传的ipas;");

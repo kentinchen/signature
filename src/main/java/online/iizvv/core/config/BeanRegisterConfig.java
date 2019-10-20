@@ -46,7 +46,9 @@ public class BeanRegisterConfig {
                 "/package/updatePackageImgsById",
                 "/package/updatePackageSummaryById",
                 "/package/updatePackageTotalDeviceById",
-                "/package/updatePackageStateById");
+                "/package/updatePackageStateById",
+                "/package/updateMobileconfig",
+                "/package/updatePackageInfoById");
         return registration;
     }
 }

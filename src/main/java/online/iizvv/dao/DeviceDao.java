@@ -28,6 +28,17 @@ public interface DeviceDao {
 
     /**
      * create by: iizvv
+     * description: 设置所有设备为可用
+     * create time: 2019/10/20 4:49 下午
+     * 
+     
+     * @return 
+     */
+    @Update("UPDATE device SET is_use = true WHERE is_use = false")
+    int updateAllDeviceUse();
+    
+    /**
+     * create by: iizvv
      * description: 获取设备
      * create time: 2019-06-26 21:32
      *

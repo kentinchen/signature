@@ -159,6 +159,22 @@ public class AppleController {
         return result;
     }
 
+    @ApiOperation(value = "/updateAllAppleUse", notes = "设置所有帐号为可用状态", produces = "application/json")
+    @PostMapping("/updateAllAppleUse")
+    public Result updateAllAppleUse() {
+        Result result = new Result();
+        result.setMsg("帐号状态修改失败");
+        boolean b = appleService.updateAllAppleUse();
+        if (b) {
+            b = deviceService.updateAllDeviceUse();
+            if (b) {
+                result.setCode(1);
+                result.setMsg("帐号状态修改完成");
+            }
+        }
+        return result;
+    }
+
     @ApiOperation(value = "/deleteById", notes = "删除帐号", produces = "application/json")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "id", value = "开发者账号id", required = true),

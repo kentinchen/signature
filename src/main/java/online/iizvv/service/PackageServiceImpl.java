@@ -74,6 +74,21 @@ public class PackageServiceImpl {
 
     /**
      * create by: iizvv
+     * description: 更新基本信息
+     * create time: 2019-09-02 19:05
+     *
+
+     * @return boolean
+     */
+    public boolean updatePackageInfoById(long id, String subTitle, float level, String commentCount, int ranking, String className, int age, String summary) {
+        int aPackage = packageDao.updatePackageInfoById(id, subTitle, level, commentCount, ranking, className, age, summary);
+        return aPackage>0;
+    }
+
+    /**
+
+    /**
+     * create by: iizvv
      * description: 更新预览图
      * create time: 2019-09-02 19:13
      *

@@ -291,6 +291,35 @@ public class PackageController {
         return result;
     }
 
+    @ApiOperation(value = "/updateMobileconfig", notes = "更新获取UDID文件描述信息")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "ipaId", required = true),
+            @ApiImplicitParam(name = "organization", value = "组织名称"),
+            @ApiImplicitParam(name = "display", value = "标题"),
+            @ApiImplicitParam(name = "description", value = "描述"),
+    })
+    @PostMapping("/updateMobileconfig")
+    public Result updateMobileconfig(long id, String organization, String display, String description) {
+        Result result = new Result();
+        if (organization == null) {
+            organization = Config.payloadOrganization;
+        }
+        if (display == null) {
+            display = Config.payloadDisplayName;
+        }
+        if (description == null) {
+            description = Config.payloadDescription;
+        }
+        String mobileconfig = creatUDIDMobileconfig(id, organization, display, description);
+        boolean b = packageService.updatePackageMobileconfigById(id, mobileconfig);
+        if (b) {
+            result.setCode(1);
+            result.setMsg("配置文件更新成功");
+        }else {
+            result.setMsg("配置文件更新失败");
+        }
+        return result;
+    }
 
     @ApiOperation(value = "/updatePackageSummaryById", notes = "更新简介")
     @ApiImplicitParams(value = {
@@ -306,6 +335,31 @@ public class PackageController {
             result.setMsg("简介更新成功");
         }else {
             result.setMsg("简介更新失败");
+        }
+        return result;
+    }
+
+    @ApiOperation(value = "/updatePackageInfoById", notes = "更新app信息")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id", value = "ipaId", required = true),
+            @ApiImplicitParam(name = "subTitle", value = "副标题"),
+            @ApiImplicitParam(name = "level", value = "星级"),
+            @ApiImplicitParam(name = "commentCount", value = "评分数量"),
+            @ApiImplicitParam(name = "ranking", value = "排行"),
+            @ApiImplicitParam(name = "className", value = "分类名称"),
+            @ApiImplicitParam(name = "age", value = "适用年龄"),
+            @ApiImplicitParam(name = "summary", value = "简介内容"),
+    })
+    @PostMapping("/updatePackageInfoById")
+    public Result updatePackageInfoById(long id, String subTitle, float level, String commentCount,
+                                        int ranking, String className, int age, String summary) {
+        Result result = new Result();
+        boolean b = packageService.updatePackageInfoById(id, subTitle, level, commentCount, ranking, className, age, summary);
+        if (b) {
+            result.setCode(1);
+            result.setMsg("数据更新成功");
+        }else {
+            result.setMsg("数据更新失败");
         }
         return result;
     }
@@ -432,6 +486,7 @@ public class PackageController {
      */
     Package analyzeIPA(MultipartFile file) throws ParserConfigurationException, ParseException, SAXException, PropertyListFormatException, IOException {
         log.info("开始解析ipa文件");
+        long fileSize = file.getSize();
         File excelFile = File.createTempFile(IdUtil.simpleUUID(), ".ipa");
         log.info("开始转换文件");
         file.transferTo(excelFile);
@@ -519,6 +574,7 @@ public class PackageController {
             pck.setBundleIdentifier(bundleIdentifier);
             pck.setIcon(iconLink);
             pck.setLink(appLink);
+            pck.setSize(fileManager.getFileSize(fileSize));
         }else {
             log.info("ipa文件上传失败");
         }
@@ -563,7 +619,7 @@ public class PackageController {
 
      * @return 证书名称
      */
-    String creatUDIDMobileconfig(long id) {
+    String creatUDIDMobileconfig(long id, String organization, String display, String description) {
         log.info("创建获取UDID所用证书");
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n" +
@@ -585,9 +641,9 @@ public class PackageController {
                 "            </array>\n" +
                 "        </dict>\n" +
                 "        <key>PayloadOrganization</key>\n" +
-                "        <string>" + Config.payloadOrganization +"</string>  <!--组织名称-->\n" +
+                "        <string>" + organization +"</string>  <!--组织名称-->\n" +
                 "        <key>PayloadDisplayName</key>\n" +
-                "        <string>" + Config.payloadDisplayName + "</string>  <!--安装时显示的标题-->\n" +
+                "        <string>" + display + "</string>  <!--安装时显示的标题-->\n" +
                 "        <key>PayloadVersion</key>\n" +
                 "        <integer>1</integer>\n" +
                 "        <key>PayloadUUID</key>\n" +
@@ -595,7 +651,7 @@ public class PackageController {
                 "        <key>PayloadIdentifier</key>\n" +
                 "        <string>online.iizvv.profile-service</string>\n" +
                 "        <key>PayloadDescription</key>\n" +
-                "        <string>"+Config.payloadDescription+"</string>   <!--描述-->\n" +
+                "        <string>"+ description +"</string>   <!--描述-->\n" +
                 "        <key>PayloadType</key>\n" +
                 "        <string>Profile Service</string>\n" +
                 "    </dict>\n" +
@@ -701,7 +757,7 @@ public class PackageController {
                         boolean b = packageService.insertPackage(aPackage);
                         if (b) {
                             log.info("ipa写入数据库成功");
-                            String mobileconfig = creatUDIDMobileconfig(aPackage.getId());
+                            String mobileconfig = creatUDIDMobileconfig(aPackage.getId(), Config.payloadOrganization, Config.payloadDisplayName, Config.payloadDescription);
                             if (mobileconfig != null) {
                                 b = packageService.updatePackageMobileconfigById(aPackage.getId(), mobileconfig);
                                 if (b) {

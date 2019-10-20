@@ -50,6 +50,27 @@ public class Package {
   @ApiModelProperty(value = "最小支持版本")
   private String miniVersion;
 
+  @ApiModelProperty(value = "副标题")
+  private String subTitle;
+
+  @ApiModelProperty(value = "星级")
+  private float level;
+
+  @ApiModelProperty(value = "评分数量")
+  private String commentCount;
+
+  @ApiModelProperty(value = "排行")
+  private int ranking;
+
+  @ApiModelProperty(value = "分类名称")
+  private String className;
+
+  @ApiModelProperty(value = "适用年龄")
+  private int age;
+
+  @ApiModelProperty(value = "文件大小")
+  private String size;
+
   @ApiModelProperty(value = "简介")
   private String summary;
 
@@ -196,6 +217,61 @@ public class Package {
     this.createTime = createTime;
   }
 
+  public String getSubTitle() {
+    return subTitle;
+  }
+
+  public void setSubTitle(String subTitle) {
+    this.subTitle = subTitle;
+  }
+
+  public float getLevel() {
+    return level;
+  }
+
+  public void setLevel(float level) {
+    this.level = level;
+  }
+
+  public String getCommentCount() {
+    return commentCount;
+  }
+
+  public void setCommentCount(String commentCount) {
+    this.commentCount = commentCount;
+  }
+
+  public int getRanking() {
+    return ranking;
+  }
+
+  public void setRanking(int ranking) {
+    this.ranking = ranking;
+  }
+
+  public String getClassName() {
+    return className;
+  }
+
+  public void setClassName(String className) {
+    this.className = className;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
+
+  public String getSize() {
+    return size;
+  }
+
+  public void setSize(String size) {
+    this.size = size;
+  }
 
   @Override
   public String toString() {
@@ -214,6 +290,13 @@ public class Package {
             ", totalDevice=" + totalDevice +
             ", buildVersion='" + buildVersion + '\'' +
             ", miniVersion='" + miniVersion + '\'' +
+            ", subTitle='" + subTitle + '\'' +
+            ", level=" + level +
+            ", commentCount='" + commentCount + '\'' +
+            ", ranking=" + ranking +
+            ", className='" + className + '\'' +
+            ", age=" + age +
+            ", size='" + size + '\'' +
             ", summary='" + summary + '\'' +
             ", isStint=" + isStint +
             ", createTime=" + createTime +

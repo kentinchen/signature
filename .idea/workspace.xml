@@ -5,9 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="72c9fa7a-ab92-4882-8ea1-8de913202eee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/AppleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/AppleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/PackageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/PackageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/VersionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/controls/VersionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/BeanRegisterConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/BeanRegisterConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/AppleDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/AppleDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/PackageDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/dao/PackageDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Package.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Package.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/service/AppleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/service/AppleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/service/PackageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/service/PackageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/online/iizvv/utils/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/online/iizvv/utils/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-pro.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-pro.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/cms/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/utils/html/cms/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/cms/p__account__detail.async.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/html/cms/p__account__detail.async.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/cms/p__account__index.async.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/html/cms/p__account__index.async.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/cms/p__account__new.async.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/html/cms/p__account__new.async.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/cms/p__apps__detail.async.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/html/cms/p__apps__detail.async.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/cms/p__apps__index.async.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/html/cms/p__apps__index.async.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/cms/p__apps__new.async.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/html/cms/p__apps__new.async.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/cms/vendors.chunk.css" beforeDir="false" afterPath="$PROJECT_DIR$/utils/html/cms/vendors.chunk.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/h5/css/chunk-b1bcec64.7cb7dec1.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/h5/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/utils/html/h5/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/h5/js/app.913ea7ae.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/h5/js/chunk-46eaa9c6.a465e893.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/h5/js/chunk-b1bcec64.e1d96917.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/html/h5/js/chunk-vendors.b3592feb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/配置.md" beforeDir="false" afterPath="$PROJECT_DIR$/utils/配置.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/配置.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/utils/配置.pdf" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,109 +45,6 @@
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/Config.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="915">
-              <caret line="61" column="47" selection-start-line="61" selection-start-column="47" selection-end-line="61" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application-pro.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/VersionController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6420">
-              <caret line="461" selection-start-line="461" selection-end-line="461" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/AppleController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2055">
-              <caret line="166" column="53" selection-start-line="166" selection-start-column="53" selection-end-line="166" selection-end-column="53" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/BeanRegisterConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/PackageController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6495">
-              <caret line="470" column="67" selection-start-line="470" selection-start-column="67" selection-end-line="470" selection-end-column="67" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/PKDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/UserDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UserController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3270">
-              <caret line="242" column="25" selection-start-line="242" selection-start-column="25" selection-end-line="242" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -145,63 +71,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/../User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Apple.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Device.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/ApiFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UploadImageController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UploadFileController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/Filter/ApiFilter.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/utils/AESUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/signature/SignatureApplication.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/CustomMultiThreadingConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/AsyncConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/server/SaticScheduleTask.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/server/WebSocketServer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/WebSocketConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DPDap.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/AppleServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/DevicePackage.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DPDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/DPServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/Version.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Package.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/pojo/PackageKey.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/utils/FileManager.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/application-dev.yml" />
-        <option value="$PROJECT_DIR$/src/main/resources/application.yml" />
-        <option value="$PROJECT_DIR$/utils/配置.md" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/utils/Shell.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/PKDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/PKServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/AppleController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/DeviceController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/filter/ApiFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/UserDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/UserServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/utils/ITSUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/AppleDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/dao/PackageDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/service/PackageServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/utils/JwtHelper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/PackageController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UserController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/BeanRegisterConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/application-pro.yml" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/VersionController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/core/config/Config.java" />
-        <option value="$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java" />
-      </list>
-    </option>
-  </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
@@ -209,163 +78,15 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="MavenProjectNavigator">
-    <treeState>
-      <expand>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="signature" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="signature" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
-        </path>
-      </expand>
-      <select />
-    </treeState>
-  </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="597" />
     <option name="y" value="23" />
     <option name="width" value="1769" />
     <option name="height" value="1011" />
   </component>
+  <component name="ProjectId" id="1SUNNlnLfHiHyWP5XRaZLMOf1g8" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="online" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="online" type="462c0819:PsiDirectoryNode" />
-              <item name="iizvv" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="online" type="462c0819:PsiDirectoryNode" />
-              <item name="iizvv" type="462c0819:PsiDirectoryNode" />
-              <item name="controls" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="online" type="462c0819:PsiDirectoryNode" />
-              <item name="iizvv" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="online" type="462c0819:PsiDirectoryNode" />
-              <item name="iizvv" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="online" type="462c0819:PsiDirectoryNode" />
-              <item name="iizvv" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="online" type="462c0819:PsiDirectoryNode" />
-              <item name="iizvv" type="462c0819:PsiDirectoryNode" />
-              <item name="pojo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="online" type="462c0819:PsiDirectoryNode" />
-              <item name="iizvv" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="online" type="462c0819:PsiDirectoryNode" />
-              <item name="iizvv" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="signature" type="b2602c69:ProjectViewProjectNode" />
-              <item name="signature" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="RequestMappingsPanelOrder0" value="0" />
@@ -456,492 +177,22 @@
       <workItem from="1569399759004" duration="46000" />
       <workItem from="1569459427814" duration="1585000" />
       <workItem from="1570199134841" duration="19000" />
+      <workItem from="1571614178480" duration="30000" />
     </task>
     <servers />
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132304000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="597" y="23" width="1769" height="1011" extended-state="0" />
-    <editor active="true" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.31441808" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="UI Designer" order="6" />
-      <window_info id="Web" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3297062" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3338983" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Flutter Performance" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Spring" order="13" />
-      <window_info anchor="bottom" id="Java Enterprise" order="14" />
-      <window_info anchor="bottom" id="Messages" order="15" weight="0.32938188" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" visible="true" weight="0.16328894" />
-      <window_info anchor="right" id="Palette" order="4" />
-      <window_info anchor="right" id="Flutter Inspector" order="5" />
-      <window_info anchor="right" id="Flutter Outline" order="6" />
-      <window_info anchor="right" id="Database" order="7" />
-      <window_info anchor="right" id="Palette&#9;" order="8" />
-      <window_info anchor="right" id="Theme Preview" order="9" />
-      <window_info anchor="right" id="Capture Analysis" order="10" />
-      <window_info anchor="right" id="Bean Validation" order="11" />
-    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/AsyncConfig.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/UserDevice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="56" selection-start-line="56" selection-end-line="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#531#532#0" expanded="true" />
-            <element signature="e#550#551#0" expanded="true" />
-            <element signature="e#891#892#0" expanded="true" />
-            <element signature="e#913#914#0" expanded="true" />
-            <element signature="e#950#951#0" expanded="true" />
-            <element signature="e#971#972#0" expanded="true" />
-            <element signature="e#1004#1005#0" expanded="true" />
-            <element signature="e#1031#1032#0" expanded="true" />
-            <element signature="e#1079#1080#0" expanded="true" />
-            <element signature="e#1117#1118#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/DevicePackage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="14" selection-start-line="14" selection-end-line="19" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1066#1067#0" expanded="true" />
-            <element signature="e#1088#1089#0" expanded="true" />
-            <element signature="e#1125#1126#0" expanded="true" />
-            <element signature="e#1146#1147#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/DPServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="106" selection-start-line="106" selection-end-line="106" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1709#1710#0" expanded="true" />
-            <element signature="e#1774#1775#0" expanded="true" />
-            <element signature="e#1969#1970#0" expanded="true" />
-            <element signature="e#2028#2029#0" expanded="true" />
-            <element signature="e#2219#2220#0" expanded="true" />
-            <element signature="e#2280#2281#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Apple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="116" column="31" selection-start-line="116" selection-start-column="31" selection-end-line="116" selection-end-column="31" />
-          <folding>
-            <element signature="e#995#996#0" expanded="true" />
-            <element signature="e#1019#1020#0" expanded="true" />
-            <element signature="e#1397#1398#0" expanded="true" />
-            <element signature="e#1421#1422#0" expanded="true" />
-            <element signature="e#1505#1506#0" expanded="true" />
-            <element signature="e#1529#1530#0" expanded="true" />
-            <element signature="e#1613#1614#0" expanded="true" />
-            <element signature="e#1637#1638#0" expanded="true" />
-            <element signature="e#1961#1962#0" expanded="true" />
-            <element signature="e#2009#2010#0" expanded="true" />
-            <element signature="e#2047#2048#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Package.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="59" column="26" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
-          <folding>
-            <element signature="e#3367#3368#0" expanded="true" />
-            <element signature="e#3391#3392#0" expanded="true" />
-            <element signature="e#3432#3433#0" expanded="true" />
-            <element signature="e#3457#3458#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../AppIcon60x60@3x.png" />
-    <entry file="jar://$MAVEN_REPOSITORY$/cn/hutool/hutool-all/4.5.11/hutool-all-4.5.11.jar!/cn/hutool/core/io/file/FileWriter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="177" column="42" selection-start-line="177" selection-start-column="39" selection-end-line="177" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/PackageKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-autoconfigure/2.1.6.RELEASE/spring-boot-autoconfigure-2.1.6.RELEASE.jar!/META-INF/spring-configuration-metadata.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/配置.md" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="15" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-autoconfigure/2.1.6.RELEASE/spring-boot-autoconfigure-2.1.6.RELEASE.jar!/org/springframework/boot/autoconfigure/web/servlet/WebMvcProperties.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3345">
-          <caret line="305" selection-start-line="305" selection-end-line="305" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/PKServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="76" column="23" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Authorize.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="e#811#812#0" expanded="true" />
-            <element signature="e#835#836#0" expanded="true" />
-            <element signature="e#1188#1189#0" expanded="true" />
-            <element signature="e#1215#1216#0" expanded="true" />
-            <element signature="e#1263#1264#0" expanded="true" />
-            <element signature="e#1301#1302#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/ShortUrlController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UploadFileController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/WebSocketConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/server/SaticScheduleTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/utils/AESUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="637">
-          <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/utils/FileManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
-          <caret line="145" column="5" selection-start-line="145" selection-start-column="5" selection-end-line="145" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/utils/MD5Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="57" selection-start-line="12" selection-start-column="40" selection-end-line="12" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/utils/Shell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/DeviceController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="29" column="69" selection-start-line="29" selection-start-column="69" selection-end-line="29" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/UserServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/AppleServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
-          <folding>
-            <element signature="e#747#748#0" expanded="true" />
-            <element signature="e#808#809#0" expanded="true" />
-            <element signature="e#1283#1284#0" expanded="true" />
-            <element signature="e#1340#1341#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/DeviceServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="30" column="10" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/utils/ITSUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-552">
-          <caret line="166" column="33" lean-forward="true" selection-start-line="166" selection-start-column="33" selection-end-line="166" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/service/PackageServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="253" column="50" selection-start-line="253" selection-start-column="50" selection-end-line="253" selection-end-column="50" />
-          <folding>
-            <element signature="e#3916#3917#0" expanded="true" />
-            <element signature="e#3978#3979#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/filter/ApiFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="33" column="47" selection-start-line="33" selection-start-column="47" selection-end-line="33" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/AppleDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-199">
-          <caret line="70" column="36" lean-forward="true" selection-start-line="70" selection-start-column="36" selection-end-line="70" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/DeviceDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-229">
-          <caret line="26" column="64" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="26" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/PackageDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="431">
-          <caret line="214" column="19" selection-start-line="214" selection-start-column="19" selection-end-line="214" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/DPDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
-          <caret line="63" column="36" selection-start-line="63" selection-start-column="36" selection-end-line="63" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/utils/JwtHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/pojo/Comment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/cn/hutool/hutool-all/4.5.11/hutool-all-4.5.11-sources.jar!/cn/hutool/http/HttpUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="253" column="23" selection-start-line="253" selection-start-column="23" selection-end-line="253" selection-end-column="23" />
-          <folding>
-            <element signature="e#6342#6343#0" expanded="true" />
-            <element signature="e#6394#6395#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="915">
-          <caret line="61" column="47" selection-start-line="61" selection-start-column="47" selection-end-line="61" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application-pro.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/VersionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/AppleController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2055">
-          <caret line="166" column="53" selection-start-line="166" selection-start-column="53" selection-end-line="166" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/core/config/BeanRegisterConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/PackageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6495">
-          <caret line="470" column="67" selection-start-line="470" selection-start-column="67" selection-end-line="470" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/PKDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/dao/UserDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3270">
-          <caret line="242" column="25" selection-start-line="242" selection-start-column="25" selection-end-line="242" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/online/iizvv/controls/UDIDController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6420">
-          <caret line="461" selection-start-line="461" selection-end-line="461" />
-        </state>
-      </provider>
-    </entry>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

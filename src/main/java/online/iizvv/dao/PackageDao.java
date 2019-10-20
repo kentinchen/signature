@@ -22,8 +22,8 @@ public interface PackageDao {
       *
       * @return int
       */
-    @Insert("INSERT INTO package (name, icon, version, build_version, mini_version, bundle_identifier, link, user_id) " +
-            "VALUES (#{name}, #{icon}, #{version}, #{buildVersion}, #{miniVersion}, #{bundleIdentifier}, #{link}, #{userId})")
+    @Insert("INSERT INTO package (name, icon, version, build_version, mini_version, bundle_identifier, link, user_id, size) " +
+            "VALUES (#{name}, #{icon}, #{version}, #{buildVersion}, #{miniVersion}, #{bundleIdentifier}, #{link}, #{userId}, #{size})")
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     int insertPackage(Package pck);
 
@@ -36,7 +36,7 @@ public interface PackageDao {
      */
     @Update("UPDATE package SET name = #{name}, icon = #{icon}, version = #{version}, " +
             "build_version = #{buildVersion}, mini_version = #{miniVersion}, " +
-            "link = #{link} WHERE id = #{id}")
+            "link = #{link}, size = #{size} WHERE id = #{id}")
     int updatePackage(Package pck);
 
     /**
@@ -59,6 +59,18 @@ public interface PackageDao {
      */
     @Update("UPDATE package SET summary=#{summary} WHERE id=#{id}")
     int updatePackageSummaryById(long id, String summary);
+
+    /**
+     * create by: iizvv
+     * description: 更新基本信息
+     * create time: 2019-09-02 19:05
+     *
+
+     * @return int
+     */
+    @Update("UPDATE package SET sub_title=#{subTitle}, level=#{level}, comment_count=#{commentCount}, " +
+            "ranking=#{ranking}, class_name=#{className}, age=#{age}, summary=#{summary} WHERE id=#{id}")
+    int updatePackageInfoById(long id, String subTitle, float level, String commentCount, int ranking, String className, int age, String summary);
 
     /**
      * create by: iizvv

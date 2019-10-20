@@ -32,6 +32,18 @@ public class DeviceServiceImpl {
         return deviceDao.updateDeviceIsUseByAppleId(appleId, isUse)>0;
     }
 
+    /**
+     * create by: iizvv
+     * description: 设置所有设备为可用
+     * create time: 2019/10/20 4:49 下午
+     *
+
+     * @return boolean
+     */
+    public boolean updateAllDeviceUse() {
+        return deviceDao.updateAllDeviceUse()>0;
+    }
+
     public Device getDeviceByUDID(String udid) {
         return deviceDao.getDeviceByUDID(udid);
     }

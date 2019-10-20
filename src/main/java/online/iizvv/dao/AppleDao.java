@@ -40,6 +40,17 @@ public interface AppleDao {
     int updateAppleIsUse(long id, boolean isUse);
 
     /**
+     * create by: iizvv
+     * description: 设置所有帐号为可用
+     * create time: 2019/10/20 4:46 下午
+     *
+
+     * @return int
+     */
+    @Update("UPDATE apple SET is_use = true WHERE is_use = false")
+    int updateAllAppleUse();
+
+    /**
       * create by: iizvv
       * description: 更新账号P12
       * create time: 2019-07-06 14:59
