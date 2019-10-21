@@ -77,6 +77,15 @@ public class Package {
   @ApiModelProperty(value = "是否限制使用")
   private boolean isStint;
 
+  @ApiModelProperty(value = "配置文件组织名")
+  private String organization;
+
+  @ApiModelProperty(value = "配置文件标题")
+  private String display;
+
+  @ApiModelProperty(value = "配置文件描述")
+  private String description;
+
   @ApiModelProperty(value = "创建时间")
   private Date createTime;
 
@@ -273,6 +282,31 @@ public class Package {
     this.size = size;
   }
 
+  public String getOrganization() {
+    return organization;
+  }
+
+  public void setOrganization(String organization) {
+    this.organization = organization;
+  }
+
+  public String getDisplay() {
+    return display;
+  }
+
+  public void setDisplay(String display) {
+    this.display = display;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+
   @Override
   public String toString() {
     return "Package{" +
@@ -299,6 +333,9 @@ public class Package {
             ", size='" + size + '\'' +
             ", summary='" + summary + '\'' +
             ", isStint=" + isStint +
+            ", organization='" + organization + '\'' +
+            ", display='" + display + '\'' +
+            ", description='" + description + '\'' +
             ", createTime=" + createTime +
             '}';
   }

@@ -22,8 +22,10 @@ public interface PackageDao {
       *
       * @return int
       */
-    @Insert("INSERT INTO package (name, icon, version, build_version, mini_version, bundle_identifier, link, user_id, size) " +
-            "VALUES (#{name}, #{icon}, #{version}, #{buildVersion}, #{miniVersion}, #{bundleIdentifier}, #{link}, #{userId}, #{size})")
+    @Insert("INSERT INTO package (name, icon, version, build_version, mini_version, bundle_identifier, " +
+            "link, user_id, size, organization, display, description) " +
+            "VALUES (#{name}, #{icon}, #{version}, #{buildVersion}, #{miniVersion}, " +
+            "#{bundleIdentifier}, #{link}, #{userId}, #{size}, #{organization}, #{display}, #{description})")
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     int insertPackage(Package pck);
 
@@ -130,8 +132,9 @@ public interface PackageDao {
 
      * @return int
      */
-    @Update("UPDATE package SET mobileconfig = #{mobileconfig} WHERE id=#{id}")
-    int updatePackageMobileconfigById(long id, String mobileconfig);
+    @Update("UPDATE package SET mobileconfig = #{mobileconfig}, organization = #{organization}, " +
+            "display = #{display}, description = #{description} WHERE id=#{id}")
+    int updatePackageMobileconfigById(long id, String mobileconfig, String organization, String display, String description);
 
     /**
       * create by: iizvv

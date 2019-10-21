@@ -311,7 +311,7 @@ public class PackageController {
             description = Config.payloadDescription;
         }
         String mobileconfig = creatUDIDMobileconfig(id, organization, display, description);
-        boolean b = packageService.updatePackageMobileconfigById(id, mobileconfig);
+        boolean b = packageService.updatePackageMobileconfigById(id, mobileconfig, organization, display, description);
         if (b) {
             result.setCode(1);
             result.setMsg("配置文件更新成功");
@@ -575,6 +575,9 @@ public class PackageController {
             pck.setIcon(iconLink);
             pck.setLink(appLink);
             pck.setSize(fileManager.getFileSize(fileSize));
+            pck.setOrganization(Config.payloadOrganization);
+            pck.setDisplay(Config.payloadDisplayName);
+            pck.setDescription(Config.payloadDescription);
         }else {
             log.info("ipa文件上传失败");
         }
@@ -757,9 +760,14 @@ public class PackageController {
                         boolean b = packageService.insertPackage(aPackage);
                         if (b) {
                             log.info("ipa写入数据库成功");
-                            String mobileconfig = creatUDIDMobileconfig(aPackage.getId(), Config.payloadOrganization, Config.payloadDisplayName, Config.payloadDescription);
+                            String mobileconfig = creatUDIDMobileconfig(aPackage.getId(),
+                                    aPackage.getOrganization(), aPackage.getDisplay(), aPackage.getDescription());
                             if (mobileconfig != null) {
-                                b = packageService.updatePackageMobileconfigById(aPackage.getId(), mobileconfig);
+                                b = packageService.updatePackageMobileconfigById(aPackage.getId(),
+                                        mobileconfig,
+                                        aPackage.getOrganization(),
+                                        aPackage.getDisplay(),
+                                        aPackage.getDescription());
                                 if (b) {
                                     result.setCode(1);
                                     result.setData(aPackage.getId());

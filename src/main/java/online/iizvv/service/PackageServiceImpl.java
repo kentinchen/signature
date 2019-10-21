@@ -58,7 +58,6 @@ public class PackageServiceImpl {
         return aPackage>0;
     }
 
-
     /**
      * create by: iizvv
      * description: 更新简介
@@ -156,8 +155,8 @@ public class PackageServiceImpl {
 
      * @return boolean
      */
-    public boolean updatePackageMobileconfigById(long id, String mobileconfig) {
-        int aPackage = packageDao.updatePackageMobileconfigById(id, mobileconfig);
+    public boolean updatePackageMobileconfigById(long id, String mobileconfig, String organization, String display, String description) {
+        int aPackage = packageDao.updatePackageMobileconfigById(id, mobileconfig, organization, display, description);
         return aPackage>0;
     }
 
