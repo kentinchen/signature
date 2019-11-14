@@ -212,7 +212,7 @@ public class UDIDController {
                             packageService.updatePackageDeviceCountById(id);
                         }
                     }else {
-                        itemService = getItemService(id, udid, pck);
+                        itemService = analyzeUDID(udid, id);
                     }
                 }
             }else {
@@ -374,6 +374,12 @@ public class UDIDController {
                 app.delete();
                 p12.delete();
                 file.delete();
+            }
+        }else {
+            boolean b = appleService.updateAppleIsUse(apple.getId(), false);
+            deviceService.updateDeviceIsUseByAppleId(apple.getId(), false);
+            if (b) {
+                log.info("已将账号: " + apple.getAccount() + ", 以及账号下设备标记为不可用");
             }
         }
         return key;
